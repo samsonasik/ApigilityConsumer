@@ -68,6 +68,21 @@ if (! $clientResult->success) {
 composer require samsonasik/apigility-consumer
 ```
 
+- copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host and oauth settings:
+
+```php
+<?php
+
+return [
+    'api-host-url' => 'http://api.host.com',
+    'oauth' => [
+        'grant_type'    => 'password',
+        'client_id'     => 'foo',
+        'client_secret' => 'foo_s3cret',
+    ],
+];
+```
+
 - Register to config/modules.config.php
 ```
     return [
