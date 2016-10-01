@@ -13,7 +13,7 @@ describe('ClientAuthResult', function () {
  
     describe('::applyResult', function () {
         it('set success = false when self::$messages is not empty', function () {
-            $this->result::$messages = [
+            ClientAuthResult::$messages = [
                 'http' => [
                     SpecialErrorMessage::INVALID_REQUEST['code'] => SpecialErrorMessage::INVALID_REQUEST['reason']
                 ],
@@ -24,14 +24,14 @@ describe('ClientAuthResult', function () {
         });
         
         it('set success = false when provided json is invalid', function () {
-            $this->result::$messages = [];
+            ClientAuthResult::$messages = [];
             
             $result = $this->result->applyResult('invalid json');
             expect(false)->toBe($result->success);
         });
         
         it('set success = false when login failed', function () {
-            $this->result::$messages = [];
+            ClientAuthResult::$messages = [];
 
             $response = <<<json
 {

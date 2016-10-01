@@ -13,7 +13,7 @@ describe('ClientResult', function () {
  
     describe('::applyResult', function () {
         it('set success = false when self::$messages is not empty', function () {
-            $this->result::$messages = [
+            ClientResult::$messages = [
                 'http' => [
                     SpecialErrorMessage::INVALID_REQUEST['code'] => SpecialErrorMessage::INVALID_REQUEST['reason']
                 ],
@@ -24,14 +24,14 @@ describe('ClientResult', function () {
         });
         
         it('set success = false when provided json is invalid', function () {
-            $this->result::$messages = [];
+            ClientResult::$messages = [];
             
             $result = $this->result->applyResult('invalid json');
             expect(false)->toBe($result->success);
         });
         
         it('set success = false when validation_messages is not empty', function () {
-            $this->result::$messages = [];
+            ClientResult::$messages = [];
             
             $response = <<<json
 {
@@ -52,7 +52,7 @@ json;
         });
         
         it('set success = true when validation_messages is empty and $messages is empty too', function () {
-            $this->result::$messages = [];
+            ClientResult::$messages = [];
             
             $response = <<<json
 {
