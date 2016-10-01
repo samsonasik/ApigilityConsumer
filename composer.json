@@ -1,0 +1,23 @@
+{
+    "require": {
+        "php": "^5.6|^7.0",
+        "zendframework/zend-servicemanager": "^2.5|^3.0",
+        "zendframework/zend-json": "^3.0"
+    },
+    "require-dev": {
+        "kahlan/kahlan": "dev-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "ApigilityConsumer\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+             "ApigilityConsumer\\Spec\\": "spec/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}

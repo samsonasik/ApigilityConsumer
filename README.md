@@ -1,0 +1,81 @@
+ApigilityConsumer
+=================
+
+Apigility Client module to consume API Services. It contained followed Services:
+
+`ApigilityConsumer\ClientService\ClientService`
+-----------------------------------------------
+
+With usage:
+
+```php
+use ApigilityConsumer\ClientService\ClientService;
+
+$client = $serviceManager->get(ClientService::class);
+
+$data = [
+    // fields needs to be convert to json
+];
+$timeout  = 100;
+$clientResult = $client->callAPI($data, $timeout);
+```
+
+The `$clientResult` will be a `ApigilityConsumer\Result\ClientResult` instance, with this instance, you can do:
+
+```php
+if (! $clientResult->success) {
+    var_dump($clientResult::$messages);
+} else {
+    var_dump($clientResult->data);
+}
+```
+
+# `ApigilityConsumer\ClientService\ClientAuthService`
+-----------------------------------------------------
+
+It used for `oauth`, with usage:
+
+```php
+use ApigilityConsumer\ClientService\ClientAuthService;
+
+$client = $serviceManager->get(ClientAuthService::class);
+
+$data = [
+    'form-data' => [
+        'grant_type' => 'password',
+        'username' => 'foo',
+        'password' => '123',
+    ],
+];
+$timeout  = 100;
+$clientResult = $client->callAPI($data, $timeout);
+```
+
+The `$clientResult` will be a `ApigilityConsumer\Result\ClientAuthResult` instance, with this instance, you can do:
+
+```php
+if (! $clientResult->success) {
+    var_dump($clientResult::$messages);
+} else {
+    var_dump($clientResult->data);
+}
+```
+
+# Installation
+
+- composer!
+```
+composer require samsonasik/apigility-consumer
+```
+
+- Register to config/modules.config.php
+```
+    return [
+        'modules' => [
+            'ApiglityConsumer', <-- register here
+            'Application'
+        ],
+    ];
+```
+
+
