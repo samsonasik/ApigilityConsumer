@@ -11,6 +11,7 @@ matrix:
 before_script:
   - composer self-update
   - composer install --no-interaction
+  - if [[ $TRAVIS_PHP_VERSION =~ ^7 ]]; then pecl install xdebug; fi
 
 script:
   - bin/kahlan --clover=clover.xml
