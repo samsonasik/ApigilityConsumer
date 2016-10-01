@@ -1,7 +1,7 @@
 {
-    "name": "samsonasik/apiglity-consumer",
+    "name": "samsonasik/apigility-consumer",
     "type": "library",
-    "description": "Apiglity Client API Service Consumer",
+    "description": "Apigility Client API Service Consumer",
     "keywords": ["apigility","zf3"],
     "homepage": "https://github.com/samsonasik/ApigilityConsumer",
     "license": "MIT",
