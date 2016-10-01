@@ -15,8 +15,5 @@ before_script:
 
 script:
   - bin/kahlan --clover=clover.xml
-
-after_success:
-  - "if [ $(phpenv version-name) = '7.0' ]; then curl -F 'json_file=@coveralls.json' https://coveralls.io/api/v1/jobs --verbose; fi"
-  - "if [ $(phpenv version-name) = '7.0' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
-  - "if [ $(phpenv version-name) = '7.0' ]; then php ocular.phar code-coverage:upload --format=php-clover 'clover.xml'; fi"
+  - php ./vendor/bin/phpcov merge --clover ./clover.xml ./build/coverage/
+  - php ./vendor/bin/coveralls -v --exclude-no-stmt
