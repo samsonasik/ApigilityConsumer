@@ -30,5 +30,21 @@ describe('ClientAuthResult', function () {
             expect(false)->toBe($result->success);
         });
         
+        it('set success = false when login failed', function () {
+            $this->result::$messages = [];
+
+            $response = <<<json
+{
+    "type": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
+    "title": "invalid_request",
+    "status": 400,
+    "detail": "The grant type was not specified in the request"
+}
+json;
+
+            $result = $this->result->applyResult($response);
+            expect(false)->toBe($result->success);
+        });
+
     });
 });
