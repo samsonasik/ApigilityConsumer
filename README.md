@@ -21,7 +21,7 @@ After installed, copy `vendor/samsonasik/apigility-consumer/config/apigility-con
 return [
     'api-host-url' => 'http://api.host.com',
     'oauth' => [
-        'grant_type'    => 'password',
+        'grant_type'    => 'password', // or client_credentials
         'client_id'     => 'foo',
         'client_secret' => 'foo_s3cret',
     ],
@@ -93,8 +93,8 @@ $data = [
     'form-request-method' => 'POST',
 
     'form-data' => [
-        'username' => 'foo',
-        'password' => '123',
+        'username' => 'foo', // not required if grant_type config = 'client_credentials' 
+        'password' => '123', // not required if grant_type config = 'client_credentials' 
     ],
 ];
 $timeout  = 100;

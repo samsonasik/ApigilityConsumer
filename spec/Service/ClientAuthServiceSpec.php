@@ -25,6 +25,35 @@ describe('ClientAuthService', function () {
     });
     
     describe('->callAPI', function () {
+        it('define grant_type = client_credentials will not set username form-data', function () {
+            $client = Double::instance(['extends' => Client::class]);
+            $service = new ClientAuthService(
+                'http://api.host.url',
+                $client,
+                [
+                    'grant_type'    => 'client_credentials',
+                    'client_id'     => 'foo',
+                    'client_secret' => 'foo_s3cret',
+                ]
+            );
+            
+            $data = [
+                'api-route-segment' => '/oauth',
+                'form-request-method' => 'POST',
+            ];
+            
+            allow($client)->toReceive('setRawBody')->with(Json::encode(
+                [
+                    'grant_type'    => 'client_credentials',
+                    'client_id'     => 'foo',
+                    'client_secret' => 'foo_s3cret',
+                ]
+            ));
+            
+            $result = $service->callAPI($data);
+            expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
+        });
+        
         it('return "ClientAuthResult" instance', function () {
             $data = [
                 'api-route-segment' => '/oauth',
@@ -86,6 +115,7 @@ json
             
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
+            expect($result->success)->toBe(false);
         });
     });
     

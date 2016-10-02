@@ -50,14 +50,19 @@ class ClientAuthService implements ClientApiInterface
             'Accept' => 'application/json',
             'Content-type' => 'application/json',
         ];
-
+        
         $dataTobeSent = [
             'grant_type' => $this->authConfig['grant_type'],
-            'username' => $data['form-data']['username'],
-            'password' => $data['form-data']['password'],
             'client_id' => $this->authConfig['client_id'],
             'client_secret' => $this->authConfig['client_secret'],
         ];
+        
+        if ($this->authConfig['grant_type'] !== 'client_credentials') {
+            $dataTobeSent += [
+                'username' => $data['form-data']['username'],
+                'password' => $data['form-data']['password'],
+            ];
+        }
 
         $this->httpClient->setRawBody(Json::encode($dataTobeSent));
 
