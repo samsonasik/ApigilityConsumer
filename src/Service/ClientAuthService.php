@@ -103,16 +103,6 @@ class ClientAuthService implements ClientApiInterface
             ];
         }
 
-        // 400 is specifically invalid request due missing request parameter passed
-        // so, show user that login failed instead for security reason
-        if ($statusCode !== 200 && $statusCode !== 400 && $statusCode !== 410) {
-            ClientAuthResult::$messages = [
-                'http' => [
-                    $response->getStatusCode() => Json::decode($response->getBody(), true)['detail'],
-                ],
-            ];
-        }
-
         return ClientAuthResult::applyResult($response->getBody());
     }
 }

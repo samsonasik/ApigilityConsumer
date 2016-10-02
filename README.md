@@ -53,7 +53,6 @@ $data = [
     'form-request-method' => 'POST',
 
     'form-data' => [
-        'grant_type' => 'password',
         'username' => 'foo',
         'password' => '123',
     ],
