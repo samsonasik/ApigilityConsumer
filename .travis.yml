@@ -14,6 +14,4 @@ before_script:
   - if [[ $TRAVIS_PHP_VERSION =~ ^7 ]]; then pecl install xdebug; fi
 
 script:
-  - bin/kahlan --clover=build/log/clover.xml
-  - php ./bin/phpcov merge --clover ./build/log/clover.xml ./build/coverage/
-  - php ./bin/coveralls -v --exclude-no-stmt
+  - bin/kahlan
