@@ -36,5 +36,23 @@ describe('ClientService', function () {
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
         });
+        
+        it('define timeout parameter will set timeout for http call', function () {
+            $data = [
+                'api-route-segment' => '/api',
+                'form-request-method' => 'POST',
+                
+                'token_type' => 'Bearer',
+                'access_token' => 'Acc33sT0ken',
+                'form-data' => [
+                    'foo' => 'fooValue',
+                ],
+            ];
+            
+            allow($this->client)->toReceive('setOptions')->with(['timeout' => 100]);
+            
+            $result = $this->service->callAPI($data, 100);
+            expect($result)->toBeAnInstanceOf(ClientResult::class);
+        });
     });
 });
