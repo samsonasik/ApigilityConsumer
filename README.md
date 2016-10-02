@@ -3,10 +3,46 @@ ApigilityConsumer
 
 [![Build Status](https://travis-ci.org/samsonasik/ApigilityConsumer.svg?branch=master)](https://travis-ci.org/samsonasik/ApigilityConsumer)
 
-Apigility Client module to consume API Services. It contained followed Services:
+Apigility Client module to consume API Services. 
 
-`ApigilityConsumer\Service\ClientService`
------------------------------------------------
+Installation
+------------
+
+```
+composer require samsonasik/apigility-consumer
+```
+
+After installed, copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host and oauth settings:
+
+```php
+<?php
+
+return [
+    'api-host-url' => 'http://api.host.com',
+    'oauth' => [
+        'grant_type'    => 'password',
+        'client_id'     => 'foo',
+        'client_secret' => 'foo_s3cret',
+    ],
+];
+```
+
+Then, Enable it :
+
+```
+    return [
+        'modules' => [
+            'ApigilityConsumer', <-- register here
+            'Application'
+        ],
+    ];
+```
+
+
+Services
+--------
+
+- *`ApigilityConsumer\Service\ClientService`*
 
 With usage:
 
@@ -19,8 +55,8 @@ $data = [
     'api-route-segment' => '/api',
     'form-request-method' => 'POST',
     
-    // fields that will be used as raw json with 'form-data' index
     'form-data' => [
+        // fields that will be used as raw json to be sent
         'foo' => 'fooValue',
     ],
 ];
@@ -38,8 +74,7 @@ if (! $clientResult->success) {
 }
 ```
 
-# `ApigilityConsumer\Service\ClientAuthService`
------------------------------------------------------
+- *`ApigilityConsumer\Service\ClientAuthService`*
 
 It used for `oauth`, with usage:
 
@@ -69,38 +104,6 @@ if (! $clientResult->success) {
 } else {
     var_dump($clientResult->data);
 }
-```
-
-# Installation
-
-- composer!
-```
-composer require samsonasik/apigility-consumer
-```
-
-- copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host and oauth settings:
-
-```php
-<?php
-
-return [
-    'api-host-url' => 'http://api.host.com',
-    'oauth' => [
-        'grant_type'    => 'password',
-        'client_id'     => 'foo',
-        'client_secret' => 'foo_s3cret',
-    ],
-];
-```
-
-- Register to config/modules.config.php
-```
-    return [
-        'modules' => [
-            'ApiglityConsumer', <-- register here
-            'Application'
-        ],
-    ];
 ```
 
 
