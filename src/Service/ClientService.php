@@ -26,7 +26,7 @@ class ClientService implements ClientApiInterface
     /**
      * {inheritdoc}.
      *
-     * It call API for generic card actions, search, create card and bulk actions
+     * It call API for generic API Services
      *
      * @param array    $data
      * @param int|null $timeout

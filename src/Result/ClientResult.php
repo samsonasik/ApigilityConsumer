@@ -75,8 +75,6 @@ class ClientResult implements ResultInterface
 
     /**
      * A success result, with 'success' property = true
-     * For bulk process, there are may happen when not all rows are succeed, they may have error messages
-     * that setted via 'failed_*' key.
      *
      * @param array $result
      *
