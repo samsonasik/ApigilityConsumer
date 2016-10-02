@@ -9,9 +9,15 @@ matrix:
   fast_finish: true
 
 before_install:
-  - composer self-update
-  - composer install --no-interaction
   - if [[ $TRAVIS_PHP_VERSION =~ ^7 ]]; then pecl install xdebug; fi
+  
+before_script:
+  - composer self-update
+  - composer install --prefer-source --no-interaction
+  - composer dump-autoload -o
 
 script:
-  - bin/kahlan --coverage=4
+  - bin/kahlan --coverage=4 --reporter=verbose
+  
+notifications:
+    email: false
