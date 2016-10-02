@@ -14,4 +14,4 @@ before_script:
   - if [[ $TRAVIS_PHP_VERSION =~ ^7 ]]; then pecl install xdebug; fi
 
 script:
-  - bin/kahlan
+  - bin/kahlan --coverage=4

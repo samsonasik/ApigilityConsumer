@@ -14,7 +14,13 @@ use ApigilityConsumer\ClientService\ClientService;
 $client = $serviceManager->get(ClientService::class);
 
 $data = [
-    // fields needs to be convert to json
+    'api-route-segment' => '/api',
+    'form-request-method' => 'POST',
+    
+    // fields that will be used as raw json with 'form-data' index
+    'form-data' => [
+        'foo' => 'fooValue',
+    ],
 ];
 $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
@@ -41,6 +47,9 @@ use ApigilityConsumer\ClientService\ClientAuthService;
 $client = $serviceManager->get(ClientAuthService::class);
 
 $data = [
+    'api-route-segment' => '/oauth',
+    'form-request-method' => 'POST',
+
     'form-data' => [
         'grant_type' => 'password',
         'username' => 'foo',
