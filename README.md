@@ -53,13 +53,17 @@ use ApigilityConsumer\Service\ClientService;
 $client = $serviceManager->get(ClientService::class);
 
 $data = [
-    'api-route-segment' => '/api',
+    'api-route-segment' => '/api', 
     'form-request-method' => 'POST',
     
     'form-data' => [
         // fields that will be used as raw json to be sent
         'foo' => 'fooValue',
     ],
+    
+    // token type and access token if required
+    'token_type' =>  'token type if required',
+    'access_token' => 'access type if required',
 ];
 $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
