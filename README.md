@@ -45,7 +45,7 @@ Services
 
 - *`ApigilityConsumer\Service\ClientService`*
 
-With usage:
+For general Api Call, with usage:
 
 ```php
 use ApigilityConsumer\Service\ClientService;
