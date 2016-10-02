@@ -5,14 +5,14 @@ ApigilityConsumer
 
 Apigility Client module to consume API Services. 
 
-# Installation
+Installation
+------------
 
-- composer!
 ```
 composer require samsonasik/apigility-consumer
 ```
 
-- copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host and oauth settings:
+After installed, copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host and oauth settings:
 
 ```php
 <?php
@@ -27,7 +27,8 @@ return [
 ];
 ```
 
-- Register to config/modules.config.php
+Then, Enable it :
+
 ```
     return [
         'modules' => [
@@ -41,8 +42,7 @@ return [
 Services
 --------
 
-`ApigilityConsumer\ClientService\ClientService`
------------------------------------------------
+- *`ApigilityConsumer\ClientService\ClientService`*
 
 With usage:
 
@@ -74,8 +74,7 @@ if (! $clientResult->success) {
 }
 ```
 
-# `ApigilityConsumer\ClientService\ClientAuthService`
------------------------------------------------------
+- *`ApigilityConsumer\ClientService\ClientAuthService`*
 
 It used for `oauth`, with usage:
 
