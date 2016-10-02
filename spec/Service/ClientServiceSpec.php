@@ -19,7 +19,7 @@ describe('ClientService', function () {
     });
     
     describe('->callAPI', function () {
-        it('return "ClientAuthService" instance', function () {
+        it('return "ClientResult" instance', function () {
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',

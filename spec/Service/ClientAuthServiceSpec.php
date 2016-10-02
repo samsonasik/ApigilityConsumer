@@ -36,5 +36,24 @@ describe('ClientAuthService', function () {
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
         });
+        
+        it('return "ClientAuthResult" instance', function () {
+            $data = [
+                'api-route-segment' => '/oauth',
+                'form-request-method' => 'POST',
+                
+                'form-data' => [
+                    'grant_type' => 'password',
+                    'username' => 'foo',
+                    'password' => '123',
+                ],
+            ];
+            
+            allow($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
+            
+            $result = $this->service->callAPI($data);
+            expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
+        });
+        
     });
 });
