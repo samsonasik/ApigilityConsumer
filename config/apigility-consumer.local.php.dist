@@ -3,7 +3,7 @@
 return [
     'api-host-url' => 'http://api.host.com',
     'oauth' => [
-        'grant_type'    => 'password',
+        'grant_type'    => 'password', // can be client_credentials
         'client_id'     => 'foo',
         'client_secret' => 'foo_s3cret',
     ],
