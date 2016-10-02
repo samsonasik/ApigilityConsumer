@@ -63,7 +63,7 @@ $data = [
     
     // token type and access token if required
     'token_type' =>  'token type if required',
-    'access_token' => 'access type if required',
+    'access_token' => 'access token if required',
 ];
 $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
