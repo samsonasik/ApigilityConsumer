@@ -62,7 +62,7 @@ $data = [
     ],
     
     // token type and access token if required
-    'token_type' =>  'token type if required',
+    'token_type' =>  'token type if required, for example: "Bearer"',
     'access_token' => 'access token if required',
 ];
 $timeout  = 100;
