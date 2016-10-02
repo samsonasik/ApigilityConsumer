@@ -1,6 +1,8 @@
 ApigilityConsumer
 =================
 
+[![Build Status](https://travis-ci.org/samsonasik/ApigilityConsumer.svg?branch=master)](https://travis-ci.org/samsonasik/ApigilityConsumer)
+
 Apigility Client module to consume API Services. It contained followed Services:
 
 `ApigilityConsumer\ClientService\ClientService`
