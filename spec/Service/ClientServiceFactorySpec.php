@@ -7,10 +7,10 @@ use ApigilityConsumer\Service\ClientServiceFactory;
 use Kahlan\Plugin\Double;
 use Zend\ServiceManager\ServiceManager;
 
-describe('ClientAuthServiceFactory', function () {
+describe('ClientServiceFactory', function () {
     
     beforeAll(function () {
-        $this->factory = new ClientAuthServiceFactory();
+        $this->factory = new ClientServiceFactory();
     });
  
     describe('->__invoke', function () {
