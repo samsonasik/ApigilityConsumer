@@ -8,7 +8,7 @@ php:
 matrix:
   fast_finish: true
 
-before_script:
+before_install:
   - composer self-update
   - composer install --no-interaction
   - if [[ $TRAVIS_PHP_VERSION =~ ^7 ]]; then pecl install xdebug; fi
