@@ -5,7 +5,7 @@ ApigilityConsumer
 
 Apigility Client module to consume API Services. It contained followed Services:
 
-`ApigilityConsumer\ClientService\ClientService`
+`ApigilityConsumer\Service\ClientService`
 -----------------------------------------------
 
 With usage:
@@ -38,7 +38,7 @@ if (! $clientResult->success) {
 }
 ```
 
-# `ApigilityConsumer\ClientService\ClientAuthService`
+# `ApigilityConsumer\Service\ClientAuthService`
 -----------------------------------------------------
 
 It used for `oauth`, with usage:
