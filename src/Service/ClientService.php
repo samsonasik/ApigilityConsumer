@@ -77,7 +77,7 @@ class ClientService implements ClientApiInterface
      * when ClientResult::$messages is not empty, or response status code is not 200 ( messages will filled via ClientResult::$messages assignment ),
      * it will failure,.
      *
-     * otherwise, depends on responseCode returned in ['response']['responseCode'] key on processed $response->getBody()
+     * otherwise, will success.
      *
      * @param Response $response
      *
