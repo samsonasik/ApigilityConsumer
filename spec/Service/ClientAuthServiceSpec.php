@@ -6,6 +6,7 @@ use ApigilityConsumer\Result\ClientAuthResult;
 use ApigilityConsumer\Service\ClientAuthService;
 use Kahlan\Plugin\Double;
 use Zend\Http\Client;
+use Zend\Http\Response;
 use Zend\Json\Json;
 
 describe('ClientAuthService', function () {
@@ -68,6 +69,20 @@ describe('ClientAuthService', function () {
                     'password'     => 'foo',
                 ],
             ];
+            
+            $response = Double::instance(['extends' => Response::class]);
+            allow($response)->toReceive('getStatusCode')->andReturn(400);
+            allow($response)->toReceive('getBody')->andReturn(<<<json
+{
+  "type": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
+  "title": "invalid_client",
+  "status": 400,
+  "detail": "The client credentials are invalid"
+}
+json
+            );
+            
+            allow($this->client)->toReceive('send')->andReturn($response);
             
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);

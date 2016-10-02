@@ -103,6 +103,15 @@ class ClientAuthService implements ClientApiInterface
             ];
         }
 
+        // 400 is specifically invalid request due missing request parameter passed or invalid client details
+        if ($statusCode === 400) {
+            ClientAuthResult::$messages = [
+                'http' => [
+                    $response->getStatusCode() => Json::decode($response->getBody(), true)['detail'],
+                ],
+            ];
+        }
+
         return ClientAuthResult::applyResult($response->getBody());
     }
 }
