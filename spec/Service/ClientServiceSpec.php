@@ -20,22 +20,90 @@ describe('ClientService', function () {
     });
     
     describe('->callAPI', function () {
-        it('return "ClientResult" instance', function () {
+        it('return "ClientResult" instance with success = true when status code = 200 and body != ""', function () {
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
                 
-                'token_type' => 'Bearer',
-                'access_token' => 'Acc33sT0ken',
                 'form-data' => [
                     'foo' => 'fooValue',
                 ],
             ];
             
-            allow($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
+            $headers = [
+                'Accept' => 'application/json',
+                'Content-type' => 'application/json'
+            ];
+            
+            $response = Double::instance(['extends' => Response::class]);
+            allow($response)->toReceive('getStatusCode')->andReturn(200);
+            allow($response)->toReceive('getBody')->andReturn('{}');
+                
+            allow($this->client)->toReceive('send')->andReturn($response); // Because we want to change the original behavior
+            
+            expect($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
+            expect($this->client)->toReceive('setHeaders')->with($headers);
+            expect($this->client)->toReceive('setUri')->with('http://api.host.url/api');
+            expect($this->client)->toReceive('setMethod')->with($data['form-request-method']);
             
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
+            expect($result->success)->toBe(true);
+        });
+        
+        it('return "ClientResult" instance with success = false when status code != 200', function () {
+            $data = [
+                'api-route-segment' => '/api',
+                'form-request-method' => 'POST',
+                
+                'form-data' => [
+                    'foo' => 'fooValue',
+                ],
+            ];
+            
+            $headers = [
+                'Accept' => 'application/json',
+                'Content-type' => 'application/json'
+            ];
+            
+            $response = Double::instance(['extends' => Response::class]);
+            allow($response)->toReceive('getStatusCode')->andReturn(400);
+                
+            allow($this->client)->toReceive('send')->andReturn($response);
+            
+            expect($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
+            expect($this->client)->toReceive('setHeaders')->with($headers);
+            expect($this->client)->toReceive('setUri')->with('http://api.host.url/api');
+            expect($this->client)->toReceive('setMethod')->with($data['form-request-method']);
+            
+            $result = $this->service->callAPI($data);
+            expect($result)->toBeAnInstanceOf(ClientResult::class);
+            expect($result->success)->toBe(false);
+        });
+        
+        it('return "ClientResult" instance with success = false when client->send() throw exception', function () {
+            $data = [
+                'api-route-segment' => '/api',
+                'form-request-method' => 'POST',
+                
+                'form-data' => [
+                    'foo' => 'fooValue',
+                ],
+            ];
+            
+            $headers = [
+                'Accept' => 'application/json',
+                'Content-type' => 'application/json'
+            ];
+            
+            expect($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
+            expect($this->client)->toReceive('setHeaders')->with($headers);
+            expect($this->client)->toReceive('setUri')->with('http://api.host.url/api');
+            expect($this->client)->toReceive('setMethod')->with($data['form-request-method']);
+            
+            $result = $this->service->callAPI($data);
+            expect($result)->toBeAnInstanceOf(ClientResult::class);
+            expect($result->success)->toBe(false);
         });
         
         it('define timeout parameter will set timeout for http call', function () {
@@ -56,12 +124,13 @@ describe('ClientService', function () {
                 'Content-type' => 'application/json'
             ];
 
-            allow($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']))->andReturn($this->client);
-            allow($this->client)->toReceive('setOptions')->with(['timeout' => 100])->andReturn($this->client);
-            allow($this->client)->toReceive('setHeaders')->with($headers)->andReturn($this->client);
-            allow($this->client)->toReceive('setUri')->with('http://api.host.url/api')->andReturn($this->client);
-            allow($this->client)->toReceive('setMethod')->with($data['form-request-method'])->andReturn($this->client);
-            allow($this->client)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
+            allow($this->client)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class])); 
+                
+            expect($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
+            expect($this->client)->toReceive('setOptions')->with(['timeout' => 100]);
+            expect($this->client)->toReceive('setHeaders')->with($headers);
+            expect($this->client)->toReceive('setUri')->with('http://api.host.url/api');
+            expect($this->client)->toReceive('setMethod')->with($data['form-request-method']);
             
             $result = $this->service->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);

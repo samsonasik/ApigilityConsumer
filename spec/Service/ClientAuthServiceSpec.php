@@ -82,7 +82,26 @@ describe('ClientAuthService', function () {
                 ],
             ];
             
-            allow($this->client)->toReceive('setOptions')->with(['timeout' => 100]);
+            $dataTobeSent = [
+                'grant_type' => 'password',
+                'client_id' =>  'foo',
+                'client_secret' => 'foo_s3cret',
+                'username'    => 'foo',
+                'password'     => 'foo',
+            ];
+            
+            $headers = [
+                'Accept' => 'application/json',
+                'Content-type' => 'application/json'
+            ];
+
+            allow($this->client)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
+            
+            expect($this->client)->toReceive('setRawBody')->with(Json::encode($dataTobeSent));
+            expect($this->client)->toReceive('setOptions')->with(['timeout' => 100]);
+            expect($this->client)->toReceive('setHeaders')->with($headers);
+            expect($this->client)->toReceive('setUri')->with('http://api.host.url/oauth');
+            expect($this->client)->toReceive('setMethod')->with($data['form-request-method']);
             
             $result = $this->service->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
