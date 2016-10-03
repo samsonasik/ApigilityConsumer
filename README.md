@@ -5,7 +5,7 @@ ApigilityConsumer
 [![Coverage Status](https://coveralls.io/repos/github/samsonasik/ApigilityConsumer/badge.svg?branch=master)](https://coveralls.io/github/samsonasik/ApigilityConsumer?branch=master)
 [![Downloads](https://img.shields.io/packagist/dt/samsonasik/apigility-consumer.svg?style=flat-square)](https://packagist.org/packages/samsonasik/apigility-consumer)
 
-Apigility Client module to consume API Services. 
+ZF2 and ZF3 Apigility Client module to consume API Services. 
 
 Installation
 ------------
