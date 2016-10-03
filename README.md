@@ -16,7 +16,6 @@ composer require samsonasik/apigility-consumer
 After installed, copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host and oauth settings:
 
 ```php
-<?php
 
 return [
     'api-host-url' => 'http://api.host.com',
@@ -30,13 +29,14 @@ return [
 
 Then, Enable it :
 
-```
-    return [
-        'modules' => [
-            'ApigilityConsumer', <-- register here
-            'Application'
-        ],
-    ];
+```php
+
+return [
+    'modules' => [
+        'ApigilityConsumer', <-- register here
+        'Application'
+    ],
+];
 ```
 
 
