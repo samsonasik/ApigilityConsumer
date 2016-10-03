@@ -15,7 +15,8 @@ before_script:
   - if [[ $TRAVIS_PHP_VERSION =~ ^7 ]]; then git clone git://github.com/xdebug/xdebug.git && cd xdebug && phpize && ./configure --enable-xdebug  && make && make install && echo "extension = xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini && cd ..; fi
 
 script:
-  - bin/kahlan --coverage=4 --reporter=verbose
-  
+  - bin/kahlan --coverage=4 --reporter=verbose --clover=build/logs/clover.xml
+  - bin/coveralls -v --exclude-no-stmt
+
 notifications:
     email: false
