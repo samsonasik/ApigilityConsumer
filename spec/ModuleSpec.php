@@ -5,7 +5,6 @@ namespace ApigilityConsumer\Spec;
 use ApigilityConsumer\Module;
 
 describe('Module', function () {
-    
     beforeAll(function () {
         $this->module = new Module();
     });

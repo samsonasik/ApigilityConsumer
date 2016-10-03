@@ -10,11 +10,13 @@ Apigility Client module to consume API Services.
 Installation
 ------------
 
-```
+Installation of this module uses [getcomposer.org](composer).
+
+```sh
 composer require samsonasik/apigility-consumer
 ```
 
-After installed, copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host and oauth settings:
+For its configuration, copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host and oauth settings:
 
 ```php
 
@@ -28,23 +30,19 @@ return [
 ];
 ```
 
-Then, Enable it :
-
+Then, enable it :
 ```php
-
+// config/modules.config.php
 return [
-    'modules' => [
-        'ApigilityConsumer', <-- register here
-        'Application'
-    ],
-];
+    'ApigilityConsumer', <-- register here
+    'Application'
+],
 ```
-
 
 Services
 --------
 
-- *`ApigilityConsumer\Service\ClientService`*
+**1. ApigilityConsumer\Service\ClientService**
 
 For general Api Call, with usage:
 
@@ -80,7 +78,7 @@ if (! $clientResult->success) {
 }
 ```
 
-- *`ApigilityConsumer\Service\ClientAuthService`*
+**2. ApigilityConsumer\Service\ClientAuthService**
 
 It used for `oauth`, with usage:
 
@@ -112,4 +110,7 @@ if (! $clientResult->success) {
 }
 ```
 
+Contributing
+------------
+Contributions are very welcome. Please read [CONTRIBUTING.md](https://github.com/samsonasik/ApigilityConsumer/blob/master/CONTRIBUTING.md)
 

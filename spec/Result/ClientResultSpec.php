@@ -6,7 +6,6 @@ use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientResult;
 
 describe('ClientResult', function () {
-    
     beforeAll(function () {
         $this->result = new ClientResult();
     });
@@ -65,6 +64,5 @@ json;
             $result = $this->result->applyResult($response);
             expect(true)->toBe($result->success);
         });
-        
     });
 });

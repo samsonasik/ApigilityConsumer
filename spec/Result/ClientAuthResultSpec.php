@@ -6,7 +6,6 @@ use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientAuthResult;
 
 describe('ClientAuthResult', function () {
-    
     beforeAll(function () {
         $this->result = new ClientAuthResult();
     });
@@ -62,6 +61,5 @@ json;
             $result = $this->result->applyResult($response);
             expect(true)->toBe($result->success);
         });
-
     });
 });

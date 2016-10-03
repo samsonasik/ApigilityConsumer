@@ -10,7 +10,6 @@ use Zend\Http\Response;
 use Zend\Json\Json;
 
 describe('ClientService', function () {
-    
     beforeAll(function () {
         $this->client = Double::instance(['extends' => Client::class]);
         $this->service = new ClientService(
@@ -40,7 +39,7 @@ describe('ClientService', function () {
             allow($response)->toReceive('getBody')->andReturn('{}');
                 
             allow($this->client)->toReceive('send')->andReturn($response); // Because we want to change the original behavior
-            
+
             expect($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
             expect($this->client)->toReceive('setHeaders')->with($headers);
             expect($this->client)->toReceive('setUri')->with('http://api.host.url/api');
@@ -124,7 +123,7 @@ describe('ClientService', function () {
                 'Content-type' => 'application/json'
             ];
 
-            allow($this->client)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class])); 
+            allow($this->client)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
                 
             expect($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
             expect($this->client)->toReceive('setOptions')->with(['timeout' => 100]);

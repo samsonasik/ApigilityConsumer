@@ -8,7 +8,6 @@ use Kahlan\Plugin\Double;
 use Zend\ServiceManager\ServiceManager;
 
 describe('ClientAuthServiceFactory', function () {
-    
     beforeAll(function () {
         $this->factory = new ClientAuthServiceFactory();
     });

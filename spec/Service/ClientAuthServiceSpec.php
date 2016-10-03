@@ -10,7 +10,6 @@ use Zend\Http\Response;
 use Zend\Json\Json;
 
 describe('ClientAuthService', function () {
-    
     beforeAll(function () {
         $this->client = Double::instance(['extends' => Client::class]);
         $this->service = new ClientAuthService(
@@ -107,7 +106,7 @@ describe('ClientAuthService', function () {
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
         });
         
-        it('return invalid request when invalid data provided', function() {
+        it('return invalid request when invalid data provided', function () {
             $data = [
                 'api-route-segment' => '/oauth',
                 'form-request-method' => 'POST',
@@ -137,5 +136,4 @@ json
             expect($result->success)->toBe(false);
         });
     });
-    
 });

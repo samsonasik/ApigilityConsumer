@@ -36,7 +36,7 @@ class ClientResult implements ResultInterface
      *
      * There is a condition when the STATIC $messages already setted up via ClientResult::$messages assignment
      * in \ApigilityConsumer\Service\ClientService::getClientResult(), then it will set 'validation_messages' and return failure.
-     * 
+     *
      * Otherwise, it will return succeed.
      *
      * @param string $result

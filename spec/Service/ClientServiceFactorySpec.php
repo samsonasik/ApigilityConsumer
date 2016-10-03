@@ -8,7 +8,6 @@ use Kahlan\Plugin\Double;
 use Zend\ServiceManager\ServiceManager;
 
 describe('ClientServiceFactory', function () {
-    
     beforeAll(function () {
         $this->factory = new ClientServiceFactory();
     });
