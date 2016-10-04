@@ -34,7 +34,7 @@ Then, enable it :
 ```php
 // config/modules.config.php
 return [
-    'ApigilityConsumer', <-- register here
+    'ApigilityConsumer', // <-- register here
     'Application'
 ],
 ```
