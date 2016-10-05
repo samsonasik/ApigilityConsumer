@@ -1,0 +1,4 @@
+<?php
+
+use ApigilityConsumer\ConfigProvider;
+return (new ConfigProvider())->__invoke();
