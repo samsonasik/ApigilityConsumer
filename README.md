@@ -39,6 +39,11 @@ return [
 ],
 ```
 
+Using at Zend\Expressive
+------------------------
+You can use at Zend\Expressive, after set up local `config/autoload/apigility-consumer.local.php` like above, you can copy `config/expressive.local.php.dist` to `config/autoload/expressive.local.php`, and you can use it.
+
+
 Services
 --------
 
