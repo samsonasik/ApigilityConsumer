@@ -76,7 +76,7 @@ class ClientService implements ClientApiInterface
                     return $this->getClientResult($response);
                 }
                 
-                $this->httpClient->setFileUpload($file['tmp_name'], $file['name']);
+                $this->httpClient->setFileUpload($file['tmp_name'], $key);
             }
                 
             // no need to include in raw data

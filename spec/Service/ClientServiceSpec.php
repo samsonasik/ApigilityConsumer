@@ -81,7 +81,7 @@ describe('ClientService', function () {
                 
             foreach ($data['form-data']['files'] as $key => $row) {
                 expect($this->client)->toReceive('setFileUpload')->with(
-                    $row['tmp_name'], $row['name']
+                    $row['tmp_name'], $key
                 );
             }
             
@@ -128,7 +128,7 @@ describe('ClientService', function () {
                 
             foreach ($data['form-data']['files'] as $key => $row) {
                 expect($this->client)->toReceive('setFileUpload')->with(
-                    $row['tmp_name'], $row['name']
+                    $row['tmp_name'], $key
                 );
             }
             
