@@ -72,6 +72,10 @@ class ClientService implements ClientApiInterface
             unset($headers['Content-type']);
         }
         
+        if (empty($data['form-data'])) {
+            $data['form-data'] = [];
+        }
+        
         $this->httpClient->setRawBody(Json::encode($data['form-data']));
 
         if (null !== $timeout) {
