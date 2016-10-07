@@ -52,7 +52,7 @@ class ClientService implements ClientApiInterface
             
             $files = $data['form-data']['files'];
             foreach ($files as $key => $file) {
-                if (empty($file['tmp_name']) || empty($file['name'])) {
+                if (empty($file['tmp_name']) || empty($file['name']) || file_get_contents($file['tmp_name']) === false ) {
                     $response = new Response();
                     $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
                     $response->setReasonPhrase(sprintf(
