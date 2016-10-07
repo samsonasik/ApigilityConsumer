@@ -2,7 +2,7 @@
     "name": "samsonasik/apigility-consumer",
     "type": "library",
     "description": "Apigility Client API Service Consumer",
-    "keywords": ["apigility", "zf2", "zf3", "client", "consumer", "http", "oauth"],
+    "keywords": ["apigility", "zf2", "zf3", "expressive", "client", "consumer", "http", "oauth"],
     "homepage": "https://github.com/samsonasik/ApigilityConsumer",
     "license": "MIT",
     "authors": [
