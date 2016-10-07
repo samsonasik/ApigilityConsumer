@@ -8,6 +8,7 @@ use RuntimeException;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Response;
 use Zend\Json\Json;
+use Zend\Stdlib\ErrorHandler;
 
 class ClientService implements ClientApiInterface
 {
@@ -47,6 +48,47 @@ class ClientService implements ClientApiInterface
             'Accept' => 'application/json',
             'Content-type' => 'application/json'
         ];
+                
+        if (! empty($data['form-data']['files'])) {
+            
+            $files = $data['form-data']['files'];
+            $fileIsValid = true;
+            foreach ($files as $key => $file) {
+                if (empty($file['tmp_name']) || empty($file['name'])) {
+                    $fileIsValid = false;
+                } else {
+                    ErrorHandler::start();
+                    $fileContent = file_get_contents($file['tmp_name']);
+                    $error = ErrorHandler::stop();
+                    if ($fileContent === false) {
+                        $fileIsValid = false;
+                    }
+                }
+                
+                if (! $fileIsValid) {
+                    $response = new Response();
+                    $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
+                    $response->setReasonPhrase(sprintf(
+                        SpecialErrorMessage::INVALID_REQUEST_FILE['reason'],
+                        $this->apiHostUrl
+                    ));
+                    
+                    return $this->getClientResult($response);
+                }
+                
+                $this->httpClient->setFileUpload($file['tmp_name'], $file['name']);
+            }
+                
+            // no need to include in raw data
+            unset($data['form-data']['files']);
+            // remove Content-type definition
+            unset($headers['Content-type']);
+        }
+        
+        if (empty($data['form-data'])) {
+            $data['form-data'] = [];
+        }
+        
         $this->httpClient->setRawBody(Json::encode($data['form-data']));
 
         if (null !== $timeout) {

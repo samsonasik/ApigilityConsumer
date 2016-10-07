@@ -20,6 +20,11 @@ final class SpecialErrorMessage
         'code' => 400,
         'reason' => 'Data decoding error.',
     ];
+    
+    const INVALID_REQUEST_FILE = [
+        'code' => 400,
+        'reason' => 'Invalid files data, please make sure you have "tmp_name" and "name" key',
+    ];
 
     const SERVICE_UNAVAILABLE = [
         'code' => 503,
