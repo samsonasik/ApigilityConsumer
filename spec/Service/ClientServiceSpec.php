@@ -50,7 +50,7 @@ describe('ClientService', function () {
             expect($result->success)->toBe(true);
         });
         
-        it('set files data with success if has tmp_name and name key', function () {
+        it('set files data with success if has tmp_name and name key exists', function () {
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -75,7 +75,6 @@ describe('ClientService', function () {
             $headers = [
                 'Authorization' => 'Bearer Acc33sT0ken',
                 'Accept' => 'application/json',
-                'Content-type' => 'application/json'
             ];
 
             allow($this->client)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
@@ -86,9 +85,10 @@ describe('ClientService', function () {
                 );
             }
             
-            unset($data['form-data']['files']);
-            
-            expect($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
+            $processedData = $data;
+            unset($processedData['form-data']['files']);
+                        
+            expect($this->client)->toReceive('setRawBody')->with(Json::encode($processedData['form-data']));
             expect($this->client)->toReceive('setOptions')->with(['timeout' => 100]);
             expect($this->client)->toReceive('setHeaders')->with($headers);
             expect($this->client)->toReceive('setUri')->with('http://api.host.url/api');
