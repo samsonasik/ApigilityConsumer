@@ -52,6 +52,17 @@ class ClientService implements ClientApiInterface
             
             $files = $data['form-data']['files'];
             foreach ($files as $key => $file) {
+                if (empty($file['tmp_name']) || empty($file['name'])) {
+                    $response = new Response();
+                    $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
+                    $response->setReasonPhrase(sprintf(
+                        SpecialErrorMessage::INVALID_REQUEST_FILE['reason'],
+                        $this->apiHostUrl
+                    ));
+                    
+                    return $this->getClientResult($response); 
+                }
+                
                 $this->httpClient->setFileUpload($file['tmp_name'], $file['name']);
             }
                 
