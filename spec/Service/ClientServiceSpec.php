@@ -98,6 +98,53 @@ describe('ClientService', function () {
             expect($result)->toBeAnInstanceOf(ClientResult::class);
         });
         
+        it('set files data with success if has tmp_name and name key exists and does not has any other data', function () {
+            $data = [
+                'api-route-segment' => '/api',
+                'form-request-method' => 'POST',
+                
+                'token_type' => 'Bearer',
+                'access_token' => 'Acc33sT0ken',
+                'form-data' => [
+                    'files' => [
+                        'fileup1' => [
+                            'name' => 'fileup1.jpg',
+                            'tmp_name' => __DIR__ . '/xyz'
+                        ],
+                        'fileup2' => [
+                            'name' => 'fileup2.jpg',
+                            'tmp_name' => __DIR__ . '/xyz'
+                        ],
+                    ],
+                ],
+            ];
+            
+            $headers = [
+                'Authorization' => 'Bearer Acc33sT0ken',
+                'Accept' => 'application/json',
+            ];
+
+            allow($this->client)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
+                
+            foreach ($data['form-data']['files'] as $key => $row) {
+                expect($this->client)->toReceive('setFileUpload')->with(
+                    $row['tmp_name'], $row['name']
+                );
+            }
+            
+            $processedData = $data;
+            unset($processedData['form-data']['files']);
+                        
+            expect($this->client)->toReceive('setRawBody')->with(Json::encode($processedData['form-data']));
+            expect($this->client)->toReceive('setOptions')->with(['timeout' => 100]);
+            expect($this->client)->toReceive('setHeaders')->with($headers);
+            expect($this->client)->toReceive('setUri')->with('http://api.host.url/api');
+            expect($this->client)->toReceive('setMethod')->with($data['form-request-method']);
+            
+            $result = $this->service->callAPI($data, 100);
+            expect($result)->toBeAnInstanceOf(ClientResult::class);
+        });
+        
         it('return "ClientResult" instance with success = false when status code != 200', function () {
             $data = [
                 'api-route-segment' => '/api',
