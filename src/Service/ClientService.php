@@ -47,6 +47,20 @@ class ClientService implements ClientApiInterface
             'Accept' => 'application/json',
             'Content-type' => 'application/json'
         ];
+                
+        if (! empty($data['form-data']['files'])) {
+            
+            $files = $data['form-data']['files'];
+            foreach ($files as $key => $file) {
+                $this->httpClient->setFileUpload($file['tmp_name'], $file['name']);
+            }
+                
+            // no need to include in raw data
+            unset($data['form-data']['files']);
+            // remove Content-type definition
+            unset($headers['Content-type']);
+        }
+        
         $this->httpClient->setRawBody(Json::encode($data['form-data']));
 
         if (null !== $timeout) {
