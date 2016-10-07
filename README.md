@@ -51,6 +51,8 @@ Services
 
 For general Api Call, with usage:
 
+**a. General RAW Json data**
+
 ```php
 use ApigilityConsumer\Service\ClientService;
 
@@ -72,6 +74,8 @@ $data = [
 $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
 ```
+
+**b. With Upload file**
 
 You can also do upload with it to upload file to API Service. For example:
 
