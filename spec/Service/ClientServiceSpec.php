@@ -145,6 +145,63 @@ describe('ClientService', function () {
             expect($result)->toBeAnInstanceOf(ClientResult::class);
         });
         
+        it('set files data with success if has tmp_name and name key exists and does not has any other data', function () {
+            $data = [
+                'api-route-segment' => '/api',
+                'form-request-method' => 'POST',
+                
+                'token_type' => 'Bearer',
+                'access_token' => 'Acc33sT0ken',
+                'form-data' => [
+                    'files' => [
+                        'fileup2' => [
+                            'name' => 'fileup2.jpg',
+                            'tmp_name' => __DIR__ . '/xyzx'
+                        ],
+                    ],
+                ],
+            ];
+            
+            $headers = [
+                'Authorization' => 'Bearer Acc33sT0ken',
+                'Accept' => 'application/json',
+            ];
+
+            allow($this->client)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
+                        
+            $result = $this->service->callAPI($data, 100);
+            expect($result)->toBeAnInstanceOf(ClientResult::class);
+            expect($result->success)->toBe(false);
+        });
+        
+        it('set files data with success if doesnot has tmp_name or name key in per-file', function () {
+            $data = [
+                'api-route-segment' => '/api',
+                'form-request-method' => 'POST',
+                
+                'token_type' => 'Bearer',
+                'access_token' => 'Acc33sT0ken',
+                'form-data' => [
+                    'files' => [
+                        'fileup2' => [
+                            'name' => 'fileup2.jpg',
+                        ],
+                    ],
+                ],
+            ];
+            
+            $headers = [
+                'Authorization' => 'Bearer Acc33sT0ken',
+                'Accept' => 'application/json',
+            ];
+
+            allow($this->client)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
+                        
+            $result = $this->service->callAPI($data, 100);
+            expect($result)->toBeAnInstanceOf(ClientResult::class);
+            expect($result->success)->toBe(false);
+        });
+        
         it('return "ClientResult" instance with success = false when status code != 200', function () {
             $data = [
                 'api-route-segment' => '/api',
