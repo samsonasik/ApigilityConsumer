@@ -73,6 +73,16 @@ $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
 ```
 
+You can also do upload with it to upload file to API Service. For example:
+
+```php
+$data['form-data']          = $request->getPost()->toArray();
+$data['form-data']['files'] = $request->getFiles()->toArray();
+
+$timeout  = 100;
+$clientResult = $client->callAPI($data, $timeout);
+```
+
 The `$clientResult` will be a `ApigilityConsumer\Result\ClientResult` instance, with this instance, you can do:
 
 ```php
