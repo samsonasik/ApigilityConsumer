@@ -17,9 +17,9 @@ class ClientAuthServiceFactory
         $httpClient = new HttpClient();
 
         return new ClientAuthService(
-            $config['api-host-url'],
+            $config['apigility-consumer']['api-host-url'],
             $httpClient,
-            $config['oauth']
+            $config['apigility-consumer']['oauth']
         );
     }
 }

@@ -17,7 +17,7 @@ class ClientServiceFactory
         $httpClient = new HttpClient();
 
         return new ClientService(
-            $config['api-host-url'],
+            $config['apigility-consumer']['api-host-url'],
             $httpClient
         );
     }

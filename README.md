@@ -22,11 +22,13 @@ For its configuration, copy `vendor/samsonasik/apigility-consumer/config/apigili
 ```php
 
 return [
-    'api-host-url' => 'http://api.host.com',
-    'oauth' => [
-        'grant_type'    => 'password', // or client_credentials
-        'client_id'     => 'foo',
-        'client_secret' => 'foo_s3cret',
+    'apigility-consumer' => [
+        'api-host-url' => 'http://api.host.com',
+        'oauth' => [
+            'grant_type'    => 'password', // or client_credentials
+            'client_id'     => 'foo',
+            'client_secret' => 'foo_s3cret',
+        ],
     ],
 ];
 ```
