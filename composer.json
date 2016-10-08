@@ -35,5 +35,11 @@
     },
     "config": {
         "bin-dir": "bin"
+    },
+    "extra": {
+        "zf": {
+            "module": "ApigilityConsumer",
+            "config-provider": "ApigilityConsumer\\ConfigProvider"
+        }
     }
 }
