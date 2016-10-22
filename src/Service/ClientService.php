@@ -65,6 +65,7 @@ class ClientService implements ClientApiInterface
         }
         
         if ($this->authType !== null) {
+            $authConfigSelected = [];
             if (! empty($this->authConfig[$this->authType])) {
                 $authConfigSelected = $this->authConfig[$this->authType];
             }
