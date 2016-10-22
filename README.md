@@ -164,6 +164,14 @@ If you want to specify custom username and password for the Http Auth on `callAP
 use Zend\Http\Client as HttpClient;
 
 $data = [
+    'api-route-segment' => '/api', 
+    'form-request-method' => 'POST',
+
+    'form-data' => [
+        // fields that will be used as raw json to be sent
+        'foo' => 'fooValue',
+    ],
+    
     'auth' => [
         HttpClient::AUTH_BASIC => [
             'username' => 'foo',
