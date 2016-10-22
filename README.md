@@ -77,8 +77,6 @@ For general Api Call, with usage:
 ```php
 use ApigilityConsumer\Service\ClientService;
 
-$client = $serviceManager->get(ClientService::class);
-
 $data = [
     'api-route-segment' => '/api', 
     'form-request-method' => 'POST',
@@ -92,6 +90,9 @@ $data = [
     'token_type' =>  'token type if required, for example: "Bearer"',
     'access_token' => 'access token if required',
 ];
+
+$client = $serviceManager->get(ClientService::class);
+
 $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
 ```
@@ -101,8 +102,13 @@ $clientResult = $client->callAPI($data, $timeout);
 You can also do upload with it to upload file to API Service. For example:
 
 ```php
-$data['form-data']          = $request->getPost()->toArray();
-$data['form-data']['files'] = $request->getFiles()->toArray();
+use ApigilityConsumer\Service\ClientService;
+
+$data['api-route-segment']   = '/api';
+$data['form-request-method'] = 'POST';
+
+$data['form-data']           = $request->getPost()->toArray();
+$data['form-data']['files']  = $request->getFiles()->toArray();
 
 /** data['form-data'] should be containst like the following
 [
@@ -127,6 +133,8 @@ $data['form-data']['files'] = $request->getFiles()->toArray();
     ],
 ]
 */
+
+$client = $serviceManager->get(ClientService::class);
 
 $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
