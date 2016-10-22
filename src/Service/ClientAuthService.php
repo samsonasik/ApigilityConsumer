@@ -18,20 +18,20 @@ class ClientAuthService implements ClientApiInterface
     private $httpClient;
 
     /** @var array  */
-    private $authConfig;
+    private $oauthConfig;
 
     /**
      * ClientAuthService constructor.
      *
      * @param $apiHostUrl
      * @param HttpClient $httpClient
-     * @param array      $authConfig
+     * @param array      $oauthConfig
      */
-    public function __construct($apiHostUrl, HttpClient $httpClient, array $authConfig)
+    public function __construct($apiHostUrl, HttpClient $httpClient, array $oauthConfig)
     {
         $this->apiHostUrl = $apiHostUrl;
         $this->httpClient = $httpClient;
-        $this->authConfig = $authConfig;
+        $this->oauthConfig = $oauthConfig;
     }
 
     /**
@@ -52,12 +52,12 @@ class ClientAuthService implements ClientApiInterface
         ];
         
         $dataTobeSent = [
-            'grant_type' => $this->authConfig['grant_type'],
-            'client_id' => $this->authConfig['client_id'],
-            'client_secret' => $this->authConfig['client_secret'],
+            'grant_type' => $this->oauthConfig['grant_type'],
+            'client_id' => $this->oauthConfig['client_id'],
+            'client_secret' => $this->oauthConfig['client_secret'],
         ];
         
-        if ($this->authConfig['grant_type'] !== 'client_credentials') {
+        if ($this->oauthConfig['grant_type'] !== 'client_credentials') {
             $dataTobeSent += [
                 'username' => $data['form-data']['username'],
                 'password' => $data['form-data']['password'],

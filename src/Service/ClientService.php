@@ -17,11 +17,31 @@ class ClientService implements ClientApiInterface
 
     /** @var HttpClient */
     private $httpClient;
+    
+    /** @var array  */
+    private $oauthConfig;
+    
+    private $authType = null;
 
-    public function __construct($apiHostUrl, HttpClient $httpClient)
-    {
+    public function __construct(
+        $apiHostUrl,
+        HttpClient $httpClient,
+        array $authConfig
+    ) {
         $this->apiHostUrl = $apiHostUrl;
         $this->httpClient = $httpClient;
+        $this->authConfig = $authConfig;
+    }
+    
+    /**
+     * Set Auth Type if required
+     * 
+     * @param string $authType
+     */
+    public function withHttpAuthType($authType = HttpClient::AUTH_BASIC)
+    {
+        $this->authType = $authType;
+        return $this;
     }
 
     /**
@@ -42,6 +62,11 @@ class ClientService implements ClientApiInterface
             $headers = [
                 'Authorization' => $data['token_type'].' '.$data['access_token'],
             ];
+        }
+        
+        if ($this->authType !== null && ! empty($this->authConfig[$this->authType])) {
+            $authConfigSelected = $this->authConfig[$this->authType];
+            $this->httpClient->setAuth($authConfigSelected['username'], $authConfigSelected['password'], $this->authType);
         }
 
         $headers += [

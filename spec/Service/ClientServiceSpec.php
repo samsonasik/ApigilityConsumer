@@ -14,7 +14,17 @@ describe('ClientService', function () {
         $this->client = Double::instance(['extends' => Client::class]);
         $this->service = new ClientService(
             'http://api.host.url',
-            $this->client
+            $this->client,
+            [
+                Client::AUTH_BASIC => [
+                    'username' => 'foo',
+                    'password' => 'foo_s3cret'
+                ],
+                Client::AUTH_DIGEST => [
+                    'username' => 'foo',
+                    'password' => 'foo_s3cret'
+                ],
+            ]
         );
     });
     
@@ -284,6 +294,39 @@ describe('ClientService', function () {
             expect($this->client)->toReceive('setMethod')->with($data['form-request-method']);
             
             $result = $this->service->callAPI($data, 100);
+            expect($result)->toBeAnInstanceOf(ClientResult::class);
+        });
+        
+        it('call client->setAuth() when withHttpAuthType() called and exists in configuration', function () {
+            $data = [
+                'api-route-segment' => '/api',
+                'form-request-method' => 'POST',
+                
+                'token_type' => 'Bearer',
+                'access_token' => 'Acc33sT0ken',
+                'form-data' => [
+                    'foo' => 'fooValue',
+                ],
+            ];
+            
+            $headers = [
+                'Authorization' => 'Bearer Acc33sT0ken',
+                'Accept' => 'application/json',
+                'Content-type' => 'application/json'
+            ];
+
+            allow($this->client)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
+            
+            expect($this->client)->toReceive('setAuth')->with('foo', 'foo_s3cret', Client::AUTH_BASIC);    
+            expect($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
+            expect($this->client)->toReceive('setOptions')->with(['timeout' => 100]);
+            expect($this->client)->toReceive('setHeaders')->with($headers);
+            expect($this->client)->toReceive('setUri')->with('http://api.host.url/api');
+            expect($this->client)->toReceive('setMethod')->with($data['form-request-method']);
+            
+            $result = $this->service
+                            ->withHttpAuthType(Client::AUTH_BASIC)
+                            ->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
         });
         
