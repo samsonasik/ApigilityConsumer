@@ -76,7 +76,6 @@ For general Api Call, with usage:
 
 ```php
 use ApigilityConsumer\Service\ClientService;
-use Zend\Http\Client as HttpClient;
 
 $client = $serviceManager->get(ClientService::class);
 
@@ -148,12 +147,15 @@ if (! $clientResult->success) {
 if api call require authentication for basic or digest, you can apply `->withHttpAuthType()`:
 
 ```php
+use Zend\Http\Client as HttpClient;
+
 $clientResult = $client->withHttpAuthType(HttpClient::AUTH_BASIC)
                        ->callAPI($data, $timeout);
 // OR
 $clientResult = $client->withHttpAuthType(HttpClient::AUTH_DIGEST)
                        ->callAPI($data, $timeout);
 ```
+
 that will read of specified basic or digest auth config we defined at  config/autoload/apigility-consumer.local.php.
 
 **2. ApigilityConsumer\Service\ClientAuthService**

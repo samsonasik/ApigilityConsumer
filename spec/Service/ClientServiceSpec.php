@@ -5,22 +5,22 @@ namespace ApigilityConsumer\Spec\Service;
 use ApigilityConsumer\Result\ClientResult;
 use ApigilityConsumer\Service\ClientService;
 use Kahlan\Plugin\Double;
-use Zend\Http\Client;
+use Zend\Http\Client as HttpClient;
 use Zend\Http\Response;
 use Zend\Json\Json;
 
 describe('ClientService', function () {
     beforeAll(function () {
-        $this->client = Double::instance(['extends' => Client::class]);
+        $this->client = Double::instance(['extends' => HttpClient::class]);
         $this->service = new ClientService(
             'http://api.host.url',
             $this->client,
             [
-                Client::AUTH_BASIC => [
+                HttpClient::AUTH_BASIC => [
                     'username' => 'foo',
                     'password' => 'foo_s3cret'
                 ],
-                Client::AUTH_DIGEST => [
+                HttpClient::AUTH_DIGEST => [
                     'username' => 'foo',
                     'password' => 'foo_s3cret'
                 ],
@@ -317,7 +317,7 @@ describe('ClientService', function () {
 
             allow($this->client)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
             
-            expect($this->client)->toReceive('setAuth')->with('foo', 'foo_s3cret', Client::AUTH_BASIC);    
+            expect($this->client)->toReceive('setAuth')->with('foo', 'foo_s3cret', HttpClient::AUTH_BASIC);    
             expect($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
             expect($this->client)->toReceive('setOptions')->with(['timeout' => 100]);
             expect($this->client)->toReceive('setHeaders')->with($headers);
@@ -325,7 +325,7 @@ describe('ClientService', function () {
             expect($this->client)->toReceive('setMethod')->with($data['form-request-method']);
             
             $result = $this->service
-                            ->withHttpAuthType(Client::AUTH_BASIC)
+                            ->withHttpAuthType(HttpClient::AUTH_BASIC)
                             ->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
         });
