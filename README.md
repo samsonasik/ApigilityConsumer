@@ -156,7 +156,33 @@ $clientResult = $client->withHttpAuthType(HttpClient::AUTH_DIGEST)
                        ->callAPI($data, $timeout);
 ```
 
-that will read of specified basic or digest auth config we defined at  config/autoload/apigility-consumer.local.php.
+that will read of specified basic or digest auth config we defined at `config/autoload/apigility-consumer.local.php`.
+
+If you want to specify custom username and password for the Http Auth, you can specify via `$data`:
+
+```php
+use Zend\Http\Client as HttpClient;
+
+$data = [
+    'auth' => [
+        HttpClient::AUTH_BASIC => [
+            'username' => 'foo',
+            'password' => 'foo_s3cret'
+        ],
+        
+        HttpClient::AUTH_DIGEST => [
+            'username' => 'foo',
+            'password' => 'foo_s3cret'
+        ],
+    ],
+];
+
+$clientResult = $client->withHttpAuthType(HttpClient::AUTH_BASIC)
+                       ->callAPI($data, $timeout);
+// OR
+$clientResult = $client->withHttpAuthType(HttpClient::AUTH_DIGEST)
+                       ->callAPI($data, $timeout);
+```
 
 **2. ApigilityConsumer\Service\ClientAuthService**
 

@@ -64,9 +64,18 @@ class ClientService implements ClientApiInterface
             ];
         }
         
-        if ($this->authType !== null && ! empty($this->authConfig[$this->authType])) {
-            $authConfigSelected = $this->authConfig[$this->authType];
-            $this->httpClient->setAuth($authConfigSelected['username'], $authConfigSelected['password'], $this->authType);
+        if ($this->authType !== null) {
+            if (! empty($this->authConfig[$this->authType])) {
+                $authConfigSelected = $this->authConfig[$this->authType];
+            }
+            
+            if (! empty($data['auth'][$this->authType])) {
+                $authConfigSelected = $data['auth'][$this->authType];
+            }
+            
+            if (! empty($authConfigSelected['username']) && ! empty($authConfigSelected['password'])) {
+                $this->httpClient->setAuth($authConfigSelected['username'], $authConfigSelected['password'], $this->authType);
+            }
         }
 
         $headers += [
