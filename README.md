@@ -158,7 +158,7 @@ $clientResult = $client->withHttpAuthType(HttpClient::AUTH_DIGEST)
 
 that will read of specified basic or digest auth config we defined at `config/autoload/apigility-consumer.local.php`.
 
-If you want to specify custom username and password for the Http Auth, you can specify via `$data`:
+If you want to specify custom username and password for the Http Auth on `callAPI()` call, you can specify via `$data`:
 
 ```php
 use Zend\Http\Client as HttpClient;
