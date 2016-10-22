@@ -1,12 +1,31 @@
 <?php
 
+use Zend\Http\Client as HttpClient;
+
 return [
     'apigility-consumer' => [
         'api-host-url' => 'http://api.host.com',
+        
+        // for oauth
         'oauth' => [
-            'grant_type'    => 'password', // can be client_credentials also
+            'grant_type'    => 'password', // or client_credentials
             'client_id'     => 'foo',
             'client_secret' => 'foo_s3cret',
+        ],
+        
+        // for basic and or digest
+        'auth' => [
+            
+            HttpClient::AUTH_BASIC => [
+                'username' => 'foo',
+                'password' => 'foo_s3cret'
+            ],
+            
+            HttpClient::AUTH_DIGEST => [
+                'username' => 'foo',
+                'password' => 'foo_s3cret'
+            ],
+            
         ],
     ],
 ];

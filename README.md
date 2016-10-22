@@ -20,14 +20,32 @@ composer require samsonasik/apigility-consumer
 For its configuration, copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host and oauth settings:
 
 ```php
+use Zend\Http\Client as HttpClient;
 
 return [
     'apigility-consumer' => [
         'api-host-url' => 'http://api.host.com',
+        
+        // for oauth
         'oauth' => [
             'grant_type'    => 'password', // or client_credentials
             'client_id'     => 'foo',
             'client_secret' => 'foo_s3cret',
+        ],
+        
+        // for basic and or digest
+        'auth' => [
+            
+            HttpClient::AUTH_BASIC => [
+                'username' => 'foo',
+                'password' => 'foo_s3cret'
+            ],
+            
+            HttpClient::AUTH_DIGEST => [
+                'username' => 'foo',
+                'password' => 'foo_s3cret'
+            ],
+            
         ],
     ],
 ];
@@ -123,6 +141,22 @@ if (! $clientResult->success) {
     var_dump($clientResult->data);
 }
 ```
+
+**With include Http (basic or digest) Authentication**
+
+if api call require authentication for basic or digest, you can apply `->withHttpAuthType()`:
+
+```php
+use Zend\Http\Client as HttpClient;
+
+$clientResult = $client->withHttpAuthType(HttpClient::AUTH_BASIC)
+                       ->callAPI($data, $timeout);
+// OR
+$clientResult = $client->withHttpAuthType(HttpClient::AUTH_DIGEST)
+                       ->callAPI($data, $timeout);
+```
+
+that will read of specified basic or digest auth config we defined at  config/autoload/apigility-consumer.local.php.
 
 **2. ApigilityConsumer\Service\ClientAuthService**
 
