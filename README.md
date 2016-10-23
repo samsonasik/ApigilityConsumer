@@ -212,7 +212,8 @@ $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
 ```
 
-**Client Result of callAPI() returned usage**
+Client Result of callAPI() returned usage
+-----------------------------------------
 
 The `$clientResult` will be a `ApigilityConsumer\Result\ClientAuthResult` instance, with this instance, you can do:
 
