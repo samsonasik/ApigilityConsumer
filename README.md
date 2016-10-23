@@ -17,7 +17,7 @@ Installation of this module uses [getcomposer.org](composer).
 composer require samsonasik/apigility-consumer
 ```
 
-For its configuration, copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host and oauth settings:
+For its configuration, copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host url (required), oauth, and/or http auth settings:
 
 ```php
 use Zend\Http\Client as HttpClient;
