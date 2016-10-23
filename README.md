@@ -140,16 +140,6 @@ $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
 ```
 
-The `$clientResult` will be a `ApigilityConsumer\Result\ClientResult` instance, with this instance, you can do:
-
-```php
-if (! $clientResult->success) {
-    var_dump($clientResult::$messages);
-} else {
-    var_dump($clientResult->data);
-}
-```
-
 **With include Http (basic or digest) Authentication**
 
 if api call require authentication for basic or digest, you can apply `->withHttpAuthType()`:
@@ -222,9 +212,14 @@ $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
 ```
 
+**Client Result of callAPI() returned usage**
+
 The `$clientResult` will be a `ApigilityConsumer\Result\ClientAuthResult` instance, with this instance, you can do:
 
 ```php
+//...
+$clientResult = $client->callAPI($data, $timeout);
+
 if (! $clientResult->success) {
     var_dump($clientResult::$messages);
 } else {
