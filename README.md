@@ -215,7 +215,7 @@ $clientResult = $client->callAPI($data, $timeout);
 Client Result of callAPI() returned usage
 -----------------------------------------
 
-The `$clientResult` will be a `ApigilityConsumer\Result\ClientAuthResult` instance, with this instance, you can do:
+The `$clientResult` will be a `ApigilityConsumer\Result\ClientResult` or `ApigilityConsumer\Result\ClientAuthResult` instance, with this instance, you can do:
 
 ```php
 //...
