@@ -14,7 +14,7 @@ class ClientServiceFactory
     public function __invoke($container)
     {
         $config     = $container->get('config');
-        $httpClient = new HttpClient();
+        $httpClient = new HttpClient(null, ['adapter' => \Zend\Http\Client\Adapter\Curl::class]);
         $authConfig = (!empty($config['apigility-consumer']['auth'])) 
             ? $config['apigility-consumer']['auth']
             : []; 
