@@ -3,7 +3,6 @@
 namespace ApigilityConsumer\Service;
 
 use Zend\Http\Client as HttpClient;
-use Zend\Http\Client\Adapter\Curl;
 
 /**
  * Factory to handle ClientService creation.
@@ -15,7 +14,7 @@ class ClientServiceFactory
     public function __invoke($container)
     {
         $config     = $container->get('config');
-        $httpClient = new HttpClient(null, ['adapter' => Curl::class]);
+        $httpClient = new HttpClient();
         $authConfig = (!empty($config['apigility-consumer']['auth']))
             ? $config['apigility-consumer']['auth']
             : [];

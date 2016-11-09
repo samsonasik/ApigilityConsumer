@@ -6,6 +6,7 @@ use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientResult;
 use RuntimeException;
 use Zend\Http\Client as HttpClient;
+use Zend\Http\Client\Adapter\Curl;
 use Zend\Http\Response;
 use Zend\Json\Json;
 use Zend\Stdlib\ErrorHandler;
@@ -17,10 +18,10 @@ class ClientService implements ClientApiInterface
 
     /** @var HttpClient */
     private $httpClient;
-    
+
     /** @var array  */
     private $oauthConfig;
-    
+
     private $authType = null;
 
     public function __construct(
@@ -32,10 +33,10 @@ class ClientService implements ClientApiInterface
         $this->httpClient = $httpClient;
         $this->authConfig = $authConfig;
     }
-    
+
     /**
      * Set Auth Type if required
-     * 
+     *
      * @param string $authType
      */
     public function withHttpAuthType($authType = HttpClient::AUTH_BASIC)
@@ -63,18 +64,21 @@ class ClientService implements ClientApiInterface
                 'Authorization' => $data['token_type'].' '.$data['access_token'],
             ];
         }
-        
+
         if ($this->authType !== null) {
             $authConfigSelected = [];
             if (! empty($this->authConfig[$this->authType])) {
                 $authConfigSelected = $this->authConfig[$this->authType];
             }
-            
+
             if (! empty($data['auth'][$this->authType])) {
                 $authConfigSelected = $data['auth'][$this->authType];
             }
-            
+
             if (! empty($authConfigSelected['username']) && ! empty($authConfigSelected['password'])) {
+                if ($this->authType === HttpClient::AUTH_DIGEST) {
+                    $this->httpClient->setAdapter(Curl::class);
+                }
                 $this->httpClient->setAuth($authConfigSelected['username'], $authConfigSelected['password'], $this->authType);
             }
         }
@@ -83,9 +87,9 @@ class ClientService implements ClientApiInterface
             'Accept' => 'application/json',
             'Content-type' => 'application/json'
         ];
-                
+
         if (! empty($data['form-data']['files'])) {
-            
+
             $files = $data['form-data']['files'];
             $fileIsValid = true;
             foreach ($files as $key => $file) {
@@ -99,7 +103,7 @@ class ClientService implements ClientApiInterface
                         $fileIsValid = false;
                     }
                 }
-                
+
                 if (! $fileIsValid) {
                     $response = new Response();
                     $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
@@ -107,23 +111,23 @@ class ClientService implements ClientApiInterface
                         SpecialErrorMessage::INVALID_REQUEST_FILE['reason'],
                         $this->apiHostUrl
                     ));
-                    
+
                     return $this->getClientResult($response);
                 }
-                
+
                 $this->httpClient->setFileUpload($file['tmp_name'], $key);
             }
-                
+
             // no need to include in raw data
             unset($data['form-data']['files']);
             // remove Content-type definition
             unset($headers['Content-type']);
         }
-        
+
         if (empty($data['form-data'])) {
             $data['form-data'] = [];
         }
-        
+
         $this->httpClient->setRawBody(Json::encode($data['form-data']));
 
         if (null !== $timeout) {
