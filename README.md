@@ -17,7 +17,7 @@ Installation of this module uses [getcomposer.org](composer).
 composer require samsonasik/apigility-consumer
 ```
 
-For its configuration, copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host and oauth settings:
+For its configuration, copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host url (required), oauth, and/or http auth settings:
 
 ```php
 use Zend\Http\Client as HttpClient;
@@ -77,8 +77,6 @@ For general Api Call, with usage:
 ```php
 use ApigilityConsumer\Service\ClientService;
 
-$client = $serviceManager->get(ClientService::class);
-
 $data = [
     'api-route-segment' => '/api', 
     'form-request-method' => 'POST',
@@ -92,6 +90,9 @@ $data = [
     'token_type' =>  'token type if required, for example: "Bearer"',
     'access_token' => 'access token if required',
 ];
+
+$client = $serviceManager->get(ClientService::class);
+
 $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
 ```
@@ -101,8 +102,13 @@ $clientResult = $client->callAPI($data, $timeout);
 You can also do upload with it to upload file to API Service. For example:
 
 ```php
-$data['form-data']          = $request->getPost()->toArray();
-$data['form-data']['files'] = $request->getFiles()->toArray();
+use ApigilityConsumer\Service\ClientService;
+
+$data['api-route-segment']   = '/api';
+$data['form-request-method'] = 'POST';
+
+$data['form-data']           = $request->getPost()->toArray();
+$data['form-data']['files']  = $request->getFiles()->toArray();
 
 /** data['form-data'] should be containst like the following
 [
@@ -128,18 +134,10 @@ $data['form-data']['files'] = $request->getFiles()->toArray();
 ]
 */
 
+$client = $serviceManager->get(ClientService::class);
+
 $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
-```
-
-The `$clientResult` will be a `ApigilityConsumer\Result\ClientResult` instance, with this instance, you can do:
-
-```php
-if (! $clientResult->success) {
-    var_dump($clientResult::$messages);
-} else {
-    var_dump($clientResult->data);
-}
 ```
 
 **With include Http (basic or digest) Authentication**
@@ -164,6 +162,14 @@ If you want to specify custom username and password for the Http Auth on `callAP
 use Zend\Http\Client as HttpClient;
 
 $data = [
+    'api-route-segment' => '/api', 
+    'form-request-method' => 'POST',
+
+    'form-data' => [
+        // fields that will be used as raw json to be sent
+        'foo' => 'fooValue',
+    ],
+    
     'auth' => [
         HttpClient::AUTH_BASIC => [
             'username' => 'foo',
@@ -206,9 +212,15 @@ $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
 ```
 
-The `$clientResult` will be a `ApigilityConsumer\Result\ClientAuthResult` instance, with this instance, you can do:
+Client Result of callAPI() returned usage
+-----------------------------------------
+
+The `$clientResult` will be a `ApigilityConsumer\Result\ClientResult` or `ApigilityConsumer\Result\ClientAuthResult` instance, with this instance, you can do:
 
 ```php
+//...
+$clientResult = $client->callAPI($data, $timeout);
+
 if (! $clientResult->success) {
     var_dump($clientResult::$messages);
 } else {

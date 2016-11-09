@@ -15,9 +15,9 @@ class ClientServiceFactory
     {
         $config     = $container->get('config');
         $httpClient = new HttpClient();
-        $authConfig = (!empty($config['apigility-consumer']['auth'])) 
+        $authConfig = (!empty($config['apigility-consumer']['auth']))
             ? $config['apigility-consumer']['auth']
-            : []; 
+            : [];
 
         return new ClientService(
             $config['apigility-consumer']['api-host-url'],
