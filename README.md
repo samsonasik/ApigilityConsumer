@@ -11,7 +11,7 @@ ZF2 and ZF3 Apigility Client module to consume API Services.
 Installation
 ------------
 
-Installation of this module uses [getcomposer.org](composer).
+Installation of this module uses [composer](https://getcomposer.org/).
 
 ```sh
 composer require samsonasik/apigility-consumer
