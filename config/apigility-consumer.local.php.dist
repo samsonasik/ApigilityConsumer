@@ -13,6 +13,14 @@ return [
             'client_secret' => 'foo_s3cret',
         ],
         
+        // adapter options
+        'api-http-adapter-options' => [
+            'curloptions' => array(
+                CURLOPT_CAPATH => __DIR__ . '/../../data/',
+                CURLOPT_SSL_VERIFYPEER => true
+            )
+        ],
+        
         // for basic and or digest
         'auth' => [
             

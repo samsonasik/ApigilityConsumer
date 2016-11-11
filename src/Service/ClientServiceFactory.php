@@ -14,7 +14,11 @@ class ClientServiceFactory
     public function __invoke($container)
     {
         $config     = $container->get('config');
-        $httpClient = new HttpClient();
+        $httpClient = new HttpClient(
+            null,
+            !empty($config['apigility-consumer']['api-http-adapter-options']) ?
+                $config['apigility-consumer']['api-http-adapter-options'] : null
+        );
         $authConfig = (!empty($config['apigility-consumer']['auth']))
             ? $config['apigility-consumer']['auth']
             : [];
