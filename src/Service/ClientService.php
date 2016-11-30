@@ -24,6 +24,13 @@ class ClientService implements ClientApiInterface
 
     private $authType = null;
 
+    /**
+     * ClientService constructor.
+     *
+     * @param  string      $apiHostUrl
+     * @param  HttpClient  $httpClient
+     * @param  array       $authConfig
+     */
     public function __construct(
         $apiHostUrl,
         HttpClient $httpClient,
