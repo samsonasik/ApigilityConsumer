@@ -5,8 +5,8 @@ namespace ApigilityConsumer\Spec\Service;
 use ApigilityConsumer\Result\ClientResult;
 use ApigilityConsumer\Service\ClientService;
 use Kahlan\Plugin\Double;
-use Zend\Http\Client as HttpClient;
 use Zend\Http\Client\Adapter\Curl;
+use Zend\Http\Client as HttpClient;
 use Zend\Http\Response;
 use Zend\Json\Json;
 
