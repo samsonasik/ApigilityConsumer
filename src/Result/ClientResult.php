@@ -17,7 +17,7 @@ class ClientResult implements ResultInterface
 
     /** @var  array */
     public $data;
-    
+
     /**
      * use static modifier on purpose, to make it usable when assign
      * ClientResult::$messages from outside (eg: on ApigilityConsumer\Service\ClientService::getClientResult()),
@@ -85,7 +85,7 @@ class ClientResult implements ResultInterface
         $self = new self();
         $self->success = true;
         $self->data    = $result;
-        
+
         return $self;
     }
 
@@ -102,9 +102,7 @@ class ClientResult implements ResultInterface
         $self->success = false;
 
         if (isset($result['validation_messages']['http'])) {
-            $self::$messages = (isset($result['validation_messages']))
-                ? $result['validation_messages']
-                : [];
+            $self::$messages = $result['validation_messages'];
         } else {
             $self::$messages = (isset($result['validation_messages']))
                 ? ['validation_messages' => $result['validation_messages']]
