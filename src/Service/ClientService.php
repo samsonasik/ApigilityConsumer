@@ -45,10 +45,23 @@ class ClientService implements ClientApiInterface
      * Set Auth Type if required
      *
      * @param string $authType
+     * @return self
      */
     public function withHttpAuthType($authType = HttpClient::AUTH_BASIC)
     {
         $this->authType = $authType;
+        return $this;
+    }
+
+    /**
+     * Reset Auth Type back to null after assigned,
+     * after it called, call ->callAPI() will not uses Http Authentication.
+     *
+     * @return self
+     */
+    public function resetHttpAuthType()
+    {
+        $this->authType = null;
         return $this;
     }
 

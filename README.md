@@ -6,7 +6,7 @@ ApigilityConsumer
 [![Coverage Status](https://coveralls.io/repos/github/samsonasik/ApigilityConsumer/badge.svg?branch=master)](https://coveralls.io/github/samsonasik/ApigilityConsumer?branch=master)
 [![Downloads](https://img.shields.io/packagist/dt/samsonasik/apigility-consumer.svg?style=flat-square)](https://packagist.org/packages/samsonasik/apigility-consumer)
 
-ZF2 and ZF3 Apigility Client module to consume API Services. 
+ZF2 and ZF3 Apigility Client module to consume API Services.
 
 Installation
 ------------
@@ -25,27 +25,27 @@ use Zend\Http\Client as HttpClient;
 return [
     'apigility-consumer' => [
         'api-host-url' => 'http://api.host.com',
-        
+
         // for oauth
         'oauth' => [
             'grant_type'    => 'password', // or client_credentials
             'client_id'     => 'foo',
             'client_secret' => 'foo_s3cret',
         ],
-        
+
         // for basic and or digest
         'auth' => [
-            
+
             HttpClient::AUTH_BASIC => [
                 'username' => 'foo',
                 'password' => 'foo_s3cret'
             ],
-            
+
             HttpClient::AUTH_DIGEST => [
                 'username' => 'foo',
                 'password' => 'foo_s3cret'
             ],
-            
+
         ],
     ],
 ];
@@ -78,14 +78,14 @@ For general Api Call, with usage:
 use ApigilityConsumer\Service\ClientService;
 
 $data = [
-    'api-route-segment' => '/api', 
+    'api-route-segment' => '/api',
     'form-request-method' => 'POST',
-    
+
     'form-data' => [
         // fields that will be used as raw json to be sent
         'foo' => 'fooValue',
     ],
-    
+
     // token type and access token if required
     'token_type' =>  'token type if required, for example: "Bearer"',
     'access_token' => 'access token if required',
@@ -114,7 +114,7 @@ $data['form-data']['files']  = $request->getFiles()->toArray();
 [
     'regular_key1' => 'regular_keyValue1',
     'regular_key2' => 'regular_keyValue2',
-    
+
     'files' => [
         'file1' => [
             'type' => 'text/csv',
@@ -162,20 +162,20 @@ If you want to specify custom username and password for the Http Auth on `callAP
 use Zend\Http\Client as HttpClient;
 
 $data = [
-    'api-route-segment' => '/api', 
+    'api-route-segment' => '/api',
     'form-request-method' => 'POST',
 
     'form-data' => [
         // fields that will be used as raw json to be sent
         'foo' => 'fooValue',
     ],
-    
+
     'auth' => [
         HttpClient::AUTH_BASIC => [
             'username' => 'foo',
             'password' => 'foo_s3cret'
         ],
-        
+
         HttpClient::AUTH_DIGEST => [
             'username' => 'foo',
             'password' => 'foo_s3cret'
@@ -188,6 +188,21 @@ $clientResult = $client->withHttpAuthType(HttpClient::AUTH_BASIC)
 // OR
 $clientResult = $client->withHttpAuthType(HttpClient::AUTH_DIGEST)
                        ->callAPI($data, $timeout);
+```
+
+**Reset Http Auth Type**
+
+After one or both `HttpClient::AUTH_BASIC` or `HttpClient::AUTH_DIGEST` used, we can re-use the client service and use back normal API Call without Http Authentication with apply `->resetHttpAuthType()`:
+
+```php
+$clientResultWithBasicAuth   = $client->withHttpAuthType(HttpClient::AUTH_BASIC)
+                                      ->callAPI($data1, $timeout);
+$clientResultWithDigestAuth  = $client->withHttpAuthType(HttpClient::AUTH_DIGEST)
+                                      ->callAPI($data2, $timeout);
+
+// RESET IT TO NORMAL WITHOUT HTTP AUTHENTICATION
+$clientResultWithoutHttpAuth = $client->resetHttpAuthType()
+                                      ->callAPI($data3, $timeout);
 ```
 
 **2. ApigilityConsumer\Service\ClientAuthService**
@@ -204,8 +219,8 @@ $data = [
     'form-request-method' => 'POST',
 
     'form-data' => [
-        'username' => 'foo', // not required if grant_type config = 'client_credentials' 
-        'password' => '123', // not required if grant_type config = 'client_credentials' 
+        'username' => 'foo', // not required if grant_type config = 'client_credentials'
+        'password' => '123', // not required if grant_type config = 'client_credentials'
     ],
 ];
 $timeout  = 100;
@@ -231,4 +246,3 @@ if (! $clientResult->success) {
 Contributing
 ------------
 Contributions are very welcome. Please read [CONTRIBUTING.md](https://github.com/samsonasik/ApigilityConsumer/blob/master/CONTRIBUTING.md)
-

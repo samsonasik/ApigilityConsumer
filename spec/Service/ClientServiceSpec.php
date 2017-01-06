@@ -5,6 +5,7 @@ namespace ApigilityConsumer\Spec\Service;
 use ApigilityConsumer\Result\ClientResult;
 use ApigilityConsumer\Service\ClientService;
 use Kahlan\Plugin\Double;
+use ReflectionProperty;
 use Zend\Http\Client\Adapter\Curl;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Response;
@@ -27,6 +28,22 @@ describe('ClientService', function () {
                 ],
             ]
         );
+    });
+
+    describe('->resetHttpAuthType()', function () {
+
+        it('reset $authType property back to null', function () {
+
+            $service = $this->service->withHttpAuthType(HttpClient::AUTH_BASIC);
+            $r = new ReflectionProperty($service, 'authType');
+            $r->setAccessible(true);
+            expect($r->getValue($service))->toBe(HttpClient::AUTH_BASIC);
+
+            $service->resetHttpAuthType();
+            expect($r->getValue($service))->toBe(null);
+
+        });
+
     });
 
     describe('->callAPI', function () {
