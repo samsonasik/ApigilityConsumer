@@ -187,16 +187,16 @@ class ClientService implements ClientApiInterface
     private function getClientResult(Response $response)
     {
         $messages = ClientResult::$messages;
-
-        if ($response->getBody() === '') {
+        
+        $statusCode = $response->getStatusCode();
+        if ($statusCode === 200 && $response->getBody() === '') {
             $messages = [
                 'http' => [
-                    SpecialErrorMessage::INVALID_REQUEST['code'] => SpecialErrorMessage::INVALID_REQUEST['reason'],
+                    204 => 'No Content',
                 ],
             ];
         }
 
-        $statusCode = $response->getStatusCode();
         if ($statusCode !== 200 && $statusCode !== 422) { // 422 is Unprocessable Entity, will be handled in ClientResult
             $messages = [
                 'http' => [

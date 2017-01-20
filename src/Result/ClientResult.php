@@ -27,6 +27,11 @@ class ClientResult implements ResultInterface
      */
     public static $messages = [];
 
+    // avoid class instantiation
+    private function __construct()
+    {
+    }
+
     /**
      * Apply result with return its class as value object
      * when succeed, it will return static::fromSucceed()

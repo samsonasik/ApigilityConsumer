@@ -78,6 +78,37 @@ describe('ClientService', function () {
             expect($result->success)->toBe(true);
         });
 
+        it('return "ClientResult" instance with success = true when status code = 200 and body = ""', function () {
+            $data = [
+                'api-route-segment' => '/api',
+                'form-request-method' => 'POST',
+
+                'form-data' => [
+                    'foo' => 'fooValue',
+                ],
+            ];
+
+            $headers = [
+                'Accept' => 'application/json',
+                'Content-type' => 'application/json'
+            ];
+
+            $response = Double::instance(['extends' => Response::class]);
+            allow($response)->toReceive('getStatusCode')->andReturn(200);
+            allow($response)->toReceive('getBody')->andReturn('');
+
+            allow($this->client)->toReceive('send')->andReturn($response); // Because we want to change the original behavior
+
+            expect($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
+            expect($this->client)->toReceive('setHeaders')->with($headers);
+            expect($this->client)->toReceive('setUri')->with('http://api.host.url/api');
+            expect($this->client)->toReceive('setMethod')->with($data['form-request-method']);
+
+            $result = $this->service->callAPI($data);
+            expect($result)->toBeAnInstanceOf(ClientResult::class);
+            expect($result->success)->toBe(false);
+        });
+
         it('set files data with success if has tmp_name and name key exists', function () {
             $data = [
                 'api-route-segment' => '/api',
