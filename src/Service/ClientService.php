@@ -20,7 +20,7 @@ class ClientService implements ClientApiInterface
     private $httpClient;
 
     /** @var array  */
-    private $oauthConfig;
+    private $authConfig;
 
     private $authType = null;
 
@@ -187,7 +187,7 @@ class ClientService implements ClientApiInterface
     private function getClientResult(Response $response)
     {
         $messages = ClientResult::$messages;
-        
+
         $statusCode = $response->getStatusCode();
         if ($statusCode === 200 && $response->getBody() === '') {
             $messages = [
