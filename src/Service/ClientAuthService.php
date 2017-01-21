@@ -50,13 +50,13 @@ class ClientAuthService implements ClientApiInterface
             'Accept' => 'application/json',
             'Content-type' => 'application/json',
         ];
-        
+
         $dataTobeSent = [
             'grant_type' => $this->oauthConfig['grant_type'],
             'client_id' => $this->oauthConfig['client_id'],
             'client_secret' => $this->oauthConfig['client_secret'],
         ];
-        
+
         if ($this->oauthConfig['grant_type'] !== 'client_credentials') {
             $dataTobeSent += [
                 'username' => $data['form-data']['username'],
@@ -113,7 +113,7 @@ class ClientAuthService implements ClientApiInterface
         if ($statusCode === 400 || $statusCode === 401) {
             ClientAuthResult::$messages = [
                 'http' => [
-                    $response->getStatusCode() => Json::decode($response->getBody(), true)['detail'],
+                    $response->getStatusCode() => Json::decode($response->getBody(), 1)['detail'],
                 ],
             ];
         }
