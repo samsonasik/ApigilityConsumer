@@ -71,8 +71,6 @@ Services
 
 **1. ApigilityConsumer\Service\ClientService**
 
-<details>
-<summary>Click to expand</summary>
 For general Api Call, with usage:
 
 **a. General RAW Json data**
@@ -207,12 +205,9 @@ $clientResultWithDigestAuth  = $client->withHttpAuthType(HttpClient::AUTH_DIGEST
 $clientResultWithoutHttpAuth = $client->resetHttpAuthType()
                                       ->callAPI($data3, $timeout);
 ```
-</details>
 
 **2. ApigilityConsumer\Service\ClientAuthService**
 
-<details>
-<summary>Click to expand</summary>
 It used for `oauth`, with usage:
 
 ```php
@@ -232,7 +227,6 @@ $data = [
 $timeout  = 100;
 $clientResult = $client->callAPI($data, $timeout);
 ```
-</details>
 
 Client Result of callAPI() returned usage
 -----------------------------------------
