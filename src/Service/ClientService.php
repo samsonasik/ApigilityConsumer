@@ -22,7 +22,9 @@ class ClientService implements ClientApiInterface
     /** @var array  */
     private $authConfig;
 
+    private $client   = null;
     private $authType = null;
+
 
     /**
      * ClientService constructor.
@@ -39,6 +41,16 @@ class ClientService implements ClientApiInterface
         $this->apiHostUrl = $apiHostUrl;
         $this->httpClient = $httpClient;
         $this->authConfig = $authConfig;
+    }
+
+    /**
+     * @param  string     $client
+     * @return self
+     */
+    public function withClient($client = null)
+    {
+        $this->client = $client;
+        return $this;
     }
 
     /**
@@ -86,6 +98,11 @@ class ClientService implements ClientApiInterface
         }
 
         if ($this->authType !== null) {
+
+            if ($this->client !== null) {
+                $this->authConfig = $this->authConfig['clients'][$this->client];
+            }
+
             $authConfigSelected = [];
             if (! empty($this->authConfig[$this->authType])) {
                 $authConfigSelected = $this->authConfig[$this->authType];
