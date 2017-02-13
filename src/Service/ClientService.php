@@ -100,6 +100,10 @@ class ClientService implements ClientApiInterface
 
         if ($this->authType !== null) {
 
+            if (! in_array($this->authType, [HttpClient::AUTH_BASIC, HttpClient::AUTH_DIGEST])) {
+                throw InvalidArgumentException('authType selected should be a ' . HttpClient::AUTH_BASIC . ' or ' . HttpClient::AUTH_DIGEST);
+            }
+
             if ($this->client !== null) {
                 if (! isset($this->authConfig['clients'][$this->client])) {
                     throw InvalidArgumentException('client selected not found in the "clients" config');
@@ -110,9 +114,6 @@ class ClientService implements ClientApiInterface
 
             $authConfigSelected = [];
             if (! empty($this->authConfig[$this->authType])) {
-                if (! in_array($this->authType, [HttpClient::AUTH_BASIC, HttpClient::AUTH_DIGEST])) {
-                    throw InvalidArgumentException('authType selected should be a ' . HttpClient::AUTH_BASIC . ' or ' . HttpClient::AUTH_DIGEST);
-                }
                 $authConfigSelected = $this->authConfig[$this->authType];
             }
 
@@ -124,6 +125,7 @@ class ClientService implements ClientApiInterface
                 if ($this->authType === HttpClient::AUTH_DIGEST) {
                     $this->httpClient->setAdapter(Curl::class);
                 }
+
                 $this->httpClient->setAuth($authConfigSelected['username'], $authConfigSelected['password'], $this->authType);
             }
         }
