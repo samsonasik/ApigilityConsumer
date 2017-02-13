@@ -46,10 +46,15 @@ class ClientService implements ClientApiInterface
 
     /**
      * @param  string     $client
+     * @throws InvalidArgumentException
      * @return self
      */
     public function withClient($client = null)
     {
+        if (! isset($this->authConfig['clients'][$client])) {
+            throw new InvalidArgumentException('client selected not found in the "clients" config');
+        }
+
         $this->client = $client;
         return $this;
     }
@@ -58,23 +63,40 @@ class ClientService implements ClientApiInterface
      * Set Auth Type if required
      *
      * @param string $authType
+     * @throws InvalidArgumentException
      * @return self
      */
     public function withHttpAuthType($authType = HttpClient::AUTH_BASIC)
     {
+        if (! in_array($authType, [HttpClient::AUTH_BASIC, HttpClient::AUTH_DIGEST])) {
+            throw new InvalidArgumentException('authType selected should be a ' . HttpClient::AUTH_BASIC . ' or ' . HttpClient::AUTH_DIGEST);
+        }
+
         $this->authType = $authType;
         return $this;
     }
 
     /**
-     * Reset Auth Type back to null after assigned,
-     * after it called, call ->callAPI() will not uses Http Authentication.
+     * Reset Auth Type back to null,
+     * for handle after callAPI() already called with specified auth type
      *
      * @return self
      */
     public function resetHttpAuthType()
     {
         $this->authType = null;
+        return $this;
+    }
+
+    /**
+     * Reset client_id back to null,
+     * for handle after callAPI() already called with specified client
+     *
+     * @return self
+     */
+    public function resetClient()
+    {
+        $this->client = null;
         return $this;
     }
 
@@ -100,15 +122,7 @@ class ClientService implements ClientApiInterface
 
         if ($this->authType !== null) {
 
-            if (! in_array($this->authType, [HttpClient::AUTH_BASIC, HttpClient::AUTH_DIGEST])) {
-                throw InvalidArgumentException('authType selected should be a ' . HttpClient::AUTH_BASIC . ' or ' . HttpClient::AUTH_DIGEST);
-            }
-
             if ($this->client !== null) {
-                if (! isset($this->authConfig['clients'][$this->client])) {
-                    throw InvalidArgumentException('client selected not found in the "clients" config');
-                }
-
                 $this->authConfig = $this->authConfig['clients'][$this->client];
             }
 
