@@ -44,7 +44,7 @@ return [
 
             // multiple clients to be selected
             'clients' => [
-                'foo' => [
+                'foo' => [ // foo is client_id
                     HttpClient::AUTH_BASIC => [
                         'username' => 'foo',
                         'password' => 'foo_s3cret'
@@ -55,7 +55,7 @@ return [
                         'password' => 'foo_s3cret'
                     ],
                 ],
-                'bar' => [
+                'bar' => [ // bar is client_id
                     HttpClient::AUTH_BASIC => [
                         'username' => 'bar',
                         'password' => 'bar_s3cret'

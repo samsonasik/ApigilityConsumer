@@ -4,6 +4,7 @@ namespace ApigilityConsumer\Service;
 
 use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientAuthResult;
+use InvalidArgumentException;
 use RuntimeException;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Response;
@@ -20,6 +21,9 @@ class ClientAuthService implements ClientApiInterface
     /** @var array  */
     private $oauthConfig;
 
+    /** @var string|null */
+    private $client   = null;
+
     /**
      * ClientAuthService constructor.
      *
@@ -32,6 +36,33 @@ class ClientAuthService implements ClientApiInterface
         $this->apiHostUrl = $apiHostUrl;
         $this->httpClient = $httpClient;
         $this->oauthConfig = $oauthConfig;
+    }
+
+    /**
+     * @param  string     $client
+     * @throws InvalidArgumentException
+     * @return self
+     */
+    public function withClient($client = null)
+    {
+        if (! isset($this->oauthConfig['clients'][$client])) {
+            throw new InvalidArgumentException('client selected not found in the "clients" config');
+        }
+
+        $this->client = $client;
+        return $this;
+    }
+
+    /**
+     * Reset client_id back to null,
+     * for handle after callAPI() already called with specified client
+     *
+     * @return self
+     */
+    public function resetClient()
+    {
+        $this->client = null;
+        return $this;
     }
 
     /**
@@ -50,6 +81,11 @@ class ClientAuthService implements ClientApiInterface
             'Accept' => 'application/json',
             'Content-type' => 'application/json',
         ];
+
+        if ($this->client !== null) {
+            $this->oauthConfig  = $this->oauthConfig[$this->client];
+            $this->oauthConfig['client_id'] =  $this->client;
+        }
 
         $dataTobeSent = [
             'grant_type' => $this->oauthConfig['grant_type'],
