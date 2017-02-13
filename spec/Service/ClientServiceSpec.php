@@ -4,6 +4,7 @@ namespace ApigilityConsumer\Spec\Service;
 
 use ApigilityConsumer\Result\ClientResult;
 use ApigilityConsumer\Service\ClientService;
+use InvalidArgumentException;
 use Kahlan\Plugin\Double;
 use ReflectionProperty;
 use Zend\Http\Client\Adapter\Curl;
@@ -78,7 +79,7 @@ describe('ClientService', function () {
             expect($result->success)->toBe(true);
         });
 
-        it('return "ClientResult" instance with success = true when status code = 200 and body = ""', function () {
+        it('return "ClientResult" instance with success = false when status code = 200 and body = ""', function () {
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -346,20 +347,41 @@ describe('ClientService', function () {
             expect($result)->toBeAnInstanceOf(ClientResult::class);
         });
 
-        it('call client->setAuth() when withHttpAuthType() called and exists in configuration', function () {
+        it('throws InvalidArgumentException when withHttpAuthType() called and authType is not "basic" or "digest"', function () {
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
 
-                'token_type' => 'Bearer',
-                'access_token' => 'Acc33sT0ken',
                 'form-data' => [
                     'foo' => 'fooValue',
                 ],
             ];
 
             $headers = [
-                'Authorization' => 'Bearer Acc33sT0ken',
+                'Accept' => 'application/json',
+                'Content-type' => 'application/json'
+            ];
+
+            $closure = function () use ($data) {
+                $this->service
+                            ->withHttpAuthType('not_basic_nor_digest')
+                            ->callAPI($data, 100);
+            };
+            expect($closure)->toThrow(new InvalidArgumentException('authType selected should be a basic or digest'));
+
+        });
+
+        it('call client->setAuth() when withHttpAuthType() called and exists in configuration', function () {
+            $data = [
+                'api-route-segment' => '/api',
+                'form-request-method' => 'POST',
+
+                'form-data' => [
+                    'foo' => 'fooValue',
+                ],
+            ];
+
+            $headers = [
                 'Accept' => 'application/json',
                 'Content-type' => 'application/json'
             ];
@@ -384,8 +406,6 @@ describe('ClientService', function () {
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
 
-                'token_type' => 'Bearer',
-                'access_token' => 'Acc33sT0ken',
                 'form-data' => [
                     'foo' => 'fooValue',
                 ],
@@ -403,7 +423,6 @@ describe('ClientService', function () {
             ];
 
             $headers = [
-                'Authorization' => 'Bearer Acc33sT0ken',
                 'Accept' => 'application/json',
                 'Content-type' => 'application/json'
             ];
@@ -428,8 +447,6 @@ describe('ClientService', function () {
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
 
-                'token_type' => 'Bearer',
-                'access_token' => 'Acc33sT0ken',
                 'form-data' => [
                     'foo' => 'fooValue',
                 ],
@@ -447,7 +464,6 @@ describe('ClientService', function () {
             ];
 
             $headers = [
-                'Authorization' => 'Bearer Acc33sT0ken',
                 'Accept' => 'application/json',
                 'Content-type' => 'application/json'
             ];
