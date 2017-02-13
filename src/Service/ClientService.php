@@ -110,6 +110,9 @@ class ClientService implements ClientApiInterface
 
             $authConfigSelected = [];
             if (! empty($this->authConfig[$this->authType])) {
+                if (! in_array($this->authType, [HttpClient::AUTH_BASIC, HttpClient::AUTH_DIGEST])) {
+                    throw InvalidArgumentException('authType selected should be a ' . HttpClient::AUTH_BASIC . ' or ' . HttpClient::AUTH_DIGEST);
+                }
                 $authConfigSelected = $this->authConfig[$this->authType];
             }
 
