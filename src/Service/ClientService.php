@@ -122,13 +122,14 @@ class ClientService implements ClientApiInterface
 
         if ($this->authType !== null) {
 
+            $authConfig = $this->authConfig;
             if ($this->client !== null) {
-                $this->authConfig = $this->authConfig['clients'][$this->client];
+                $authConfig = $this->authConfig['clients'][$this->client];
             }
 
             $authConfigSelected = [];
-            if (! empty($this->authConfig[$this->authType])) {
-                $authConfigSelected = $this->authConfig[$this->authType];
+            if (! empty($authConfig[$this->authType])) {
+                $authConfigSelected = $authConfig[$this->authType];
             }
 
             if (! empty($data['auth'][$this->authType])) {

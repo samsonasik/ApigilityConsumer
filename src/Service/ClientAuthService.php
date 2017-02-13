@@ -82,18 +82,19 @@ class ClientAuthService implements ClientApiInterface
             'Content-type' => 'application/json',
         ];
 
+        $oauthConfig = $this->oauthConfig;
         if ($this->client !== null) {
-            $this->oauthConfig  = $this->oauthConfig[$this->client];
-            $this->oauthConfig['client_id'] =  $this->client;
+            $oauthConfig = $this->oauthConfig[$this->client];
+            $oauthConfig['client_id'] =  $this->client;
         }
 
         $dataTobeSent = [
-            'grant_type' => $this->oauthConfig['grant_type'],
-            'client_id' => $this->oauthConfig['client_id'],
-            'client_secret' => $this->oauthConfig['client_secret'],
+            'grant_type'    => $oauthConfig['grant_type'],
+            'client_id'     => $oauthConfig['client_id'],
+            'client_secret' => $oauthConfig['client_secret'],
         ];
 
-        if ($this->oauthConfig['grant_type'] !== 'client_credentials') {
+        if ($oauthConfig['grant_type'] !== 'client_credentials') {
             $dataTobeSent += [
                 'username' => $data['form-data']['username'],
                 'password' => $data['form-data']['password'],
