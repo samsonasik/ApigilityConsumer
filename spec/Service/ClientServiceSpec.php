@@ -484,5 +484,30 @@ describe('ClientService', function () {
             expect($result)->toBeAnInstanceOf(ClientResult::class);
         });
 
+
+        it('throws InvalidArgumentException when withClient() called and client is not defined in the config', function () {
+            $data = [
+                'api-route-segment' => '/api',
+                'form-request-method' => 'POST',
+
+                'form-data' => [
+                    'foo' => 'fooValue',
+                ],
+            ];
+
+            $headers = [
+                'Accept' => 'application/json',
+                'Content-type' => 'application/json'
+            ];
+
+            $closure = function () use ($data) {
+                $this->service
+                            ->withClient('not_registered_client')
+                            ->callAPI($data, 100);
+            };
+            expect($closure)->toThrow(new InvalidArgumentException('client selected not found in the "clients" config'));
+
+        });
+
     });
 });
