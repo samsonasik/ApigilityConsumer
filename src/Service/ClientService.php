@@ -4,6 +4,7 @@ namespace ApigilityConsumer\Service;
 
 use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientResult;
+use InvalidArgumentException;
 use RuntimeException;
 use Zend\Http\Client\Adapter\Curl;
 use Zend\Http\Client as HttpClient;
@@ -100,6 +101,10 @@ class ClientService implements ClientApiInterface
         if ($this->authType !== null) {
 
             if ($this->client !== null) {
+                if (! isset($this->authConfig['clients'][$this->client])) {
+                    throw InvalidArgumentException('client selected not found in the "clients" config');
+                }
+
                 $this->authConfig = $this->authConfig['clients'][$this->client];
             }
 
