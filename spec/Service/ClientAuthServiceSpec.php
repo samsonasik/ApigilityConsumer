@@ -6,6 +6,7 @@ use ApigilityConsumer\Result\ClientAuthResult;
 use ApigilityConsumer\Service\ClientAuthService;
 use InvalidArgumentException;
 use Kahlan\Plugin\Double;
+use ReflectionProperty;
 use Zend\Http\Client;
 use Zend\Http\Response;
 use Zend\Json\Json;
@@ -22,6 +23,40 @@ describe('ClientAuthService', function () {
                 'client_secret' => 'foo_s3cret',
             ]
         );
+    });
+
+    describe('->resetClient()', function () {
+
+        it('reset $client property back to null', function () {
+
+            $service = new ClientAuthService(
+                'http://api.host.url',
+                $this->httpClient,
+                [
+                    'grant_type'    => 'password',
+                    'client_id'     => 'foo',
+                    'client_secret' => 'foo_s3cret',
+
+                    'clients' => [
+                        'bar' => [
+                            'grant_type' => 'password',
+                            'client_secret' => 'bar_s3cret',
+                        ],
+                    ],
+
+                ]
+            );
+
+            $service = $service->withClient('bar');
+            $r = new ReflectionProperty($service, 'client');
+            $r->setAccessible(true);
+            expect($r->getValue($service))->toBe('bar');
+
+            $service->resetClient();
+            expect($r->getValue($service))->toBe(null);
+
+        });
+
     });
 
     describe('->callAPI', function () {
