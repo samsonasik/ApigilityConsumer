@@ -99,7 +99,7 @@ Then, enable it :
 // config/modules.config.php
 return [
     'ApigilityConsumer', // <-- register here
-    'Application'
+    'Application',
 ],
 ```
 
