@@ -65,9 +65,16 @@ describe('ClientService', function () {
                     ],
 
                     'clients' => [
-                        'bar' => [
-                            'username' => 'bar',
-                            'password' => 'bar_s3cret'
+                        'bar' => [ // bar is client_id
+                            HttpClient::AUTH_BASIC => [
+                                'username' => 'bar',
+                                'password' => 'bar_s3cret'
+                            ],
+
+                            HttpClient::AUTH_DIGEST => [
+                                'username' => 'bar',
+                                'password' => 'bar_s3cret'
+                            ],
                         ],
                     ],
                 ]
@@ -407,6 +414,66 @@ describe('ClientService', function () {
             };
             expect($closure)->toThrow(new InvalidArgumentException('authType selected should be a basic or digest'));
 
+        });
+
+        it('call client->setAuth() when withHttpAuthType() and withClient() called and exists in configuration', function () {
+            $data = [
+                'api-route-segment' => '/api',
+                'form-request-method' => 'POST',
+
+                'form-data' => [
+                    'foo' => 'fooValue',
+                ],
+            ];
+
+            $headers = [
+                'Accept' => 'application/json',
+                'Content-type' => 'application/json'
+            ];
+
+            allow($this->httpClient)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
+
+            expect($this->httpClient)->toReceive('setAuth')->with('bar', 'bar_s3cret', HttpClient::AUTH_BASIC);
+            expect($this->httpClient)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
+            expect($this->httpClient)->toReceive('setOptions')->with(['timeout' => 100]);
+            expect($this->httpClient)->toReceive('setHeaders')->with($headers);
+            expect($this->httpClient)->toReceive('setUri')->with('http://api.host.url/api');
+            expect($this->httpClient)->toReceive('setMethod')->with($data['form-request-method']);
+
+            $service = new ClientService(
+                'http://api.host.url',
+                $this->httpClient,
+                [
+                    HttpClient::AUTH_BASIC => [
+                        'username' => 'foo',
+                        'password' => 'foo_s3cret'
+                    ],
+                    HttpClient::AUTH_DIGEST => [
+                        'username' => 'foo',
+                        'password' => 'foo_s3cret'
+                    ],
+
+                    'clients' => [
+                        'bar' => [ // bar is client_id
+                            HttpClient::AUTH_BASIC => [
+                                'username' => 'bar',
+                                'password' => 'bar_s3cret'
+                            ],
+
+                            HttpClient::AUTH_DIGEST => [
+                                'username' => 'bar',
+                                'password' => 'bar_s3cret'
+                            ],
+                        ],
+                    ],
+                ]
+            );
+
+            $result = $service
+                            ->withHttpAuthType(HttpClient::AUTH_BASIC)
+                            ->withClient('bar')
+                            ->callAPI($data, 100);
+            expect($result)->toBeAnInstanceOf(ClientResult::class);
         });
 
         it('call client->setAuth() when withHttpAuthType() called and exists in configuration', function () {
