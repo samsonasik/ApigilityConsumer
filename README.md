@@ -148,12 +148,10 @@ We can re-use the client service and use back default "client_id" with `resetCli
 
 ```php
 $clientResult = $client->withClient('bar') // bar is "client_id" defined in clients in auth config
-                       ->withHttpAuthType(HttpClient::AUTH_BASIC)
                        ->callAPI($data, $timeout);
 
 $clientResultDefault = $client->resetClient()
-                      ->withHttpAuthType(HttpClient::AUTH_BASIC)
-                      ->callAPI($data, $timeout);
+                              ->callAPI($data, $timeout);
 ```
 
 **2. ApigilityConsumer\Service\ClientService**
