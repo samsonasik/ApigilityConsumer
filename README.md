@@ -29,14 +29,30 @@ return [
 
         // for oauth
         'oauth' => [
+
+            //default selected client
             'grant_type'    => 'password', // or client_credentials
             'client_id'     => 'foo',
             'client_secret' => 'foo_s3cret',
+
+            // multiple clients to be selected
+            'clients' => [
+                'foo' => [ // foo is client_id
+                    'grant_type'    => 'password', // or client_credentials
+                    'client_secret' => 'foo_s3cret',
+                ],
+                'bar' => [ // bar is client_id
+                    'grant_type'    => 'password', // or client_credentials
+                    'client_secret' => 'bar_s3cret',
+                ],
+            ],
+
         ],
 
         // for basic and or digest
         'auth' => [
 
+            // default client
             HttpClient::AUTH_BASIC => [
                 'username' => 'foo',
                 'password' => 'foo_s3cret'
@@ -45,6 +61,32 @@ return [
             HttpClient::AUTH_DIGEST => [
                 'username' => 'foo',
                 'password' => 'foo_s3cret'
+            ],
+
+            // multiple clients to be selected
+            'clients' => [
+                'foo' => [ // foo is client_id
+                    HttpClient::AUTH_BASIC => [
+                        'username' => 'foo',
+                        'password' => 'foo_s3cret'
+                    ],
+
+                    HttpClient::AUTH_DIGEST => [
+                        'username' => 'foo',
+                        'password' => 'foo_s3cret'
+                    ],
+                ],
+                'bar' => [ // bar is client_id
+                    HttpClient::AUTH_BASIC => [
+                        'username' => 'bar',
+                        'password' => 'bar_s3cret'
+                    ],
+
+                    HttpClient::AUTH_DIGEST => [
+                        'username' => 'bar',
+                        'password' => 'bar_s3cret'
+                    ],
+                ],
             ],
 
         ],
@@ -69,7 +111,52 @@ You can use at Zend\Expressive, after set up local `config/autoload/apigility-co
 Services
 --------
 
-**1. ApigilityConsumer\Service\ClientService**
+**1. ApigilityConsumer\Service\ClientAuthService**
+
+It used for `oauth`, with usage:
+
+```php
+use ApigilityConsumer\Service\ClientAuthService;
+
+$client = $serviceManager->get(ClientAuthService::class);
+
+$data = [
+    'api-route-segment' => '/oauth',
+    'form-request-method' => 'POST',
+
+    'form-data' => [
+        'username' => 'foo', // not required if grant_type config = 'client_credentials'
+        'password' => '123', // not required if grant_type config = 'client_credentials'
+    ],
+];
+$timeout  = 100;
+$clientResult = $client->callAPI($data, $timeout);
+```
+
+**Specify Oauth "client_id"**
+
+You can specify what client_id to be used on Http Auth with provide `withClient()`:
+
+```php
+$clientResult = $client->withClient('bar') // bar is "client_id" defined in clients in oauth config
+                       ->callAPI($data, $timeout);
+```
+
+**Reset  Oauth "client_id"**
+
+We can re-use the client service and use back default "client_id" with `resetClient()`:
+
+```php
+$clientResult = $client->withClient('bar') // bar is "client_id" defined in clients in auth config
+                       ->withHttpAuthType(HttpClient::AUTH_BASIC)
+                       ->callAPI($data, $timeout);
+
+$clientResultDefault = $client->resetClient()
+                      ->withHttpAuthType(HttpClient::AUTH_BASIC)
+                      ->callAPI($data, $timeout);
+```
+
+**2. ApigilityConsumer\Service\ClientService**
 
 For general Api Call, with usage:
 
@@ -191,6 +278,29 @@ $clientResult = $client->withHttpAuthType(HttpClient::AUTH_DIGEST)
                        ->callAPI($data, $timeout);
 ```
 
+**Specify "client_id" on Http Auth**
+
+You can specify what client_id to be used on Http Auth with provide `withClient()`:
+
+```php
+$clientResult = $client->withClient('bar') // bar is "client_id" defined in clients in auth config
+                       ->withHttpAuthType(HttpClient::AUTH_BASIC)
+                       ->callAPI($data, $timeout);
+```
+
+**Reset "client_id" Http Auth**
+
+We can re-use the client service and use back default "client_id" with `resetClient()`:
+
+```php
+$clientResult = $client->withClient('bar') // bar is "client_id" defined in clients in auth config
+                       ->withHttpAuthType(HttpClient::AUTH_BASIC)
+                       ->callAPI($data, $timeout);
+
+$clientResultDefault = $client->resetClient()
+                              ->callAPI($data, $timeout);
+```
+
 **Reset Http Auth Type**
 
 After one or both `HttpClient::AUTH_BASIC` or `HttpClient::AUTH_DIGEST` used, we can re-use the client service and use back normal API Call without Http Authentication with apply `->resetHttpAuthType()`:
@@ -204,28 +314,6 @@ $clientResultWithDigestAuth  = $client->withHttpAuthType(HttpClient::AUTH_DIGEST
 // RESET IT TO NORMAL WITHOUT HTTP AUTHENTICATION
 $clientResultWithoutHttpAuth = $client->resetHttpAuthType()
                                       ->callAPI($data3, $timeout);
-```
-
-**2. ApigilityConsumer\Service\ClientAuthService**
-
-It used for `oauth`, with usage:
-
-```php
-use ApigilityConsumer\Service\ClientAuthService;
-
-$client = $serviceManager->get(ClientAuthService::class);
-
-$data = [
-    'api-route-segment' => '/oauth',
-    'form-request-method' => 'POST',
-
-    'form-data' => [
-        'username' => 'foo', // not required if grant_type config = 'client_credentials'
-        'password' => '123', // not required if grant_type config = 'client_credentials'
-    ],
-];
-$timeout  = 100;
-$clientResult = $client->callAPI($data, $timeout);
 ```
 
 Client Result of callAPI() returned usage
