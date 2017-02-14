@@ -65,7 +65,7 @@ return [
 
             // multiple clients to be selected
             'clients' => [
-                'foo' => [ // foo is client_id
+                'foo' => [ // foo is key represent just like "client_id" to ease switch per-client config
                     HttpClient::AUTH_BASIC => [
                         'username' => 'foo',
                         'password' => 'foo_s3cret'
@@ -76,7 +76,7 @@ return [
                         'password' => 'foo_s3cret'
                     ],
                 ],
-                'bar' => [ // bar is client_id
+                'bar' => [ // bar is key represent just like "client_id" to ease switch per-client config
                     HttpClient::AUTH_BASIC => [
                         'username' => 'bar',
                         'password' => 'bar_s3cret'
@@ -278,7 +278,9 @@ $clientResult = $client->withHttpAuthType(HttpClient::AUTH_DIGEST)
 
 **Specify "client_id" on Http Auth**
 
-You can specify what client_id to be used on Http Auth with provide `withClient()`:
+On Http Auth, there is no "client_id" definition concept. On `ClientService`, they are keys that represent just like "client_id" to ease switch client specific http auth.  
+
+To allow You can specify what "client_id" to be used on Http Auth with provide `withClient()`:
 
 ```php
 $clientResult = $client->withClient('bar') // bar is "client_id" defined in clients in auth config
