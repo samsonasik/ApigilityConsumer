@@ -84,7 +84,7 @@ class ClientAuthService implements ClientApiInterface
 
         $oauthConfig = $this->oauthConfig;
         if ($this->client !== null) {
-            $oauthConfig = $this->oauthConfig[$this->client];
+            $oauthConfig = $this->oauthConfig['clients'][$this->client];
             $oauthConfig['client_id'] =  $this->client;
         }
 

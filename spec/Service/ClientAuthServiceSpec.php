@@ -12,10 +12,10 @@ use Zend\Json\Json;
 
 describe('ClientAuthService', function () {
     beforeAll(function () {
-        $this->client = Double::instance(['extends' => Client::class]);
+        $this->httpClient = Double::instance(['extends' => Client::class]);
         $this->service = new ClientAuthService(
             'http://api.host.url',
-            $this->client,
+            $this->httpClient,
             [
                 'grant_type'    => 'password',
                 'client_id'     => 'foo',
@@ -26,10 +26,10 @@ describe('ClientAuthService', function () {
 
     describe('->callAPI', function () {
         it('define grant_type = client_credentials will not set username form-data', function () {
-            $client = Double::instance(['extends' => Client::class]);
+            $httpClient = Double::instance(['extends' => Client::class]);
             $service = new ClientAuthService(
                 'http://api.host.url',
-                $client,
+                $httpClient,
                 [
                     'grant_type'    => 'client_credentials',
                     'client_id'     => 'foo',
@@ -42,7 +42,7 @@ describe('ClientAuthService', function () {
                 'form-request-method' => 'POST',
             ];
 
-            allow($client)->toReceive('setRawBody')->with(Json::encode(
+            allow($httpClient)->toReceive('setRawBody')->with(Json::encode(
                 [
                     'grant_type'    => 'client_credentials',
                     'client_id'     => 'foo',
@@ -52,6 +52,26 @@ describe('ClientAuthService', function () {
 
             $result = $service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
+        });
+
+        it('throws InvalidArgumentException when withClient() called and client is not defined in the config', function () {
+            $data = [
+                'api-route-segment' => '/oauth',
+                'form-request-method' => 'POST',
+
+                'form-data' => [
+                    'username'    => 'foo',
+                    'password'     => 'foo',
+                ],
+            ];
+
+            $closure = function () use ($data) {
+                $this->service
+                            ->withClient('not_registered_client')
+                            ->callAPI($data, 100);
+            };
+            expect($closure)->toThrow(new InvalidArgumentException('client selected not found in the "clients" config'));
+
         });
 
         it('return "ClientAuthResult" instance', function () {
@@ -65,9 +85,45 @@ describe('ClientAuthService', function () {
                 ],
             ];
 
-            allow($this->client)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
+            allow($this->httpClient)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
 
             $result = $this->service->callAPI($data);
+            expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
+        });
+
+        it('return "ClientAuthResult" instance on withClient() with registered client', function () {
+            $data = [
+                'api-route-segment' => '/oauth',
+                'form-request-method' => 'POST',
+
+                'form-data' => [
+                    'username'    => 'foo',
+                    'password'     => 'foo',
+                ],
+            ];
+
+            $service = new ClientAuthService(
+                'http://api.host.url',
+                $this->httpClient,
+                [
+                    'grant_type'    => 'password',
+                    'client_id'     => 'foo',
+                    'client_secret' => 'foo_s3cret',
+
+                    'clients' => [
+                        'bar' => [
+                            'grant_type' => 'password',
+                            'client_secret' => 'bar_s3cret',
+                        ],
+                    ],
+
+                ]
+            );
+
+            allow($this->httpClient)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
+
+            $service->withClient('bar');
+            $result = $service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
         });
 
@@ -95,13 +151,13 @@ describe('ClientAuthService', function () {
                 'Content-type' => 'application/json'
             ];
 
-            allow($this->client)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
+            allow($this->httpClient)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
 
-            expect($this->client)->toReceive('setRawBody')->with(Json::encode($dataTobeSent));
-            expect($this->client)->toReceive('setOptions')->with(['timeout' => 100]);
-            expect($this->client)->toReceive('setHeaders')->with($headers);
-            expect($this->client)->toReceive('setUri')->with('http://api.host.url/oauth');
-            expect($this->client)->toReceive('setMethod')->with($data['form-request-method']);
+            expect($this->httpClient)->toReceive('setRawBody')->with(Json::encode($dataTobeSent));
+            expect($this->httpClient)->toReceive('setOptions')->with(['timeout' => 100]);
+            expect($this->httpClient)->toReceive('setHeaders')->with($headers);
+            expect($this->httpClient)->toReceive('setUri')->with('http://api.host.url/oauth');
+            expect($this->httpClient)->toReceive('setMethod')->with($data['form-request-method']);
 
             $result = $this->service->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
@@ -130,31 +186,11 @@ describe('ClientAuthService', function () {
 json
             );
 
-            allow($this->client)->toReceive('send')->andReturn($response);
+            allow($this->httpClient)->toReceive('send')->andReturn($response);
 
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
             expect($result->success)->toBe(false);
-        });
-
-        it('throws InvalidArgumentException when withClient() called and client is not defined in the config', function () {
-            $data = [
-                'api-route-segment' => '/oauth',
-                'form-request-method' => 'POST',
-
-                'form-data' => [
-                    'username'    => 'foo',
-                    'password'     => 'foo',
-                ],
-            ];
-
-            $closure = function () use ($data) {
-                $this->service
-                            ->withClient('not_registered_client')
-                            ->callAPI($data, 100);
-            };
-            expect($closure)->toThrow(new InvalidArgumentException('client selected not found in the "clients" config'));
-
         });
     });
 });
