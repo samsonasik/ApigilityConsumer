@@ -11,9 +11,11 @@ describe('ClientAuthServiceFactory', function () {
     beforeAll(function () {
         $this->factory = new ClientAuthServiceFactory();
     });
- 
+
     describe('->__invoke', function () {
+
         it('return "ClientAuthService" instance', function () {
+
             $container = Double::instance(['extends' => ServiceManager::class]);
             allow($container)->toReceive('get')->with('config')->andReturn([
                 'apigility-consumer' => [
@@ -25,9 +27,12 @@ describe('ClientAuthServiceFactory', function () {
                     ],
                 ],
             ]);
-            
+
             $result = $this->factory->__invoke($container);
             expect($result)->toBeAnInstanceOf(ClientAuthService::class);
+
         });
+
     });
+
 });

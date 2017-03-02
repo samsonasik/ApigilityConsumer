@@ -33,7 +33,9 @@ describe('ClientAuthResult', function () {
     });
 
     describe('::applyResult', function () {
+
         it('set success = false when self::$messages is not empty', function () {
+
             ClientAuthResult::$messages = [
                 'http' => [
                     204 => 'No Content'
@@ -42,16 +44,20 @@ describe('ClientAuthResult', function () {
 
             $result = ClientAuthResult::applyResult('{}');
             expect(false)->toBe($result->success);
+
         });
 
         it('set success = false when provided json is invalid', function () {
+
             ClientAuthResult::$messages = [];
 
             $result = ClientAuthResult::applyResult('invalid json');
             expect(false)->toBe($result->success);
+
         });
 
         it('set success = false when login failed', function () {
+
             ClientAuthResult::$messages = [];
 
             $response = <<<json
@@ -65,9 +71,11 @@ json;
 
             $result = ClientAuthResult::applyResult($response);
             expect(false)->toBe($result->success);
+
         });
 
         it('set success = true when login succeed', function () {
+
             ClientAuthResult::$messages = [];
 
             $response = <<<json
@@ -82,6 +90,9 @@ json;
 
             $result = ClientAuthResult::applyResult($response);
             expect(true)->toBe($result->success);
+
         });
+
     });
+
 });

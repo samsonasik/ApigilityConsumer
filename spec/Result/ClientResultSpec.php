@@ -33,7 +33,9 @@ describe('ClientResult', function () {
     });
 
     describe('::applyResult', function () {
+
         it('set success = false when self::$messages is not empty', function () {
+
             ClientResult::$messages = [
                 'http' => [
                     204 => 'No Content'
@@ -42,16 +44,20 @@ describe('ClientResult', function () {
 
             $result = ClientResult::applyResult('{}');
             expect(false)->toBe($result->success);
+
         });
 
         it('set success = false when provided json is invalid', function () {
+
             ClientResult::$messages = [];
 
             $result = ClientResult::applyResult('invalid json');
             expect(false)->toBe($result->success);
+
         });
 
         it('set success = false when validation_messages is not empty', function () {
+
             ClientResult::$messages = [];
 
             $response = <<<json
@@ -70,9 +76,11 @@ json;
 
             $result = ClientResult::applyResult($response);
             expect(false)->toBe($result->success);
+
         });
 
         it('set success = true when validation_messages is empty and $messages is empty too', function () {
+
             ClientResult::$messages = [];
 
             $response = <<<json
@@ -85,6 +93,9 @@ json;
 
             $result = ClientResult::applyResult($response);
             expect(true)->toBe($result->success);
+
         });
+
     });
+
 });

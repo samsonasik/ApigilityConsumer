@@ -60,7 +60,9 @@ describe('ClientAuthService', function () {
     });
 
     describe('->callAPI', function () {
+
         it('define grant_type = client_credentials will not set username form-data', function () {
+
             $httpClient = Double::instance(['extends' => Client::class]);
             $service = new ClientAuthService(
                 'http://api.host.url',
@@ -87,9 +89,11 @@ describe('ClientAuthService', function () {
 
             $result = $service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
+
         });
 
         it('throws InvalidArgumentException when withClient() called and client is not defined in the config', function () {
+
             $data = [
                 'api-route-segment' => '/oauth',
                 'form-request-method' => 'POST',
@@ -110,6 +114,7 @@ describe('ClientAuthService', function () {
         });
 
         it('return "ClientAuthResult" instance', function () {
+
             $data = [
                 'api-route-segment' => '/oauth',
                 'form-request-method' => 'POST',
@@ -124,9 +129,11 @@ describe('ClientAuthService', function () {
 
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
+
         });
 
         it('return "ClientAuthResult" instance on withClient() with registered client', function () {
+
             $data = [
                 'api-route-segment' => '/oauth',
                 'form-request-method' => 'POST',
@@ -160,9 +167,11 @@ describe('ClientAuthService', function () {
             $service->withClient('bar');
             $result = $service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
+
         });
 
         it('define timeout parameter will set timeout for http call', function () {
+
             $data = [
                 'api-route-segment' => '/oauth',
                 'form-request-method' => 'POST',
@@ -196,9 +205,11 @@ describe('ClientAuthService', function () {
 
             $result = $this->service->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
+
         });
 
         it('return invalid request when invalid data provided', function () {
+
             $data = [
                 'api-route-segment' => '/oauth',
                 'form-request-method' => 'POST',
@@ -226,6 +237,9 @@ json
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
             expect($result->success)->toBe(false);
+
         });
+
     });
+
 });

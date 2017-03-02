@@ -94,6 +94,7 @@ describe('ClientService', function () {
 
     describe('->callAPI', function () {
         it('return "ClientResult" instance with success = true when status code = 200 and body != ""', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -122,9 +123,11 @@ describe('ClientService', function () {
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
             expect($result->success)->toBe(true);
+
         });
 
         it('return "ClientResult" instance with success = false when status code = 200 and body = ""', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -153,9 +156,11 @@ describe('ClientService', function () {
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
             expect($result->success)->toBe(false);
+
         });
 
         it('set files data with success if has tmp_name and name key exists', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -201,9 +206,11 @@ describe('ClientService', function () {
 
             $result = $this->service->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
+
         });
 
         it('set files data with success if has tmp_name and name key exists and does not has any other data', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -248,9 +255,11 @@ describe('ClientService', function () {
 
             $result = $this->service->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
+
         });
 
         it('set files data with success if has tmp_name and name key exists and does not has any other data', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -277,9 +286,11 @@ describe('ClientService', function () {
             $result = $this->service->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
             expect($result->success)->toBe(false);
+
         });
 
         it('set files data with success if doesnot has tmp_name or name key in per-file', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -305,9 +316,11 @@ describe('ClientService', function () {
             $result = $this->service->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
             expect($result->success)->toBe(false);
+
         });
 
         it('return "ClientResult" instance with success = false when status code != 200', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -335,9 +348,11 @@ describe('ClientService', function () {
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
             expect($result->success)->toBe(false);
+
         });
 
         it('return "ClientResult" instance with success = false when client->send() throw exception', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -360,9 +375,11 @@ describe('ClientService', function () {
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
             expect($result->success)->toBe(false);
+
         });
 
         it('define timeout parameter will set timeout for http call', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -390,9 +407,11 @@ describe('ClientService', function () {
 
             $result = $this->service->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
+
         });
 
         it('throws InvalidArgumentException when withHttpAuthType() called and authType is not "basic" or "digest"', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -417,6 +436,7 @@ describe('ClientService', function () {
         });
 
         it('call client->setAuth() when withHttpAuthType() and withClient() called and exists in configuration', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -474,9 +494,11 @@ describe('ClientService', function () {
                             ->withClient('bar')
                             ->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
+
         });
 
         it('call client->setAuth() when withHttpAuthType() called and exists in configuration', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -504,9 +526,11 @@ describe('ClientService', function () {
                             ->withHttpAuthType(HttpClient::AUTH_BASIC)
                             ->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
+
         });
 
         it('call client->setAuth() when withHttpAuthType() called and exists in $data parameter', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -545,9 +569,11 @@ describe('ClientService', function () {
                             ->withHttpAuthType(HttpClient::AUTH_BASIC)
                             ->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
+
         });
 
         it('call client->setAuth() with setAdapter(Curl:class) when withHttpAuthType() called for AUTH_DIGEST', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -587,10 +613,12 @@ describe('ClientService', function () {
                             ->withHttpAuthType(HttpClient::AUTH_DIGEST)
                             ->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
+
         });
 
 
         it('throws InvalidArgumentException when withClient() called and client is not defined in the config', function () {
+
             $data = [
                 'api-route-segment' => '/api',
                 'form-request-method' => 'POST',
@@ -615,4 +643,5 @@ describe('ClientService', function () {
         });
 
     });
+
 });
