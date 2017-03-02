@@ -4,8 +4,33 @@ namespace ApigilityConsumer\Spec\Result;
 
 use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientResult;
+use ReflectionMethod;
+use Error;
 
 describe('ClientResult', function () {
+
+    describe('->__construct()', function () {
+
+        it('a private constructor', function () {
+
+            $r = new ReflectionMethod(ClientResult::class, '__construct');
+            expect($r->isPrivate())->toBe(true);
+
+        });
+
+        it('cannot create instance via new ClientAuthResult()', function () {
+
+            skipIf(PHP_MAJOR_VERSION < 7);
+
+            try {
+                new ClientResult();
+            } catch (Error $e) {
+                expect($e->getMessage())->toBe("Call to private ApigilityConsumer\\Result\\ClientResult::__construct() from context 'Kahlan\\Cli\\Kahlan'");
+            }
+
+        });
+
+    });
 
     describe('::applyResult', function () {
         it('set success = false when self::$messages is not empty', function () {
