@@ -18,7 +18,7 @@ describe('ClientResult', function () {
 
         });
 
-        it('cannot create instance via new ClientAuthResult()', function () {
+        it('cannot create instance via new ClientResult()', function () {
 
             skipIf(PHP_MAJOR_VERSION < 7);
 
