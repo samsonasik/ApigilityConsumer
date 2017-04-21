@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ApigilityConsumer\Service;
 
 use Zend\Http\Client as HttpClient;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Factory to handle ClientService creation.
@@ -11,7 +14,7 @@ use Zend\Http\Client as HttpClient;
  */
 class ClientAuthServiceFactory
 {
-    public function __invoke($container)
+    public function __invoke(ServiceLocatorInterface $container) : ClientAuthService
     {
         $config     = $container->get('config');
         $httpClient = new HttpClient();

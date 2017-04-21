@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ApigilityConsumer\Service;
 
 use ApigilityConsumer\Error\SpecialErrorMessage;
@@ -49,7 +51,7 @@ class ClientService implements ClientApiInterface
      * @throws InvalidArgumentException
      * @return self
      */
-    public function withClient($client = null)
+    public function withClient(string $client = null) : self
     {
         if (! isset($this->authConfig['clients'][$client])) {
             throw new InvalidArgumentException('client selected not found in the "clients" config');
@@ -66,7 +68,7 @@ class ClientService implements ClientApiInterface
      * @throws InvalidArgumentException
      * @return self
      */
-    public function withHttpAuthType($authType = HttpClient::AUTH_BASIC)
+    public function withHttpAuthType(string $authType = HttpClient::AUTH_BASIC) : self
     {
         if (! in_array($authType, [HttpClient::AUTH_BASIC, HttpClient::AUTH_DIGEST])) {
             throw new InvalidArgumentException('authType selected should be a ' . HttpClient::AUTH_BASIC . ' or ' . HttpClient::AUTH_DIGEST);
@@ -82,7 +84,7 @@ class ClientService implements ClientApiInterface
      *
      * @return self
      */
-    public function resetHttpAuthType()
+    public function resetHttpAuthType() : self
     {
         $this->authType = null;
         return $this;
@@ -94,7 +96,7 @@ class ClientService implements ClientApiInterface
      *
      * @return self
      */
-    public function resetClient()
+    public function resetClient() : self
     {
         $this->client = null;
         return $this;
@@ -110,7 +112,7 @@ class ClientService implements ClientApiInterface
      *
      * @return ClientResult
      */
-    public function callAPI(array $data, int $timeout = null)
+    public function callAPI(array $data, int $timeout = null) : ClientResult
     {
         $headers = [];
 
@@ -225,7 +227,7 @@ class ClientService implements ClientApiInterface
      *
      * @return ClientResult
      */
-    private function getClientResult(Response $response)
+    private function getClientResult(Response $response) : ClientResult
     {
         $messages = ClientResult::$messages;
 
