@@ -110,7 +110,7 @@ class ClientService implements ClientApiInterface
      *
      * @return ClientResult
      */
-    public function callAPI(array $data, $timeout = null)
+    public function callAPI(array $data, int $timeout = null)
     {
         $headers = [];
 
@@ -193,7 +193,6 @@ class ClientService implements ClientApiInterface
         $this->httpClient->setRawBody(Json::encode($data['form-data']));
 
         if (null !== $timeout) {
-            $timeout = (int) $timeout;
             $this->httpClient->setOptions(['timeout' => $timeout]);
         }
 

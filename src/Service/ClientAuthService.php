@@ -75,7 +75,7 @@ class ClientAuthService implements ClientApiInterface
      *
      * @return ClientAuthResult
      */
-    public function callAPI(array $data, $timeout = null)
+    public function callAPI(array $data, int $timeout = null)
     {
         $headers = [
             'Accept' => 'application/json',
@@ -108,7 +108,6 @@ class ClientAuthService implements ClientApiInterface
         $this->httpClient->setMethod($data['form-request-method']);
 
         if (null !== $timeout) {
-            $timeout = (int) $timeout;
             $this->httpClient->setOptions(['timeout' => $timeout]);
         }
 

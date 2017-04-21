@@ -14,5 +14,5 @@ interface ClientApiInterface
      *
      * @return ResultInterface
      */
-    public function callAPI(array $data, $timeout = null);
+    public function callAPI(array $data, int $timeout = null);
 }
