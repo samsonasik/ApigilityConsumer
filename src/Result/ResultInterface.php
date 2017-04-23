@@ -11,5 +11,5 @@ interface ResultInterface
      *
      * @return self
      */
-    public static function applyResult($result);
+    public static function applyResult($result) : ResultInterface;
 }

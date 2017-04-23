@@ -6,6 +6,7 @@ namespace ApigilityConsumer\Service;
 
 use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientAuthResult;
+use ApigilityConsumer\Result\ResultInterface;
 use InvalidArgumentException;
 use RuntimeException;
 use Zend\Http\Client as HttpClient;
@@ -77,7 +78,7 @@ class ClientAuthService implements ClientApiInterface
      *
      * @return ClientAuthResult
      */
-    public function callAPI(array $data, int $timeout = null) : ClientAuthResult
+    public function callAPI(array $data, int $timeout = null) : ResultInterface
     {
         $headers = [
             'Accept' => 'application/json',

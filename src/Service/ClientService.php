@@ -6,6 +6,7 @@ namespace ApigilityConsumer\Service;
 
 use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientResult;
+use ApigilityConsumer\Result\ResultInterface;
 use InvalidArgumentException;
 use RuntimeException;
 use Zend\Http\Client\Adapter\Curl;
@@ -112,7 +113,7 @@ class ClientService implements ClientApiInterface
      *
      * @return ClientResult
      */
-    public function callAPI(array $data, int $timeout = null) : ClientResult
+    public function callAPI(array $data, int $timeout = null) : ResultInterface
     {
         $headers = [];
 

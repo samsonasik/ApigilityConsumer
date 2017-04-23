@@ -41,7 +41,7 @@ class ClientAuthResult implements ResultInterface
      *
      * @return self
      */
-    public static function applyResult($result) : self
+    public static function applyResult($result) : ResultInterface
     {
         $resultArray = [];
         if (!empty(self::$messages)) {
