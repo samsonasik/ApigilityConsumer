@@ -28,7 +28,7 @@ describe('ClientAuthServiceFactory', function () {
                 ],
             ]);
 
-            $result = $this->factory->__invoke($container);
+            $result = $this->factory->__invoke($container, ClientAuthService::class);
             expect($result)->toBeAnInstanceOf(ClientAuthService::class);
 
         });

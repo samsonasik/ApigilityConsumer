@@ -23,7 +23,7 @@ describe('ClientServiceFactory', function () {
                 ],
             ]);
 
-            $result = $this->factory->__invoke($container);
+            $result = $this->factory->__invoke($container, ClientService::class);
             expect($result)->toBeAnInstanceOf(ClientService::class);
 
         });
