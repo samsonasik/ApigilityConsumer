@@ -9,6 +9,12 @@ ApigilityConsumer
 
 ZF2 and ZF3 Apigility Client module to consume API Services.
 
+> version ^2.0 only support php ^7.1 with zend-servicemanager v3 and zend-json v3
+
+> version ^1.4.0 still support php ^5.6|^7.0|^7.1
+
+> Consider upgrading :)
+
 Installation
 ------------
 

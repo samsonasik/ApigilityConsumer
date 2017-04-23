@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ApigilityConsumer\Service;
 
 use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientAuthResult;
+use ApigilityConsumer\Result\ResultInterface;
 use InvalidArgumentException;
 use RuntimeException;
 use Zend\Http\Client as HttpClient;
@@ -43,7 +46,7 @@ class ClientAuthService implements ClientApiInterface
      * @throws InvalidArgumentException
      * @return self
      */
-    public function withClient($client = null)
+    public function withClient(string $client = null) : self
     {
         if (! isset($this->oauthConfig['clients'][$client])) {
             throw new InvalidArgumentException('client selected not found in the "clients" config');
@@ -59,7 +62,7 @@ class ClientAuthService implements ClientApiInterface
      *
      * @return self
      */
-    public function resetClient()
+    public function resetClient() : self
     {
         $this->client = null;
         return $this;
@@ -75,7 +78,7 @@ class ClientAuthService implements ClientApiInterface
      *
      * @return ClientAuthResult
      */
-    public function callAPI(array $data, $timeout = null)
+    public function callAPI(array $data, int $timeout = null) : ResultInterface
     {
         $headers = [
             'Accept' => 'application/json',
@@ -108,7 +111,6 @@ class ClientAuthService implements ClientApiInterface
         $this->httpClient->setMethod($data['form-request-method']);
 
         if (null !== $timeout) {
-            $timeout = (int) $timeout;
             $this->httpClient->setOptions(['timeout' => $timeout]);
         }
 
@@ -134,7 +136,7 @@ class ClientAuthService implements ClientApiInterface
      *
      * @return ClientAuthResult
      */
-    private function getClientAuthResult(Response $response)
+    private function getClientAuthResult(Response $response) : ClientAuthResult
     {
         $statusCode = $response->getStatusCode();
         if ($statusCode !== 200 && $statusCode !== 400 && $statusCode !== 401) {

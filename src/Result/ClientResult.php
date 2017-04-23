@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ApigilityConsumer\Result;
 
 use ApigilityConsumer\Error\SpecialErrorMessage;
@@ -48,7 +50,7 @@ class ClientResult implements ResultInterface
      *
      * @return self
      */
-    public static function applyResult($result)
+    public static function applyResult($result) : ResultInterface
     {
         if (!empty(self::$messages)) {
             $resultArray['validation_messages'] = self::$messages;
@@ -85,7 +87,7 @@ class ClientResult implements ResultInterface
      *
      * @return self
      */
-    private static function fromSucceed(array $result)
+    private static function fromSucceed(array $result) : self
     {
         $self = new self();
         $self->success = true;
@@ -101,7 +103,7 @@ class ClientResult implements ResultInterface
      *
      * @return self
      */
-    private static function fromFailure(array $result)
+    private static function fromFailure(array $result) : self
     {
         $self = new self();
         $self->success = false;
