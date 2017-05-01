@@ -233,15 +233,15 @@ class ClientService implements ClientApiInterface
         $messages = ClientResult::$messages;
 
         $statusCode = $response->getStatusCode();
-        if ($statusCode === 200 && $response->getBody() === '') {
+        if ($statusCode === Response::STATUS_CODE_200 && $response->getBody() === '') {
             $messages = [
                 'http' => [
-                    204 => 'No Content',
+                    Response::STATUS_CODE_204 => 'No Content',
                 ],
             ];
         }
 
-        if ($statusCode !== 200 && $statusCode !== 422) { // 422 is Unprocessable Entity, will be handled in ClientResult
+        if ($statusCode !== Response::STATUS_CODE_200 && $statusCode !== Response::STATUS_CODE_422) { // 422 is Unprocessable Entity, will be handled in ClientResult
             $messages = [
                 'http' => [
                     $response->getStatusCode() => $response->getReasonPhrase(),
