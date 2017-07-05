@@ -169,7 +169,7 @@ class ClientService implements ClientApiInterface
                 if (! $fileIsValid) {
                     $response = new Response();
                     $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
-                    $response->setReasonPhrase(\\sprintf(
+                    $response->setReasonPhrase(\sprintf(
                         SpecialErrorMessage::INVALID_REQUEST_FILE['reason'],
                         $this->apiHostUrl
                     ));
@@ -206,7 +206,7 @@ class ClientService implements ClientApiInterface
         } catch (RuntimeException $e) {
             $response = new Response();
             $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
-            $response->setReasonPhrase(\\sprintf(
+            $response->setReasonPhrase(\sprintf(
                 SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['reason'],
                 $this->apiHostUrl
             ));
