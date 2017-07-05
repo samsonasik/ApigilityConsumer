@@ -119,7 +119,7 @@ class ClientAuthService implements ClientApiInterface
         } catch (RuntimeException $e) {
             $response = new Response();
             $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
-            $response->setReasonPhrase(\\sprintf(
+            $response->setReasonPhrase(\sprintf(
                 SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['reason'],
                 $this->apiHostUrl
             ));
