@@ -68,7 +68,7 @@ class ClientService implements ClientApiInterface
      */
     public function withHttpAuthType($authType = HttpClient::AUTH_BASIC)
     {
-        if (! in_array($authType, [HttpClient::AUTH_BASIC, HttpClient::AUTH_DIGEST])) {
+        if (! \in_array($authType, [HttpClient::AUTH_BASIC, HttpClient::AUTH_DIGEST])) {
             throw new InvalidArgumentException('authType selected should be a ' . HttpClient::AUTH_BASIC . ' or ' . HttpClient::AUTH_DIGEST);
         }
 
@@ -159,7 +159,7 @@ class ClientService implements ClientApiInterface
                     $fileIsValid = false;
                 } else {
                     ErrorHandler::start();
-                    $fileContent = file_get_contents($file['tmp_name']);
+                    $fileContent = \file_get_contents($file['tmp_name']);
                     ErrorHandler::stop();
                     if ($fileContent === false) {
                         $fileIsValid = false;
@@ -169,7 +169,7 @@ class ClientService implements ClientApiInterface
                 if (! $fileIsValid) {
                     $response = new Response();
                     $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
-                    $response->setReasonPhrase(sprintf(
+                    $response->setReasonPhrase(\\sprintf(
                         SpecialErrorMessage::INVALID_REQUEST_FILE['reason'],
                         $this->apiHostUrl
                     ));
@@ -206,7 +206,7 @@ class ClientService implements ClientApiInterface
         } catch (RuntimeException $e) {
             $response = new Response();
             $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
-            $response->setReasonPhrase(sprintf(
+            $response->setReasonPhrase(\\sprintf(
                 SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['reason'],
                 $this->apiHostUrl
             ));
