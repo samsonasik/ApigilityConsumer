@@ -142,7 +142,7 @@ class ClientAuthService implements ClientApiInterface
         if ($statusCode !== Response::STATUS_CODE_200 && $statusCode !== Response::STATUS_CODE_400 && $statusCode !== Response::STATUS_CODE_401) {
             ClientAuthResult::$messages = [
                 'http' => [
-                    $response->getStatusCode() => $response->getReasonPhrase(),
+                    $statusCode => $response->getReasonPhrase(),
                 ],
             ];
         }
@@ -152,7 +152,7 @@ class ClientAuthService implements ClientApiInterface
         if ($statusCode === Response::STATUS_CODE_400 || $statusCode === Response::STATUS_CODE_401) {
             ClientAuthResult::$messages = [
                 'http' => [
-                    $response->getStatusCode() => Json::decode($response->getBody(), 1)['detail'],
+                    $statusCode => Json::decode($response->getBody(), 1)['detail'],
                 ],
             ];
         }
