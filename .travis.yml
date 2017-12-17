@@ -23,7 +23,7 @@ before_script:
   - composer dump-autoload -o
 
 script:
-  - bin/phpstan analyse src/ --level=7
+  - bin/phpstan analyse src/ --level=7 -c phpstan.neon
   - bin/kahlan --coverage=4 --reporter=verbose --clover=build/logs/clover.xml
   - bin/coveralls -v --exclude-no-stmt
 
