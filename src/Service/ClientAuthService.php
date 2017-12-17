@@ -30,7 +30,7 @@ class ClientAuthService implements ClientApiInterface
     /**
      * ClientAuthService constructor.
      *
-     * @param $apiHostUrl
+     * @param string     $apiHostUrl
      * @param HttpClient $httpClient
      * @param array      $oauthConfig
      */

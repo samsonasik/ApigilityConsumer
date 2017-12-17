@@ -8,6 +8,12 @@ matrix:
     - php: 7.1
       env:
         - DEPS=latest
+    - php: 7.2
+      env:
+        - DEPS=lowest
+    - php: 7.2
+      env:
+        - DEPS=latest
 
 before_script:
   - mkdir -p build/logs
@@ -17,7 +23,7 @@ before_script:
   - composer dump-autoload -o
 
 script:
-  - bin/phpstan analyse src/ --level=7
+  - bin/phpstan analyse src/ --level=7 -c phpstan.neon
   - bin/kahlan --coverage=4 --reporter=verbose --clover=build/logs/clover.xml
   - bin/coveralls -v --exclude-no-stmt
 
