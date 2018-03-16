@@ -5,7 +5,7 @@ namespace ApigilityConsumer\Spec\Service;
 use ApigilityConsumer\Service\ClientService;
 use ApigilityConsumer\Service\ClientServiceFactory;
 use Kahlan\Plugin\Double;
-use Zend\ServiceManager\ServiceManager;
+use Psr\Container\ContainerInterface;
 
 describe('ClientServiceFactory', function () {
     beforeAll(function () {
@@ -16,7 +16,7 @@ describe('ClientServiceFactory', function () {
 
         it('return "ClientService" instance', function () {
 
-            $container = Double::instance(['extends' => ServiceManager::class]);
+            $container = Double::instance(['implements' => ContainerInterface::class]);
             allow($container)->toReceive('get')->with('config')->andReturn([
                 'apigility-consumer' => [
                     'api-host-url' => 'http://api.host.url'
