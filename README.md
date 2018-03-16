@@ -7,11 +7,11 @@ ApigilityConsumer
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
 [![Downloads](https://img.shields.io/packagist/dt/samsonasik/apigility-consumer.svg?style=flat-square)](https://packagist.org/packages/samsonasik/apigility-consumer)
 
-ZF2 and ZF3 Apigility Client module to consume API Services.
+ZF Apigility Client module to consume API Services.
 
-> version ^2.0 only support php ^7.1 with zend-servicemanager v3 and zend-json v3
+> This is README for version ^2.0 which only support php ^7.1 with zend-servicemanager v3 and zend-json v3
 
-> version ^1.4.0 still support php ^5.6|^7.0|^7.1
+> For version 1, you can read at [version 1 readme](https://github.com/samsonasik/ApigilityConsumer/tree/1.x.x) which still support php ^5.6|^7.0 with zend-servicemanager v2.
 
 > Consider upgrading :)
 
