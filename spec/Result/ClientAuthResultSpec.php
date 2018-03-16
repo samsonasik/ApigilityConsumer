@@ -2,10 +2,9 @@
 
 namespace ApigilityConsumer\Spec\Result;
 
-use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientAuthResult;
-use ReflectionMethod;
 use Error;
+use ReflectionMethod;
 
 describe('ClientAuthResult', function () {
 

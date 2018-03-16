@@ -2,10 +2,9 @@
 
 namespace ApigilityConsumer\Spec\Result;
 
-use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientResult;
-use ReflectionMethod;
 use Error;
+use ReflectionMethod;
 
 describe('ClientResult', function () {
 
