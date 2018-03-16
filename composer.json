@@ -17,7 +17,7 @@
         "php": "^7.1",
         "zendframework/zend-json": "^3.0",
         "zendframework/zend-http": "^2.6",
-        "zendframework/zend-servicemanager": "^3.0.0"
+        "zendframework/zend-servicemanager": "^3.3.0"
     },
     "require-dev": {
         "kahlan/kahlan": "^4.0",
