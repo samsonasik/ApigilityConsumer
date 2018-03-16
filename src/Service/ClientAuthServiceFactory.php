@@ -4,20 +4,12 @@ declare(strict_types=1);
 
 namespace ApigilityConsumer\Service;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Zend\Http\Client as HttpClient;
-use Zend\ServiceManager\Factory\FactoryInterface;
 
-class ClientAuthServiceFactory implements FactoryInterface
+class ClientAuthServiceFactory
 {
-    /**
-     * @param ContainerInterface $container
-     * @param string $requestedName
-     * @param null|array $options
-     *
-     * @return ClientAuthService
-     */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null) : ClientAuthService
+    public function __invoke(ContainerInterface $container) : ClientAuthService
     {
         $config     = $container->get('config');
         $httpClient = new HttpClient();
