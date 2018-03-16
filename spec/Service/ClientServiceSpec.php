@@ -258,7 +258,7 @@ describe('ClientService', function () {
 
         });
 
-        it('set files data with success if has tmp_name and name key not exists and does not has any other data', function () {
+        it('set files data with not success if has tmp_name and name key not exists and does not has any other data', function () {
 
             $data = [
                 'api-route-segment' => '/api',
