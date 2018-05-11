@@ -3,5 +3,5 @@
 /.travis.yml export-ignore
 /.coveralls.yml export-ignore
 /phpstan.neon export-ignore
-/test/ export-ignore
+/spec/ export-ignore
 /CONTRIBUTING.md export-ignore
