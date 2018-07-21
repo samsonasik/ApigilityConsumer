@@ -50,7 +50,7 @@ class ClientResult implements ResultInterface
      *
      * @return self
      */
-    public static function applyResult($result) : ResultInterface
+    public static function applyResult(string $result) : ResultInterface
     {
         if (!empty(self::$messages)) {
             $resultArray['validation_messages'] = self::$messages;

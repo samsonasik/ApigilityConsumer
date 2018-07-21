@@ -34,8 +34,11 @@ class ClientAuthService implements ClientApiInterface
      * @param HttpClient $httpClient
      * @param array      $oauthConfig
      */
-    public function __construct($apiHostUrl, HttpClient $httpClient, array $oauthConfig)
-    {
+    public function __construct(
+        string     $apiHostUrl,
+        HttpClient $httpClient,
+        array      $oauthConfig
+    ) {
         $this->apiHostUrl = $apiHostUrl;
         $this->httpClient = $httpClient;
         $this->oauthConfig = $oauthConfig;

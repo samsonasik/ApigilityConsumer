@@ -1,3 +1,0 @@
-parameters:
-	ignoreErrors:
-		- '#Parameter [a-zA-Z0-9\\_] $code of method Zend\Http\Response::setStatusCode() expects int, int|string given#'

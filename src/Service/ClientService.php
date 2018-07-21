@@ -38,9 +38,9 @@ class ClientService implements ClientApiInterface
      * @param  array       $authConfig
      */
     public function __construct(
-        $apiHostUrl,
+        string     $apiHostUrl,
         HttpClient $httpClient,
-        array $authConfig
+        array      $authConfig
     ) {
         $this->apiHostUrl = $apiHostUrl;
         $this->httpClient = $httpClient;
@@ -171,11 +171,8 @@ class ClientService implements ClientApiInterface
 
                 if (! $fileIsValid) {
                     $response = new Response();
-                    $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
-                    $response->setReasonPhrase(\sprintf(
-                        SpecialErrorMessage::INVALID_REQUEST_FILE['reason'],
-                        $this->apiHostUrl
-                    ));
+                    $response->setStatusCode(SpecialErrorMessage::INVALID_REQUEST_FILE['code']);
+                    $response->setReasonPhrase(SpecialErrorMessage::INVALID_REQUEST_FILE['reason']);
 
                     return $this->getClientResult($response);
                 }
