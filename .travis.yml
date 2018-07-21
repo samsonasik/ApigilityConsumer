@@ -25,7 +25,7 @@ before_script:
 script:
   - bin/phpstan analyse src/ --level=max
   - bin/kahlan --coverage=4 --reporter=verbose --clover=build/logs/clover.xml
-  - bin/coveralls -v --exclude-no-stmt
+  - bin/php-coveralls -v --exclude-no-stmt
 
 notifications:
     email: false

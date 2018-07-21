@@ -22,7 +22,7 @@
     "require-dev": {
         "kahlan/kahlan": "^4.0",
         "phpstan/phpstan": "^0.10",
-        "satooshi/php-coveralls": "^1.0.1",
+        "php-coveralls/php-coveralls": "^2.0",
         "symfony/yaml": "^3.2.7"
     },
     "autoload": {
