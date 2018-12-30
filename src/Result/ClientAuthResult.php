@@ -96,7 +96,7 @@ class ClientAuthResult implements ResultInterface
      *
      * @return self
      */
-    private static function fromFailure(array $result) : self
+    private static function fromFailure(array $result = null) : self
     {
         $self = new self();
         $self->success = false;
