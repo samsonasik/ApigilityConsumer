@@ -7,6 +7,7 @@ use ApigilityConsumer\Service\ClientAuthService;
 use InvalidArgumentException;
 use Kahlan\Plugin\Double;
 use ReflectionProperty;
+use RuntimeException;
 use Zend\Http\Client;
 use Zend\Http\Response;
 use Zend\Json\Json;
@@ -233,6 +234,33 @@ json
             );
 
             allow($this->httpClient)->toReceive('send')->andReturn($response);
+
+            $result = $this->service->callAPI($data);
+            expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
+            expect($result->success)->toBe(false);
+
+        });
+
+        it('set not success on Http Client send got RuntimeException', function () {
+
+            $data = [
+                'api-route-segment' => '/oauth',
+                'form-request-method' => 'POST',
+
+                'form-data' => [
+                    'username'    => 'foo',
+                    'password'     => 'foo',
+                ],
+            ];
+
+            $headers = [
+                'Accept'       => 'application/json',
+                'Content-type' => 'application/json'
+            ];
+
+            allow($this->httpClient)->toReceive('send')->andRun(function () {
+                throw new RuntimeException();
+            });
 
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientAuthResult::class);

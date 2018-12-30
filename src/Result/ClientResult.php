@@ -15,7 +15,7 @@ class ClientResult implements ResultInterface
     /** @var  bool */
     public $success;
 
-    /** @var  array */
+    /** @var  array|null */
     public $data;
 
     /**
@@ -81,11 +81,11 @@ class ClientResult implements ResultInterface
     /**
      * A success result, with 'success' property = true
      *
-     * @param array $result
+     * @param array|null $result
      *
      * @return self
      */
-    private static function fromSucceed(array $result)
+    private static function fromSucceed(array $result = null)
     {
         $self = new self();
         $self->success = true;
@@ -97,11 +97,11 @@ class ClientResult implements ResultInterface
     /**
      * A failure result process, return self with success = false and its validation_messages when exists.
      *
-     * @param array $result
+     * @param array|null $result
      *
      * @return self
      */
-    private static function fromFailure(array $result)
+    private static function fromFailure(array $result = null)
     {
         $self = new self();
         $self->success = false;

@@ -7,6 +7,7 @@ use ApigilityConsumer\Service\ClientService;
 use InvalidArgumentException;
 use Kahlan\Plugin\Double;
 use ReflectionProperty;
+use RuntimeException;
 use Zend\Http\Client\Adapter\Curl;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Response;
@@ -639,6 +640,29 @@ describe('ClientService', function () {
                             ->callAPI($data, 100);
             };
             expect($closure)->toThrow(new InvalidArgumentException('client selected not found in the "clients" config'));
+
+        });
+
+        it('set not success on Http Client send got RuntimeException', function () {
+
+            $data = [
+                'api-route-segment'   => '/api',
+                'form-request-method' => 'POST',
+                'form-data'           => [],
+            ];
+
+            $headers = [
+                'Accept'       => 'application/json',
+                'Content-type' => 'application/json'
+            ];
+
+            allow($this->httpClient)->toReceive('send')->andRun(function () {
+                throw new RuntimeException();
+            });
+
+            $result = $this->service->callAPI($data);
+            expect($result)->toBeAnInstanceOf(ClientResult::class);
+            expect($result->success)->toBe(false);
 
         });
 
