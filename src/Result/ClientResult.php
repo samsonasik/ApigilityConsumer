@@ -17,7 +17,7 @@ class ClientResult implements ResultInterface
     /** @var  bool */
     public $success;
 
-    /** @var  array */
+    /** @var  array|null */
     public $data;
 
     /**
@@ -83,7 +83,7 @@ class ClientResult implements ResultInterface
     /**
      * A success result, with 'success' property = true
      *
-     * @param array $result
+     * @param array|null $result
      *
      * @return self
      */
@@ -99,7 +99,7 @@ class ClientResult implements ResultInterface
     /**
      * A failure result process, return self with success = false and its validation_messages when exists.
      *
-     * @param array $result
+     * @param array|null $result
      *
      * @return self
      */

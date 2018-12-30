@@ -13,7 +13,7 @@ class ClientAuthResult implements ResultInterface
     /** @var  bool */
     public $success;
 
-    /** @var  array */
+    /** @var  array|null */
     public $data;
 
     /**
@@ -75,7 +75,7 @@ class ClientAuthResult implements ResultInterface
     /**
      * A success result, with 'success' property = true.
      *
-     * @param array $result
+     * @param array|null $result
      *
      * @return self
      */
@@ -92,7 +92,7 @@ class ClientAuthResult implements ResultInterface
      * A failure result process, return self with success = false
      * with brought messages when exists.
      *
-     * @param array $result
+     * @param array|null $result
      *
      * @return self
      */
