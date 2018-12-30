@@ -141,7 +141,9 @@ class ClientAuthService implements ClientApiInterface
      */
     private function getClientAuthResult(Response $response) : ClientAuthResult
     {
-        $statusCode = $response->getStatusCode();
+        ClientAuthResult::$messages = [];
+        $statusCode                 = $response->getStatusCode();
+
         if ($statusCode !== Response::STATUS_CODE_200 && $statusCode !== Response::STATUS_CODE_400 && $statusCode !== Response::STATUS_CODE_401) {
             ClientAuthResult::$messages = [
                 'http' => [
