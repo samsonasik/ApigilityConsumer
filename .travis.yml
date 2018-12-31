@@ -26,11 +26,11 @@ before_script:
   - composer self-update
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable --no-interaction ; fi
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer install --prefer-source --no-interaction ; fi
-  - if [[ $TRAVIS_PHP_VERSION = 7.1 ]]; then composer global require --dev phpstan/phpstan:dev-master; fi
+  - if [[ $TRAVIS_PHP_VERSION = 7.1 ]]; then composer require --dev phpstan/phpstan; fi
   - composer dump-autoload -o
 
 script:
-  - if [[ $TRAVIS_PHP_VERSION = 7.1 ]]; then ~/.composer/vendor/bin/phpstan analyse src/ --level=7 -c phpstan.neon; fi
+  - if [[ $TRAVIS_PHP_VERSION = 7.1 ]]; then bin/phpstan analyse src/ --level=7 -c phpstan.neon; fi
   - bin/kahlan --coverage=4 --reporter=verbose --clover=build/logs/clover.xml
   - bin/coveralls -v --exclude-no-stmt
 
