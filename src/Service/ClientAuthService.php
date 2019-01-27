@@ -144,23 +144,21 @@ class ClientAuthService implements ClientApiInterface
         ClientAuthResult::$messages = [];
         $statusCode                 = $response->getStatusCode();
 
-        if ($statusCode !== Response::STATUS_CODE_200 && $statusCode !== Response::STATUS_CODE_400 && $statusCode !== Response::STATUS_CODE_401) {
-            ClientAuthResult::$messages = [
-                'http' => [
-                    $statusCode => $response->getReasonPhrase(),
-                ],
-            ];
+        if ($statusCode === Response::STATUS_CODE_200) {
+            return ClientAuthResult::applyResult($response->getBody());
         }
 
         // 400 is specifically invalid request due missing request parameter passed or invalid client details
         // 401 is invalid grant ( username or password or both are invalid )
-        if ($statusCode === Response::STATUS_CODE_400 || $statusCode === Response::STATUS_CODE_401) {
-            ClientAuthResult::$messages = [
-                'http' => [
-                    $statusCode => Json::decode($response->getBody(), 1)['detail'],
-                ],
-            ];
-        }
+        $reasonPhrase = in_array($statusCode, [Response::STATUS_CODE_400, Response::STATUS_CODE_401], true)
+            ? Json::decode($response->getBody(), 1)['detail']
+            : $response->getReasonPhrase();
+
+        ClientAuthResult::$messages = [
+            'http' => [
+                $statusCode => $reasonPhrase,
+            ],
+        ];
 
         return ClientAuthResult::applyResult($response->getBody());
     }
