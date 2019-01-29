@@ -72,7 +72,11 @@ class ClientService implements ClientApiInterface
     public function withHttpAuthType(string $authType = HttpClient::AUTH_BASIC) : self
     {
         if (! \in_array($authType, [HttpClient::AUTH_BASIC, HttpClient::AUTH_DIGEST])) {
-            throw new InvalidArgumentException('authType selected should be a ' . HttpClient::AUTH_BASIC . ' or ' . HttpClient::AUTH_DIGEST);
+            throw new InvalidArgumentException(sprintf(
+                'authType selected should be a %s or %s',
+                HttpClient::AUTH_BASIC,
+                HttpClient::AUTH_DIGEST
+            ));
         }
 
         $this->authType = $authType;
@@ -124,7 +128,6 @@ class ClientService implements ClientApiInterface
         }
 
         if ($this->authType !== null) {
-
             $authConfig = $this->authConfig;
             if ($this->client !== null) {
                 $authConfig = $this->authConfig['clients'][$this->client];
@@ -144,7 +147,11 @@ class ClientService implements ClientApiInterface
                     $this->httpClient->setAdapter(Curl::class);
                 }
 
-                $this->httpClient->setAuth($authConfigSelected['username'], $authConfigSelected['password'], $this->authType);
+                $this->httpClient->setAuth(
+                    $authConfigSelected['username'],
+                    $authConfigSelected['password'],
+                    $this->authType
+                );
             }
         }
 
@@ -154,7 +161,6 @@ class ClientService implements ClientApiInterface
         ];
 
         if (! empty($data['form-data']['files'])) {
-
             $files = $data['form-data']['files'];
             $fileIsValid = true;
             foreach ($files as $key => $file) {
@@ -216,7 +222,8 @@ class ClientService implements ClientApiInterface
 
     /**
      * Handle return ClientResult with 'success' or 'failure'.
-     * when ClientResult::$messages is not empty, or response status code is not 200 ( messages will filled via ClientResult::$messages assignment ),
+     * when ClientResult::$messages is not empty,
+     * or response status code is not 200 ( messages will filled via ClientResult::$messages assignment ),
      * it will failure,.
      *
      * otherwise, will success.
