@@ -16,7 +16,7 @@ final class SpecialErrorMessage
     const RESOURCE_NOT_AVAILABLE = [
         'code' => 410,
         'reason' => 'API Call failed, The target resource %s is no longer available, ' .
-            'please check your ApigilityConsumer config, '.
+            'please check your ApigilityConsumer config, ' .
             'and/or ask API service administrator whether the API server is down.',
     ];
 
