@@ -2,7 +2,16 @@
     "name": "samsonasik/apigility-consumer",
     "type": "library",
     "description": "Apigility Client API Service Consumer",
-    "keywords": ["apigility", "zf2", "zf3", "expressive", "client", "consumer", "http", "oauth"],
+    "keywords": [
+        "apigility",
+        "zf2",
+        "zf3",
+        "expressive",
+        "client",
+        "consumer",
+        "http",
+        "oauth"
+    ],
     "homepage": "https://github.com/samsonasik/ApigilityConsumer",
     "license": "MIT",
     "authors": [
@@ -15,26 +24,17 @@
     ],
     "require": {
         "php": "^7.1",
-        "zendframework/zend-json": "^3.0",
         "zendframework/zend-http": "^2.6",
+        "zendframework/zend-json": "^3.0",
         "zendframework/zend-servicemanager": "^3.3.0"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.3",
         "kahlan/kahlan": "^4.0",
-        "phpstan/phpstan": "^0.10",
         "php-coveralls/php-coveralls": "^2.0",
-        "symfony/yaml": "^3.2.7"
-    },
-    "autoload": {
-        "psr-4": {
-            "ApigilityConsumer\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-             "ApigilityConsumer\\Spec\\": "spec/"
-        }
+        "phpstan/phpstan": "^0.10",
+        "symfony/yaml": "^3.2.7",
+        "zendframework/zend-coding-standard": "^1.0"
     },
     "config": {
         "bin-dir": "bin"
@@ -44,5 +44,19 @@
             "module": "ApigilityConsumer",
             "config-provider": "ApigilityConsumer\\ConfigProvider"
         }
+    },
+    "autoload": {
+        "psr-4": {
+            "ApigilityConsumer\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ApigilityConsumer\\Spec\\": "spec/"
+        }
+    },
+    "scripts": {
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf"
     }
 }

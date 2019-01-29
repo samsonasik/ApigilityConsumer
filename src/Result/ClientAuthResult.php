@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ApigilityConsumer\Result;
 
-use ApigilityConsumer\Error\SpecialErrorMessage;
+use ApigilityConsumer\Error\SpecialErrorMessage as ErrorMessage;
 use RuntimeException;
 use Zend\Json\Json;
 
@@ -44,7 +44,7 @@ class ClientAuthResult implements ResultInterface
     public static function applyResult(string $result) : ResultInterface
     {
         $resultArray = [];
-        if (!empty(self::$messages)) {
+        if (! empty(self::$messages)) {
             $resultArray['validation_messages'] = self::$messages;
 
             return static::fromFailure($resultArray);
@@ -58,14 +58,14 @@ class ClientAuthResult implements ResultInterface
         } catch (RuntimeException $e) {
             $resultArray['validation_messages'] = [
                 'http' => [
-                    SpecialErrorMessage::SERVICE_UNAVAILABLE['code'] => SpecialErrorMessage::SERVICE_UNAVAILABLE['reason'],
+                    ErrorMessage::SERVICE_UNAVAILABLE['code'] => ErrorMessage::SERVICE_UNAVAILABLE['reason'],
                 ],
             ];
 
             return static::fromFailure($resultArray);
         }
 
-        if (!isset($resultArray['token_type'])) {
+        if (! isset($resultArray['token_type'])) {
             return static::fromFailure($resultArray);
         }
 
