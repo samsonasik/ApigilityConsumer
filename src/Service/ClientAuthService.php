@@ -143,15 +143,16 @@ class ClientAuthService implements ClientApiInterface
     {
         ClientAuthResult::$messages = [];
         $statusCode                 = $response->getStatusCode();
+        $body                       = $response->getBody();
 
         if ($statusCode === Response::STATUS_CODE_200) {
-            return ClientAuthResult::applyResult($response->getBody());
+            return ClientAuthResult::applyResult($body);
         }
 
         // 400 is specifically invalid request due missing request parameter passed or invalid client details
         // 401 is invalid grant ( username or password or both are invalid )
         $reasonPhrase = in_array($statusCode, [Response::STATUS_CODE_400, Response::STATUS_CODE_401], true)
-            ? Json::decode($response->getBody(), 1)['detail']
+            ? Json::decode($body, 1)['detail']
             : $response->getReasonPhrase();
 
         ClientAuthResult::$messages = [
@@ -160,6 +161,6 @@ class ClientAuthService implements ClientApiInterface
             ],
         ];
 
-        return ClientAuthResult::applyResult($response->getBody());
+        return ClientAuthResult::applyResult($body);
     }
 }
