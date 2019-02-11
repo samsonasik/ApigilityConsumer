@@ -107,12 +107,12 @@ class ClientResult implements ResultInterface
         $self = new self();
         $self->success = false;
 
-        $self::$messages = isset($result['validation_messages']['http'])
-            ? $result['validation_messages']
+        $self::$messages = ! isset($result['validation_messages'])
+            ? []
             : (
-                (isset($result['validation_messages']))
-                ? ['validation_messages' => $result['validation_messages']]
-                : []
+                isset($result['validation_messages']['http'])
+                    ? $result['validation_messages']
+                    : $result
             );
 
         return $self;
