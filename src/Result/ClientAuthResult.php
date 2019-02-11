@@ -65,11 +65,9 @@ class ClientAuthResult implements ResultInterface
             return static::fromFailure($resultArray);
         }
 
-        if (! isset($resultArray['token_type'])) {
-            return static::fromFailure($resultArray);
-        }
-
-        return static::fromSucceed($resultArray);
+        return ! isset($resultArray['token_type'])
+            ? static::fromFailure($resultArray)
+            : static::fromSucceed($resultArray);
     }
 
     /**

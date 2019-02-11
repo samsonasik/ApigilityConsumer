@@ -74,11 +74,9 @@ class ClientResult implements ResultInterface
             return static::fromFailure($resultArray);
         }
 
-        if (isset($resultArray['validation_messages'])) {
-            return static::fromFailure($resultArray);
-        }
-
-        return static::fromSucceed($resultArray);
+        return isset($resultArray['validation_messages'])
+            ? static::fromFailure($resultArray)
+            : static::fromSucceed($resultArray);
     }
 
     /**
