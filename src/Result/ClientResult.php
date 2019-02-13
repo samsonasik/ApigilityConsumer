@@ -86,7 +86,7 @@ class ClientResult implements ResultInterface
      *
      * @return self
      */
-    private static function fromSucceed(array $result = null) : self
+    private static function fromSucceed(?array $result) : self
     {
         $self = new self();
         $self->success = true;
@@ -102,7 +102,7 @@ class ClientResult implements ResultInterface
      *
      * @return self
      */
-    private static function fromFailure(array $result = null) : self
+    private static function fromFailure(?array $result) : self
     {
         $self = new self();
         $self->success = false;
