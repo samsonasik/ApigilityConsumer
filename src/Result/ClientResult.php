@@ -63,7 +63,7 @@ class ClientResult implements ResultInterface
             // for handle some characters like "\\" in string
             Json::$useBuiltinEncoderDecoder = true;
             // decode
-            $resultArray = Json::decode($result, 1);
+            $resultArray = Json::decode($result, Json::TYPE_ARRAY);
         } catch (RuntimeException $e) {
             $resultArray['validation_messages'] = [
                 'http' => [
