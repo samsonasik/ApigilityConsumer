@@ -52,7 +52,7 @@ class ClientService implements ClientApiInterface
      * @throws InvalidArgumentException
      * @return self
      */
-    public function withClient(string $client = null) : self
+    public function withClient(string $client) : self
     {
         if (! isset($this->authConfig['clients'][$client])) {
             throw new InvalidArgumentException('client selected not found in the "clients" config');
