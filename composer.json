@@ -33,7 +33,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "kahlan/kahlan": "^4.0",
         "php-coveralls/php-coveralls": "^2.0",
-        "phpstan/phpstan": "^0.10",
+        "phpstan/phpstan": "^0.11.19",
         "symfony/yaml": "^3.2.7",
         "zendframework/zend-coding-standard": "^1.0"
     },
