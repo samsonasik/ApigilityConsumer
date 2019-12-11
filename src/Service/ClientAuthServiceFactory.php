@@ -14,7 +14,7 @@ class ClientAuthServiceFactory
         $config      = $container->get('config')['apigility-consumer'];
         $apiHostURL  = $config['api-host-url'];
         $httpClient  = new HttpClient(null, $config['http_client_options'] ?? null);
-        $oauthConfig = $config['oauth'] ?? [];
+        $oauthConfig = $config['oauth'];
 
         return new ClientAuthService(
             $apiHostURL,
