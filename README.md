@@ -33,6 +33,9 @@ return [
     'apigility-consumer' => [
         'api-host-url' => 'http://api.host.com',
 
+        // null for default or array of configuration listed at https://docs.zendframework.com/zend-http/client/intro/#configuration
+        'http_client_options' => null,
+
         // for oauth
         'oauth' => [
 
@@ -284,7 +287,7 @@ $clientResult = $client->withHttpAuthType(HttpClient::AUTH_DIGEST)
 
 **Specify "client_id" on Http Auth**
 
-On Http Auth, there is no "client_id" definition concept. On `ClientService`, they are keys that represent just like "client_id" to ease switch client specific http auth.  
+On Http Auth, there is no "client_id" definition concept. On `ClientService`, they are keys that represent just like "client_id" to ease switch client specific http auth.
 
 To allow You can specify what "client_id" to be used on Http Auth with provide `withClient()`:
 

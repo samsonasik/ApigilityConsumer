@@ -6,6 +6,9 @@ return [
     'apigility-consumer' => [
         'api-host-url' => 'http://api.host.com',
 
+        // null for default or array of configuration listed at https://docs.zendframework.com/zend-http/client/intro/#configuration
+        'http_client_options' => null,
+
         // for oauth
         'oauth' => [
 
