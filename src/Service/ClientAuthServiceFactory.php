@@ -11,13 +11,15 @@ class ClientAuthServiceFactory
 {
     public function __invoke(ContainerInterface $container) : ClientAuthService
     {
-        $config     = $container->get('config');
-        $httpClient = new HttpClient();
+        $config      = $container->get('config')['apigility-consumer'];
+        $apiHostURL  = $config['api-host-url'];
+        $httpClient  = new HttpClient(null, $config['http_client_options'] ?? null);
+        $oauthConfig = $config['oauth'];
 
         return new ClientAuthService(
-            $config['apigility-consumer']['api-host-url'],
+            $apiHostURL,
             $httpClient,
-            $config['apigility-consumer']['oauth']
+            $oauthConfig
         );
     }
 }
