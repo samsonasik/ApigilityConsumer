@@ -1,12 +1,14 @@
 {
     "name": "samsonasik/apigility-consumer",
     "type": "library",
-    "description": "Apigility Client API Service Consumer",
+    "description": "Laminas API Tools Client API Service Consumer",
     "keywords": [
         "apigility",
-        "zf2",
-        "zf3",
-        "expressive",
+        "laminas",
+        "api",
+        "laminas2",
+        "laminas3",
+        "mezzio",
         "client",
         "consumer",
         "http",
@@ -32,10 +34,10 @@
     "require-dev": {
         "guzzlehttp/guzzle": "^6.3",
         "kahlan/kahlan": "^4.0",
+        "laminas/laminas-coding-standard": "^2.0",
         "php-coveralls/php-coveralls": "^2.0",
         "phpstan/phpstan": "^0.11.19",
-        "symfony/yaml": "^3.2.7",
-        "laminas/laminas-coding-standard": "^2.0"
+        "symfony/yaml": "^3.2.7"
     },
     "config": {
         "bin-dir": "bin"
@@ -56,10 +58,10 @@
             "ApigilityConsumer\\Spec\\": "spec/"
         }
     },
+    "minimum-stability": "alpha",
+    "prefer-stable": true,
     "scripts": {
         "cs-check": "phpcs",
         "cs-fix": "phpcbf"
-    },
-    "minimum-stability": "alpha",
-    "prefer-stable": true
+    }
 }
