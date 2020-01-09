@@ -61,8 +61,5 @@
         "cs-fix": "phpcbf"
     },
     "minimum-stability": "alpha",
-    "prefer-stable": true,
-    "replace": {
-        "laminas/laminas-zendframework-bridge": "*"
-    }
+    "prefer-stable": true
 }

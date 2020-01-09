@@ -25,7 +25,9 @@ class ClientAuthResult implements ResultInterface
      */
     public static $messages = [];
 
-    // avoid class instantiation
+    /**
+     * avoid class instantiation
+     */
     private function __construct()
     {
     }

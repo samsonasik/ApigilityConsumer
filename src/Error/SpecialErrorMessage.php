@@ -12,19 +12,19 @@ namespace ApigilityConsumer\Error;
  */
 final class SpecialErrorMessage
 {
-    const RESOURCE_NOT_AVAILABLE = [
+    public const RESOURCE_NOT_AVAILABLE = [
         'code'   => 410,
         'reason' => 'API Call failed, The target resource %s is no longer available, '
             . 'please check your ApigilityConsumer config, '
             . 'and/or ask API service administrator whether the API server is down.',
     ];
 
-    const INVALID_REQUEST_FILE = [
+    public const INVALID_REQUEST_FILE = [
         'code'   => 400,
         'reason' => 'Invalid files data, please make sure you have "tmp_name" and "name" key',
     ];
 
-    const SERVICE_UNAVAILABLE = [
+    public const SERVICE_UNAVAILABLE = [
         'code'   => 503,
         'reason' => 'Service Unavailable, please contact API service administrator.',
     ];
