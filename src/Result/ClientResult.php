@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace ApigilityConsumer\Result;
 
 use ApigilityConsumer\Error\SpecialErrorMessage as ErrorMessage;
+use Laminas\Json\Json;
 use RuntimeException;
-use Zend\Json\Json;
 
 /**
  * An 'entity' as value object that returned in \ApigilityConsumer\Service\ClientService::getClientResult().
- *
  */
 class ClientResult implements ResultInterface
 {
@@ -29,7 +28,9 @@ class ClientResult implements ResultInterface
      */
     public static $messages = [];
 
-    // avoid class instantiation
+    /**
+     * avoid class instantiation
+     */
     private function __construct()
     {
     }
@@ -47,11 +48,9 @@ class ClientResult implements ResultInterface
      *
      * Otherwise, it will return succeed.
      *
-     * @param string $result
-     *
      * @return self
      */
-    public static function applyResult(string $result) : ResultInterface
+    public static function applyResult(string $result): ResultInterface
     {
         if (! empty(self::$messages)) {
             $resultArray['validation_messages'] = self::$messages;
@@ -81,14 +80,10 @@ class ClientResult implements ResultInterface
 
     /**
      * A success result, with 'success' property = true
-     *
-     * @param array|null $result
-     *
-     * @return self
      */
-    private static function fromSucceed(?array $result) : self
+    private static function fromSucceed(?array $result): self
     {
-        $self = new self();
+        $self          = new self();
         $self->success = true;
         $self->data    = $result;
 
@@ -97,14 +92,10 @@ class ClientResult implements ResultInterface
 
     /**
      * A failure result process, return self with success = false and its validation_messages when exists.
-     *
-     * @param array|null $result
-     *
-     * @return self
      */
-    private static function fromFailure(?array $result) : self
+    private static function fromFailure(?array $result): self
     {
-        $self = new self();
+        $self          = new self();
         $self->success = false;
 
         $self::$messages = ! isset($result['validation_messages'])

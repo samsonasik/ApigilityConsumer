@@ -8,10 +8,10 @@ use InvalidArgumentException;
 use Kahlan\Plugin\Double;
 use ReflectionProperty;
 use RuntimeException;
-use Zend\Http\Client\Adapter\Curl;
-use Zend\Http\Client as HttpClient;
-use Zend\Http\Response;
-use Zend\Json\Json;
+use Laminas\Http\Client\Adapter\Curl;
+use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Response;
+use Laminas\Json\Json;
 
 describe('ClientService', function () {
     beforeAll(function () {

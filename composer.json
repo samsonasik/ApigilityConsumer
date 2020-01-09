@@ -24,10 +24,10 @@
     ],
     "require": {
         "php": "^7.1",
-        "zendframework/zend-http": "^2.6",
-        "zendframework/zend-json": "^3.1.2",
-        "zendframework/zend-servicemanager": "^3.3.0",
-        "zendframework/zend-stdlib": "^3.2.1"
+        "laminas/laminas-http": "^2.6",
+        "laminas/laminas-json": "^3.1.2",
+        "laminas/laminas-servicemanager": "^3.3.0",
+        "laminas/laminas-stdlib": "^3.2.1"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.3",
@@ -35,7 +35,7 @@
         "php-coveralls/php-coveralls": "^2.0",
         "phpstan/phpstan": "^0.11.19",
         "symfony/yaml": "^3.2.7",
-        "zendframework/zend-coding-standard": "^1.0"
+        "laminas/laminas-coding-standard": "^2.0"
     },
     "config": {
         "bin-dir": "bin"
@@ -59,5 +59,7 @@
     "scripts": {
         "cs-check": "phpcs",
         "cs-fix": "phpcbf"
-    }
+    },
+    "minimum-stability": "alpha",
+    "prefer-stable": true
 }

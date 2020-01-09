@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace ApigilityConsumer\Service;
 
+use Laminas\Http\Client as HttpClient;
 use Psr\Container\ContainerInterface;
-use Zend\Http\Client as HttpClient;
 
 class ClientServiceFactory
 {
-    public function __invoke(ContainerInterface $container) : ClientService
+    public function __invoke(ContainerInterface $container): ClientService
     {
         $config     = $container->get('config')['apigility-consumer'];
         $apiHostURL = $config['api-host-url'];

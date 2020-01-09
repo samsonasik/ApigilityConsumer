@@ -10,11 +10,6 @@ interface ClientApiInterface
 {
     /**
      * Process Call API.
-     *
-     * @param array    $data
-     * @param int|null $timeout
-     *
-     * @return ResultInterface
      */
-    public function callAPI(array $data, int $timeout = null) : ResultInterface;
+    public function callAPI(array $data, ?int $timeout = null): ResultInterface;
 }

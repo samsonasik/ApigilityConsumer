@@ -7,9 +7,11 @@ ApigilityConsumer
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
 [![Downloads](https://poser.pugx.org/samsonasik/apigility-consumer/downloads)](https://packagist.org/packages/samsonasik/apigility-consumer)
 
-ZF Apigility Client module to consume API Services.
+Laminas API Tools Client module to consume API Services.
 
-> This is README for version ^2.0 which only support php ^7.1 with zend-servicemanager v3 and zend-json v3
+> This is README for version ^3.0 which only support php ^7.1 with laminas-servicemanager v3 and laminas-json v3
+
+> This is README for version ^2.0, you can read at [version 1 readme](https://github.com/samsonasik/ApigilityConsumer/tree/2.x.x) which only support php ^7.1 with zend-servicemanager v3 and zend-json v3
 
 > For version 1, you can read at [version 1 readme](https://github.com/samsonasik/ApigilityConsumer/tree/1.x.x) which still support php ^5.6|^7.0 with zend-servicemanager v2.
 
@@ -27,7 +29,7 @@ composer require samsonasik/apigility-consumer
 For its configuration, copy `vendor/samsonasik/apigility-consumer/config/apigility-consumer.local.php.dist` to `config/autoload/apigility-consumer.local.php` and configure with your api host url (required), oauth, and/or http auth settings:
 
 ```php
-use Zend\Http\Client as HttpClient;
+use Laminas\Http\Client as HttpClient;
 
 return [
     'apigility-consumer' => [
@@ -112,9 +114,9 @@ return [
 ],
 ```
 
-Using at Zend\Expressive
+Using at Mezzio
 ------------------------
-You can use at Zend\Expressive, after set up local `config/autoload/apigility-consumer.local.php` like above, you can copy `config/expressive.local.php.dist` to `config/autoload/expressive.local.php`, and you can use it.
+You can use at Mezzio, after set up local `config/autoload/apigility-consumer.local.php` like above, you can copy `config/expressive.local.php.dist` to `config/autoload/expressive.local.php`, and you can use it.
 
 
 Services
@@ -240,7 +242,7 @@ $clientResult = $client->callAPI($data, $timeout);
 if api call require authentication for basic or digest, you can apply `->withHttpAuthType()`:
 
 ```php
-use Zend\Http\Client as HttpClient;
+use Laminas\Http\Client as HttpClient;
 
 $clientResult = $client->withHttpAuthType(HttpClient::AUTH_BASIC)
                        ->callAPI($data, $timeout);
@@ -254,7 +256,7 @@ that will read of specified basic or digest auth config we defined at `config/au
 If you want to specify custom username and password for the Http Auth on `callAPI()` call, you can specify via `$data`:
 
 ```php
-use Zend\Http\Client as HttpClient;
+use Laminas\Http\Client as HttpClient;
 
 $data = [
     'api-route-segment' => '/api',

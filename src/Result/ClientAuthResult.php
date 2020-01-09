@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace ApigilityConsumer\Result;
 
 use ApigilityConsumer\Error\SpecialErrorMessage as ErrorMessage;
+use Laminas\Json\Json;
 use RuntimeException;
-use Zend\Json\Json;
 
 class ClientAuthResult implements ResultInterface
 {
@@ -25,7 +25,9 @@ class ClientAuthResult implements ResultInterface
      */
     public static $messages = [];
 
-    // avoid class instantiation
+    /**
+     * avoid class instantiation
+     */
     private function __construct()
     {
     }
@@ -37,11 +39,9 @@ class ClientAuthResult implements ResultInterface
      *
      * if decode failed, it will return static::fromFailure() with "Service unavailable" error message
      *
-     * @param string $result
-     *
      * @return self
      */
-    public static function applyResult(string $result) : ResultInterface
+    public static function applyResult(string $result): ResultInterface
     {
         $resultArray = [];
         if (! empty(self::$messages)) {
@@ -72,16 +72,12 @@ class ClientAuthResult implements ResultInterface
 
     /**
      * A success result, with 'success' property = true.
-     *
-     * @param array|null $result
-     *
-     * @return self
      */
-    private static function fromSucceed(?array $result) : self
+    private static function fromSucceed(?array $result): self
     {
-        $self = new self();
+        $self          = new self();
         $self->success = true;
-        $self->data = $result;
+        $self->data    = $result;
 
         return $self;
     }
@@ -89,15 +85,11 @@ class ClientAuthResult implements ResultInterface
     /**
      * A failure result process, return self with success = false
      * with brought messages when exists.
-     *
-     * @param array|null $result
-     *
-     * @return self
      */
-    private static function fromFailure(?array $result) : self
+    private static function fromFailure(?array $result): self
     {
-        $self = new self();
-        $self->success = false;
+        $self            = new self();
+        $self->success   = false;
         $self::$messages = $result['validation_messages'] ?? [];
 
         return $self;

@@ -37,6 +37,7 @@ before_script:
 script:
   - if [[ $DEPS == 'latest' ]]; then composer cs-check ; fi
   - bin/phpstan analyse src/ --level=max
+  - echo "<?php" > vendor/laminas/laminas-zendframework-bridge/src/autoload.php
   - bin/kahlan --coverage=4 --reporter=verbose --clover=build/logs/clover.xml
   - bin/php-coveralls -v --exclude-no-stmt
 
