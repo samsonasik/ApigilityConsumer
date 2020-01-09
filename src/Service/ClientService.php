@@ -8,12 +8,16 @@ use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientResult;
 use ApigilityConsumer\Result\ResultInterface;
 use InvalidArgumentException;
+use Laminas\Http\Client\Adapter\Curl;
+use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Response;
+use Laminas\Json\Json;
+use Laminas\Stdlib\ErrorHandler;
 use RuntimeException;
-use Zend\Http\Client\Adapter\Curl;
-use Zend\Http\Client as HttpClient;
-use Zend\Http\Response;
-use Zend\Json\Json;
-use Zend\Stdlib\ErrorHandler;
+
+use function file_get_contents;
+use function in_array;
+use function sprintf;
 
 class ClientService implements ClientApiInterface
 {
@@ -26,21 +30,13 @@ class ClientService implements ClientApiInterface
     /** @var array  */
     private $authConfig;
 
-    private $client   = null;
-    private $authType = null;
+    private $client;
+    private $authType;
 
-
-    /**
-     * ClientService constructor.
-     *
-     * @param  string      $apiHostUrl
-     * @param  HttpClient  $httpClient
-     * @param  array       $authConfig
-     */
     public function __construct(
-        string     $apiHostUrl,
+        string $apiHostUrl,
         HttpClient $httpClient,
-        array      $authConfig
+        array $authConfig
     ) {
         $this->apiHostUrl = $apiHostUrl;
         $this->httpClient = $httpClient;
@@ -48,11 +44,9 @@ class ClientService implements ClientApiInterface
     }
 
     /**
-     * @param  string     $client
      * @throws InvalidArgumentException
-     * @return self
      */
-    public function withClient(string $client) : self
+    public function withClient(string $client): self
     {
         if (! isset($this->authConfig['clients'][$client])) {
             throw new InvalidArgumentException('client selected not found in the "clients" config');
@@ -65,13 +59,11 @@ class ClientService implements ClientApiInterface
     /**
      * Set Auth Type if required
      *
-     * @param string $authType
      * @throws InvalidArgumentException
-     * @return self
      */
-    public function withHttpAuthType(string $authType = HttpClient::AUTH_BASIC) : self
+    public function withHttpAuthType(string $authType = HttpClient::AUTH_BASIC): self
     {
-        if (! \in_array($authType, [HttpClient::AUTH_BASIC, HttpClient::AUTH_DIGEST])) {
+        if (! in_array($authType, [HttpClient::AUTH_BASIC, HttpClient::AUTH_DIGEST])) {
             throw new InvalidArgumentException(sprintf(
                 'authType selected should be a %s or %s',
                 HttpClient::AUTH_BASIC,
@@ -86,10 +78,8 @@ class ClientService implements ClientApiInterface
     /**
      * Reset Auth Type back to null,
      * for handle after callAPI() already called with specified auth type
-     *
-     * @return self
      */
-    public function resetHttpAuthType() : self
+    public function resetHttpAuthType(): self
     {
         $this->authType = null;
         return $this;
@@ -98,10 +88,8 @@ class ClientService implements ClientApiInterface
     /**
      * Reset client_id back to null,
      * for handle after callAPI() already called with specified client
-     *
-     * @return self
      */
-    public function resetClient() : self
+    public function resetClient(): self
     {
         $this->client = null;
         return $this;
@@ -112,18 +100,15 @@ class ClientService implements ClientApiInterface
      *
      * It call API for generic API Services
      *
-     * @param array    $data
-     * @param int|null $timeout
-     *
      * @return ClientResult
      */
-    public function callAPI(array $data, int $timeout = null) : ResultInterface
+    public function callAPI(array $data, ?int $timeout = null): ResultInterface
     {
         $headers = [];
 
         if (isset($data['token_type']) && isset($data['access_token'])) {
             $headers = [
-                'Authorization' => $data['token_type'].' '.$data['access_token'],
+                'Authorization' => $data['token_type'] . ' ' . $data['access_token'],
             ];
         }
 
@@ -156,19 +141,19 @@ class ClientService implements ClientApiInterface
         }
 
         $headers += [
-            'Accept' => 'application/json',
-            'Content-type' => 'application/json'
+            'Accept'       => 'application/json',
+            'Content-type' => 'application/json',
         ];
 
         if (! empty($data['form-data']['files'])) {
-            $files = $data['form-data']['files'];
+            $files       = $data['form-data']['files'];
             $fileIsValid = true;
             foreach ($files as $key => $file) {
                 if (empty($file['tmp_name']) || empty($file['name'])) {
                     $fileIsValid = false;
                 } else {
                     ErrorHandler::start();
-                    $fileContent = \file_get_contents($file['tmp_name']);
+                    $fileContent = file_get_contents($file['tmp_name']);
                     ErrorHandler::stop();
                     if ($fileContent === false) {
                         $fileIsValid = false;
@@ -203,7 +188,7 @@ class ClientService implements ClientApiInterface
         }
 
         $this->httpClient->setHeaders($headers);
-        $this->httpClient->setUri($this->apiHostUrl.$data['api-route-segment']);
+        $this->httpClient->setUri($this->apiHostUrl . $data['api-route-segment']);
         $this->httpClient->setMethod($data['form-request-method']);
 
         try {
@@ -211,7 +196,7 @@ class ClientService implements ClientApiInterface
         } catch (RuntimeException $e) {
             $response = new Response();
             $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
-            $response->setReasonPhrase(\sprintf(
+            $response->setReasonPhrase(sprintf(
                 SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['reason'],
                 $this->apiHostUrl
             ));
@@ -227,12 +212,8 @@ class ClientService implements ClientApiInterface
      * it will failure,.
      *
      * otherwise, will success.
-     *
-     * @param Response $response
-     *
-     * @return ClientResult
      */
-    private function getClientResult(Response $response) : ClientResult
+    private function getClientResult(Response $response): ClientResult
     {
         ClientResult::$messages = [];
         $statusCode             = $response->getStatusCode();

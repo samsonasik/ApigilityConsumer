@@ -8,9 +8,9 @@ use InvalidArgumentException;
 use Kahlan\Plugin\Double;
 use ReflectionProperty;
 use RuntimeException;
-use Zend\Http\Client;
-use Zend\Http\Response;
-use Zend\Json\Json;
+use Laminas\Http\Client;
+use Laminas\Http\Response;
+use Laminas\Json\Json;
 
 describe('ClientAuthService', function () {
     beforeAll(function () {

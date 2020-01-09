@@ -8,10 +8,13 @@ use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientAuthResult;
 use ApigilityConsumer\Result\ResultInterface;
 use InvalidArgumentException;
+use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Response;
+use Laminas\Json\Json;
 use RuntimeException;
-use Zend\Http\Client as HttpClient;
-use Zend\Http\Response;
-use Zend\Json\Json;
+
+use function in_array;
+use function sprintf;
 
 class ClientAuthService implements ClientApiInterface
 {
@@ -25,31 +28,22 @@ class ClientAuthService implements ClientApiInterface
     private $oauthConfig;
 
     /** @var string|null */
-    private $client   = null;
+    private $client;
 
-    /**
-     * ClientAuthService constructor.
-     *
-     * @param string     $apiHostUrl
-     * @param HttpClient $httpClient
-     * @param array      $oauthConfig
-     */
     public function __construct(
-        string     $apiHostUrl,
+        string $apiHostUrl,
         HttpClient $httpClient,
-        array      $oauthConfig
+        array $oauthConfig
     ) {
-        $this->apiHostUrl = $apiHostUrl;
-        $this->httpClient = $httpClient;
+        $this->apiHostUrl  = $apiHostUrl;
+        $this->httpClient  = $httpClient;
         $this->oauthConfig = $oauthConfig;
     }
 
     /**
-     * @param  string     $client
      * @throws InvalidArgumentException
-     * @return self
      */
-    public function withClient(string $client) : self
+    public function withClient(string $client): self
     {
         if (! isset($this->oauthConfig['clients'][$client])) {
             throw new InvalidArgumentException('client selected not found in the "clients" config');
@@ -62,10 +56,8 @@ class ClientAuthService implements ClientApiInterface
     /**
      * Reset client_id back to null,
      * for handle after callAPI() already called with specified client
-     *
-     * @return self
      */
-    public function resetClient() : self
+    public function resetClient(): self
     {
         $this->client = null;
         return $this;
@@ -76,21 +68,18 @@ class ClientAuthService implements ClientApiInterface
      *
      * It call API for authentication process.
      *
-     * @param array    $data
-     * @param int|null $timeout
-     *
      * @return ClientAuthResult
      */
-    public function callAPI(array $data, int $timeout = null) : ResultInterface
+    public function callAPI(array $data, ?int $timeout = null): ResultInterface
     {
         $headers = [
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ];
 
         $oauthConfig = $this->oauthConfig;
         if ($this->client !== null) {
-            $oauthConfig = $this->oauthConfig['clients'][$this->client];
+            $oauthConfig              = $this->oauthConfig['clients'][$this->client];
             $oauthConfig['client_id'] = $this->client;
         }
 
@@ -110,7 +99,7 @@ class ClientAuthService implements ClientApiInterface
         $this->httpClient->setRawBody(Json::encode($dataTobeSent));
 
         $this->httpClient->setHeaders($headers);
-        $this->httpClient->setUri($this->apiHostUrl.$data['api-route-segment']);
+        $this->httpClient->setUri($this->apiHostUrl . $data['api-route-segment']);
         $this->httpClient->setMethod($data['form-request-method']);
 
         if (null !== $timeout) {
@@ -122,7 +111,7 @@ class ClientAuthService implements ClientApiInterface
         } catch (RuntimeException $e) {
             $response = new Response();
             $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
-            $response->setReasonPhrase(\sprintf(
+            $response->setReasonPhrase(sprintf(
                 SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['reason'],
                 $this->apiHostUrl
             ));
@@ -134,12 +123,8 @@ class ClientAuthService implements ClientApiInterface
     /**
      * Handle return ClientAuthResult with 'success' or 'failure'.
      * when ClientAuthResult::$messages is not empty, or response status code is not 200 it will failure,.
-     *
-     * @param Response $response
-     *
-     * @return ClientAuthResult
      */
-    private function getClientAuthResult(Response $response) : ClientAuthResult
+    private function getClientAuthResult(Response $response): ClientAuthResult
     {
         ClientAuthResult::$messages = [];
         $statusCode                 = $response->getStatusCode();
