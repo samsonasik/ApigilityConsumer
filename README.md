@@ -116,7 +116,7 @@ return [
 
 Using at Mezzio
 ------------------------
-You can use at Mezzio, after set up local `config/autoload/apigility-consumer.local.php` like above, you can copy `config/expressive.local.php.dist` to `config/autoload/expressive.local.php`, and you can use it.
+You can use at Mezzio, after set up local `config/autoload/apigility-consumer.local.php` like above, you can copy `config/mezzio.local.php.dist` to `config/autoload/mezzio.local.php`, and you can use it.
 
 
 Services
