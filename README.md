@@ -9,7 +9,9 @@ ApigilityConsumer
 
 Laminas API Tools Client module to consume API Services.
 
-> This is README for version ^3.0 which only support php ^7.1 with laminas-servicemanager v3 and laminas-json v3
+> This is README for version ^4.0 which only support php ^7.3|~8.0 with laminas-servicemanager v3 and laminas-json v3
+
+> For version ^3.0, you can read at [version 3 readme](https://github.com/samsonasik/ApigilityConsumer/tree/3.x.x) which only support php ^7.1 with laminas-servicemanager v3 and laminas-json v3
 
 > For version ^2.0, you can read at [version 2 readme](https://github.com/samsonasik/ApigilityConsumer/tree/2.x.x) which only support php ^7.1 with zend-servicemanager v3 and zend-json v3
 
