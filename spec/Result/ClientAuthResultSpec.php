@@ -19,12 +19,10 @@ describe('ClientAuthResult', function () {
 
         it('cannot create instance via new ClientAuthResult()', function () {
 
-            skipIf(PHP_MAJOR_VERSION < 7);
-
             try {
                 new ClientAuthResult();
             } catch (Error $e) {
-                expect($e->getMessage())->toBe("Call to private ApigilityConsumer\\Result\\ClientAuthResult::__construct() from context 'Kahlan\\Cli\\Kahlan'");
+                expect($e->getMessage())->toBe("Call to private ApigilityConsumer\\Result\\ClientAuthResult::__construct() from scope Kahlan\\Cli\\Kahlan");
             }
 
         });

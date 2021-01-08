@@ -1,19 +1,10 @@
 language: php
 
+env:
+  - XDEBUG_MODE=coverage
+
 matrix:
   include:
-    - php: 7.1
-      env:
-        - DEPS=lowest
-    - php: 7.1
-      env:
-        - DEPS=latest
-    - php: 7.2
-      env:
-        - DEPS=lowest
-    - php: 7.2
-      env:
-        - DEPS=latest
     - php: 7.3
       env:
         - DEPS=lowest
@@ -24,21 +15,32 @@ matrix:
       env:
         - DEPS=lowest
     - php: 7.4
+      env:
+        - DEPS=latest
+    - php: 8.0
+      env:
+        - DEPS=lowest
+    - php: 8.0
       env:
         - DEPS=latest
 
 before_script:
   - mkdir -p build/logs
   - composer self-update
-  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable --no-interaction ; fi
-  - if [[ $DEPS == 'latest' ]]; then travis_retry composer install --prefer-source --no-interaction ; fi
+  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable --no-interaction --ignore-platform-reqs ; fi
+  - if [[ $DEPS == 'latest' ]]; then travis_retry composer install --prefer-source --no-interaction --ignore-platform-reqs; fi
   - composer dump-autoload -o
 
 script:
   - if [[ $DEPS == 'latest' ]]; then composer cs-check ; fi
   - bin/phpstan analyse src/ --level=max
-  - bin/kahlan --coverage=4 --reporter=verbose --clover=build/logs/clover.xml
-  - bin/php-coveralls -v --exclude-no-stmt
+  - |
+    if [ $(phpenv version-name) != '8.0' ]; then
+      bin/kahlan --coverage=4 --reporter=verbose --clover=build/logs/clover.xml && bin/php-coveralls -v --exclude-no-stmt
+    fi
+    if [ $(phpenv version-name) == '8.0' ]; then
+      bin/kahlan --reporter=verbose
+    fi
 
 notifications:
     email: false
