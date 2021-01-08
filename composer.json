@@ -36,7 +36,7 @@
         "kahlan/kahlan": "^5.0",
         "laminas/laminas-coding-standard": "^2.0",
         "php-coveralls/php-coveralls": "^2.0",
-        "phpstan/phpstan": "^0.11.19",
+        "phpstan/phpstan": "^0.12",
         "symfony/yaml": "^3.2.7"
     },
     "config": {
