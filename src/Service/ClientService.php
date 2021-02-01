@@ -30,7 +30,10 @@ class ClientService implements ClientApiInterface
     /** @var array  */
     private $authConfig;
 
+    /** @var string|null */
     private $client;
+
+    /** @var string|null */
     private $authType;
 
     public function __construct(
