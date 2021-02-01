@@ -153,7 +153,7 @@ class ClientService implements ClientApiInterface
                     $fileIsValid = false;
                 } else {
                     ErrorHandler::start();
-                    $fileContent = file_get_contents($file['tmp_name']);
+                    $fileContent = @file_get_contents($file['tmp_name']);
                     ErrorHandler::stop();
                     if ($fileContent === false) {
                         $fileIsValid = false;
