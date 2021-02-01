@@ -22,7 +22,9 @@ describe('ClientResult', function () {
             try {
                 new ClientResult();
             } catch (Error $e) {
-                expect($e->getMessage())->toBe("Call to private ApigilityConsumer\\Result\\ClientResult::__construct() from context 'Kahlan\\Cli\\Kahlan'");
+                $in        = PHP_VERSION_ID >= 80000 ? 'scope' : 'context';
+                $kahlanCli = PHP_VERSION_ID >= 80000 ? "Kahlan\\Cli\\Kahlan" : "'Kahlan\\Cli\\Kahlan'";
+                expect($e->getMessage())->toBe("Call to private ApigilityConsumer\\Result\\ClientResult::__construct() from $in $kahlanCli");
             }
 
         });
