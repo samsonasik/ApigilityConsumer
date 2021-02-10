@@ -16,7 +16,7 @@ jobs:
         php-versions: ['7.3', '7.4', '8.0']
     steps:
       - name: Setup PHP Action
-        uses: shivammathur/setup-php@2.0
+        uses: shivammathur/setup-php@v2
         with:
           extensions: intl
           php-version: "${{ matrix.php-versions }}"
