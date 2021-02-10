@@ -2,8 +2,8 @@ ApigilityConsumer
 =================
 
 [![Latest Version](https://img.shields.io/github/release/samsonasik/ApigilityConsumer.svg?style=flat-square)](https://github.com/samsonasik/ApigilityConsumer/releases)
-[![Build Status](https://travis-ci.com/samsonasik/ApigilityConsumer.svg?branch=master)](https://travis-ci.com/samsonasik/ApigilityConsumer)
-[![Coverage Status](https://coveralls.io/repos/github/samsonasik/ApigilityConsumer/badge.svg?branch=master)](https://coveralls.io/github/samsonasik/ApigilityConsumer?branch=master)
+![ci build](https://github.com/samsonasik/ApigilityConsuemr/workflows/ci%20build/badge.svg)
+[![Code Coverage](https://codecov.io/gh/samsonasik/ApigilityConsumer/branch/master/graph/badge.svg)](https://codecov.io/gh/samsonasik/ApigilityConsumer)
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
 [![Downloads](https://poser.pugx.org/samsonasik/apigility-consumer/downloads)](https://packagist.org/packages/samsonasik/apigility-consumer)
 
