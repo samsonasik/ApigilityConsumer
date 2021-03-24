@@ -28,14 +28,14 @@ jobs:
       - name: "Install dependencies"
         run: "composer install"
       - name: "Run test suite"
-        run: "mkdir -p build/logs && bin/kahlan --coverage=4 --reporter=verbose --clover=build/logs/coverage.xml && bin/php-coveralls -v --exclude-no-stmt"
+        run: "mkdir -p build/logs && bin/kahlan --coverage=4 --reporter=verbose --clover=build/logs/clover.xml && bin/php-coveralls -v --exclude-no-stmt"
         env:
           XDEBUG_MODE: "coverage"
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./build/logs/coverage.xml
+          file: ./build/logs/clover.xml
           flags: tests
           name: codecov-umbrella
           yml: ./codecov.yml
