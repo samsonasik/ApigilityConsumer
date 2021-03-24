@@ -19,8 +19,6 @@ describe('ClientResult', function () {
 
         it('cannot create instance via new ClientResult()', function () {
 
-            skipIf(PHP_MAJOR_VERSION < 7);
-
             try {
                 new ClientResult();
             } catch (Error $e) {
