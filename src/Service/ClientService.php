@@ -8,8 +8,8 @@ use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientResult;
 use ApigilityConsumer\Result\ResultInterface;
 use InvalidArgumentException;
-use Laminas\Http\Client\Adapter\Curl;
 use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Client\Adapter\Curl;
 use Laminas\Http\Response;
 use Laminas\Json\Json;
 use Laminas\Stdlib\ErrorHandler;
@@ -30,14 +30,10 @@ class ClientService implements ClientApiInterface
     /** @var array  */
     private $authConfig;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $client;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $authType;
 
     public function __construct(
