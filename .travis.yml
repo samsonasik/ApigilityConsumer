@@ -1,19 +1,11 @@
 language: php
 
+env:
+  global:
+    - XDEBUG_MODE=coverage
+
 matrix:
   include:
-    - php: 7.1
-      env:
-        - DEPS=lowest
-    - php: 7.1
-      env:
-        - DEPS=latest
-    - php: 7.2
-      env:
-        - DEPS=lowest
-    - php: 7.2
-      env:
-        - DEPS=latest
     - php: 7.3
       env:
         - DEPS=lowest
@@ -24,6 +16,9 @@ matrix:
       env:
         - DEPS=lowest
     - php: 7.4
+      env:
+        - DEPS=latest
+    - php: 8.0
       env:
         - DEPS=latest
 
