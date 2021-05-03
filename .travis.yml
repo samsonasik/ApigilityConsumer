@@ -24,12 +24,12 @@ matrix:
 
 before_script:
   - mkdir -p build/logs
-  - if [[ $DEPS == 'lowest' ]]; then travis_retry php ./composer.phar update --prefer-lowest --prefer-stable --no-interaction ; fi
-  - if [[ $DEPS == 'latest' ]]; then travis_retry php ./composer.phar install --prefer-source --no-interaction ; fi
-  - php ./composer.phar dump-autoload -o
+  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable --no-interaction ; fi
+  - if [[ $DEPS == 'latest' ]]; then travis_retry composer install --prefer-source --no-interaction ; fi
+  - php composer dump-autoload -o
 
 script:
-  - if [[ $DEPS == 'latest' ]]; then php ./composer.phar cs-check ; fi
+  - if [[ $DEPS == 'latest' ]]; then php composer cs-check ; fi
   - bin/phpstan analyse src/ --level=max
   - bin/kahlan --coverage=4 --reporter=verbose --clover=build/logs/clover.xml
   - bin/php-coveralls -v --exclude-no-stmt
