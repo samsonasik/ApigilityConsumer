@@ -23,7 +23,7 @@ jobs:
           coverage: xdebug
       - name: Checkout
         uses: actions/checkout@v2
-        run: "composer validate"
+      - run: "composer validate"
       - name: "Install dependencies"
         run: "composer install --prefer-dist"
       - name: "CS Check"
