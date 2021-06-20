@@ -18,26 +18,11 @@ use function sprintf;
 
 class ClientAuthService implements ClientApiInterface
 {
-    /** @var  string */
-    private $apiHostUrl;
-
-    /** @var HttpClient */
-    private $httpClient;
-
-    /** @var array  */
-    private $oauthConfig;
-
     /** @var string|null */
     private $client;
 
-    public function __construct(
-        string $apiHostUrl,
-        HttpClient $httpClient,
-        array $oauthConfig
-    ) {
-        $this->apiHostUrl  = $apiHostUrl;
-        $this->httpClient  = $httpClient;
-        $this->oauthConfig = $oauthConfig;
+    public function __construct(private string $apiHostUrl, private HttpClient $httpClient, private array $oauthConfig)
+    {
     }
 
     /**
@@ -108,7 +93,7 @@ class ClientAuthService implements ClientApiInterface
 
         try {
             $response = $this->httpClient->send();
-        } catch (RuntimeException $e) {
+        } catch (RuntimeException) {
             $response = new Response();
             $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
             $response->setReasonPhrase(sprintf(

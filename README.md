@@ -2,16 +2,18 @@ ApigilityConsumer
 =================
 
 [![Latest Version](https://img.shields.io/github/release/samsonasik/ApigilityConsumer.svg?style=flat-square)](https://github.com/samsonasik/ApigilityConsumer/releases)
-[![Build Status](https://travis-ci.org/samsonasik/ApigilityConsumer.svg?branch=master)](https://travis-ci.org/samsonasik/ApigilityConsumer)
-[![Coverage Status](https://coveralls.io/repos/github/samsonasik/ApigilityConsumer/badge.svg?branch=master)](https://coveralls.io/github/samsonasik/ApigilityConsumer?branch=master)
+![ci build](https://github.com/samsonasik/ApigilityConsumer/workflows/ci%20build/badge.svg)
+[![Code Coverage](https://codecov.io/gh/samsonasik/ApigilityConsumer/branch/master/graph/badge.svg)](https://codecov.io/gh/samsonasik/ApigilityConsumer)
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
 [![Downloads](https://poser.pugx.org/samsonasik/apigility-consumer/downloads)](https://packagist.org/packages/samsonasik/apigility-consumer)
 
 Laminas API Tools Client module to consume API Services.
 
-> This is README for version ^3.0 which only support php ^7.1 with laminas-servicemanager v3 and laminas-json v3
+> This is README for version ^4.0 which only support php ^8.0 with laminas-servicemanager v3 and laminas-json v3.
 
-> For version ^2.0, you can read at [version 2 readme](https://github.com/samsonasik/ApigilityConsumer/tree/2.x.x) which only support php ^7.1 with zend-servicemanager v3 and zend-json v3
+> This is README for version ^3.0 you can read at [version 3 readme](https://github.com/samsonasik/ApigilityConsumer/tree/3.x.x) which only support php ^7.1 with laminas-servicemanager v3 and laminas-json v3.
+
+> For version ^2.0, you can read at [version 2 readme](https://github.com/samsonasik/ApigilityConsumer/tree/2.x.x) which only support php ^7.1 with zend-servicemanager v3 and zend-json v3.
 
 > For version 1, you can read at [version 1 readme](https://github.com/samsonasik/ApigilityConsumer/tree/1.x.x) which still support php ^5.6|^7.0 with zend-servicemanager v2.
 

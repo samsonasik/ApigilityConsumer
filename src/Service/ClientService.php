@@ -8,8 +8,8 @@ use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientResult;
 use ApigilityConsumer\Result\ResultInterface;
 use InvalidArgumentException;
-use Laminas\Http\Client\Adapter\Curl;
 use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Client\Adapter\Curl;
 use Laminas\Http\Response;
 use Laminas\Json\Json;
 use Laminas\Stdlib\ErrorHandler;
@@ -21,26 +21,14 @@ use function sprintf;
 
 class ClientService implements ClientApiInterface
 {
-    /** @var string */
-    private $apiHostUrl;
-
-    /** @var HttpClient */
-    private $httpClient;
-
-    /** @var array  */
-    private $authConfig;
-
+    /** @var string|null */
     private $client;
+
+    /** @var string|null */
     private $authType;
 
-    public function __construct(
-        string $apiHostUrl,
-        HttpClient $httpClient,
-        array $authConfig
-    ) {
-        $this->apiHostUrl = $apiHostUrl;
-        $this->httpClient = $httpClient;
-        $this->authConfig = $authConfig;
+    public function __construct(private string $apiHostUrl, private HttpClient $httpClient, private array $authConfig)
+    {
     }
 
     /**
@@ -193,7 +181,7 @@ class ClientService implements ClientApiInterface
 
         try {
             $response = $this->httpClient->send();
-        } catch (RuntimeException $e) {
+        } catch (RuntimeException) {
             $response = new Response();
             $response->setStatusCode(SpecialErrorMessage::RESOURCE_NOT_AVAILABLE['code']);
             $response->setReasonPhrase(sprintf(

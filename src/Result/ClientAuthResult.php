@@ -55,7 +55,7 @@ class ClientAuthResult implements ResultInterface
             Json::$useBuiltinEncoderDecoder = true;
             // decode
             $resultArray = Json::decode($result, Json::TYPE_ARRAY);
-        } catch (RuntimeException $e) {
+        } catch (RuntimeException) {
             $resultArray['validation_messages'] = [
                 'http' => [
                     ErrorMessage::SERVICE_UNAVAILABLE['code'] => ErrorMessage::SERVICE_UNAVAILABLE['reason'],

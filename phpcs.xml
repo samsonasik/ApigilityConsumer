@@ -4,4 +4,8 @@
 
     <!-- Paths to check -->
     <file>src</file>
+
+    <rule ref="WebimpressCodingStandard.NamingConventions.ValidVariableName">
+       <exclude name="WebimpressCodingStandard.NamingConventions.ValidVariableName"/>
+    </rule>
 </ruleset>
