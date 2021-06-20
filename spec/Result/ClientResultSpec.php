@@ -24,7 +24,7 @@ describe('ClientResult', function () {
             try {
                 new ClientResult();
             } catch (Error $e) {
-                expect($e->getMessage())->toBe("Call to private ApigilityConsumer\\Result\\ClientResult::__construct() from context 'Kahlan\\Cli\\Kahlan'");
+                expect($e->getMessage())->toBe("Call to private ApigilityConsumer\\Result\\ClientResult::__construct() from scope Kahlan\\Cli\\Kahlan");
             }
 
         });
