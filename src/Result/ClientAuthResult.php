@@ -10,20 +10,15 @@ use RuntimeException;
 
 class ClientAuthResult implements ResultInterface
 {
-    /** @var  bool */
-    public $success;
-
-    /** @var  array|null */
-    public $data;
+    public ?bool $success = null;
+    public ?array $data   = null;
 
     /**
      * use static modifier on purpose, to make it usable when assign
      * ClientAuthResult::$messages from outside (eg: on ApigilityConsumer\Service\ClientAuthService::getClientResult()),
      * and it brought to all instance.
-     *
-     * @var array
      */
-    public static $messages = [];
+    public static array $messages = [];
 
     /**
      * avoid class instantiation

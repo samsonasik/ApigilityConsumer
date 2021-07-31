@@ -18,8 +18,7 @@ use function sprintf;
 
 class ClientAuthService implements ClientApiInterface
 {
-    /** @var string|null */
-    private $client;
+    private ?string $client = null;
 
     public function __construct(private string $apiHostUrl, private HttpClient $httpClient, private array $oauthConfig)
     {

@@ -21,11 +21,8 @@ use function sprintf;
 
 class ClientService implements ClientApiInterface
 {
-    /** @var string|null */
-    private $client;
-
-    /** @var string|null */
-    private $authType;
+    private ?string $client   = null;
+    private ?string $authType = null;
 
     public function __construct(private string $apiHostUrl, private HttpClient $httpClient, private array $authConfig)
     {
