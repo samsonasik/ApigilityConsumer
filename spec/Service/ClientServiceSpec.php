@@ -372,6 +372,9 @@ describe('ClientService', function () {
             expect($this->httpClient)->toReceive('setHeaders')->with($headers);
             expect($this->httpClient)->toReceive('setUri')->with('http://api.host.url/api');
             expect($this->httpClient)->toReceive('setMethod')->with($data['form-request-method']);
+            allow($this->httpClient)->toReceive('send')->andRun(function () {
+                throw new RuntimeException();
+            });
 
             $result = $this->service->callAPI($data);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
