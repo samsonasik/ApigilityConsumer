@@ -6,18 +6,18 @@ use ApigilityConsumer\Result\ClientResult;
 use Error;
 use ReflectionMethod;
 
-describe('ClientResult', function () {
+describe('ClientResult', function (): void {
 
-    describe('->__construct()', function () {
+    describe('->__construct()', function (): void {
 
-        it('a private constructor', function () {
+        it('a private constructor', function (): void {
 
             $r = new ReflectionMethod(ClientResult::class, '__construct');
             expect($r->isPrivate())->toBe(true);
 
         });
 
-        it('cannot create instance via new ClientResult()', function () {
+        it('cannot create instance via new ClientResult()', function (): void {
 
             skipIf(PHP_MAJOR_VERSION < 7);
 
@@ -31,9 +31,9 @@ describe('ClientResult', function () {
 
     });
 
-    describe('::applyResult', function () {
+    describe('::applyResult', function (): void {
 
-        it('set success = false when self::$messages is not empty', function () {
+        it('set success = false when self::$messages is not empty', function (): void {
 
             ClientResult::$messages = [
                 'http' => [
@@ -46,7 +46,7 @@ describe('ClientResult', function () {
 
         });
 
-        it('set success = false when provided json is invalid', function () {
+        it('set success = false when provided json is invalid', function (): void {
 
             ClientResult::$messages = [];
 
@@ -55,7 +55,7 @@ describe('ClientResult', function () {
 
         });
 
-        it('set success = false when validation_messages is not empty', function () {
+        it('set success = false when validation_messages is not empty', function (): void {
 
             ClientResult::$messages = [];
 
@@ -78,7 +78,7 @@ json;
 
         });
 
-        it('set success = true when validation_messages is empty and $messages is empty too', function () {
+        it('set success = true when validation_messages is empty and $messages is empty too', function (): void {
 
             ClientResult::$messages = [];
 

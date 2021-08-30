@@ -6,18 +6,18 @@ use ApigilityConsumer\Result\ClientAuthResult;
 use Error;
 use ReflectionMethod;
 
-describe('ClientAuthResult', function () {
+describe('ClientAuthResult', function (): void {
 
-    describe('->__construct()', function () {
+    describe('->__construct()', function (): void {
 
-        it('a private constructor', function () {
+        it('a private constructor', function (): void {
 
             $r = new ReflectionMethod(ClientAuthResult::class, '__construct');
             expect($r->isPrivate())->toBe(true);
 
         });
 
-        it('cannot create instance via new ClientAuthResult()', function () {
+        it('cannot create instance via new ClientAuthResult()', function (): void {
 
             skipIf(PHP_MAJOR_VERSION < 7);
 
@@ -31,9 +31,9 @@ describe('ClientAuthResult', function () {
 
     });
 
-    describe('::applyResult', function () {
+    describe('::applyResult', function (): void {
 
-        it('set success = false when self::$messages is not empty', function () {
+        it('set success = false when self::$messages is not empty', function (): void {
 
             ClientAuthResult::$messages = [
                 'http' => [
@@ -46,7 +46,7 @@ describe('ClientAuthResult', function () {
 
         });
 
-        it('set success = false when provided json is invalid', function () {
+        it('set success = false when provided json is invalid', function (): void {
 
             ClientAuthResult::$messages = [];
 
@@ -55,7 +55,7 @@ describe('ClientAuthResult', function () {
 
         });
 
-        it('set success = false when login failed', function () {
+        it('set success = false when login failed', function (): void {
 
             ClientAuthResult::$messages = [];
 
@@ -73,7 +73,7 @@ json;
 
         });
 
-        it('set success = true when login succeed', function () {
+        it('set success = true when login succeed', function (): void {
 
             ClientAuthResult::$messages = [];
 

@@ -13,7 +13,7 @@ use Laminas\Http\Response;
 use Laminas\Json\Json;
 
 describe('ClientAuthService', function () {
-    beforeAll(function () {
+    beforeAll(function (): void {
         $this->httpClient = Double::instance(['extends' => Client::class]);
         $this->service = new ClientAuthService(
             'http://api.host.url',
@@ -26,9 +26,9 @@ describe('ClientAuthService', function () {
         );
     });
 
-    describe('->resetClient()', function () {
+    describe('->resetClient()', function (): void {
 
-        it('reset $client property back to null', function () {
+        it('reset $client property back to null', function (): void {
 
             $service = new ClientAuthService(
                 'http://api.host.url',
@@ -62,7 +62,7 @@ describe('ClientAuthService', function () {
 
     describe('->callAPI', function () {
 
-        it('define grant_type = client_credentials will not set username form-data', function () {
+        it('define grant_type = client_credentials will not set username form-data', function (): void {
 
             $httpClient = Double::instance(['extends' => Client::class]);
             $service = new ClientAuthService(
@@ -93,7 +93,7 @@ describe('ClientAuthService', function () {
 
         });
 
-        it('throws InvalidArgumentException when withClient() called and client is not defined in the config', function () {
+        it('throws InvalidArgumentException when withClient() called and client is not defined in the config', function (): void {
 
             $data = [
                 'api-route-segment' => '/oauth',
@@ -105,7 +105,7 @@ describe('ClientAuthService', function () {
                 ],
             ];
 
-            $closure = function () use ($data) {
+            $closure = function () use ($data): void {
                 $this->service
                             ->withClient('not_registered_client')
                             ->callAPI($data, 100);
@@ -114,7 +114,7 @@ describe('ClientAuthService', function () {
 
         });
 
-        it('return "ClientAuthResult" instance', function () {
+        it('return "ClientAuthResult" instance', function (): void {
 
             $data = [
                 'api-route-segment' => '/oauth',
@@ -133,7 +133,7 @@ describe('ClientAuthService', function () {
 
         });
 
-        it('return "ClientAuthResult" instance on withClient() with registered client', function () {
+        it('return "ClientAuthResult" instance on withClient() with registered client', function (): void {
 
             $data = [
                 'api-route-segment' => '/oauth',
@@ -171,7 +171,7 @@ describe('ClientAuthService', function () {
 
         });
 
-        it('define timeout parameter will set timeout for http call', function () {
+        it('define timeout parameter will set timeout for http call', function (): void {
 
             $data = [
                 'api-route-segment' => '/oauth',
@@ -209,7 +209,7 @@ describe('ClientAuthService', function () {
 
         });
 
-        it('return invalid request when invalid data provided', function () {
+        it('return invalid request when invalid data provided', function (): void {
 
             $data = [
                 'api-route-segment' => '/oauth',

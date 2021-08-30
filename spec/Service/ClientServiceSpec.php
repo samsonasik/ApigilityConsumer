@@ -14,7 +14,7 @@ use Laminas\Http\Response;
 use Laminas\Json\Json;
 
 describe('ClientService', function () {
-    beforeAll(function () {
+    beforeAll(function (): void {
         $this->httpClient = Double::instance(['extends' => HttpClient::class]);
         $this->service = new ClientService(
             'http://api.host.url',
@@ -32,9 +32,9 @@ describe('ClientService', function () {
         );
     });
 
-    describe('->resetHttpAuthType()', function () {
+    describe('->resetHttpAuthType()', function (): void {
 
-        it('reset $authType property back to null', function () {
+        it('reset $authType property back to null', function (): void {
 
             $service = $this->service->withHttpAuthType(HttpClient::AUTH_BASIC);
             $r = new ReflectionProperty($service, 'authType');
@@ -48,9 +48,9 @@ describe('ClientService', function () {
 
     });
 
-    describe('->resetClient()', function () {
+    describe('->resetClient()', function (): void {
 
-        it('reset $client property back to null', function () {
+        it('reset $client property back to null', function (): void {
 
             $service = new ClientService(
                 'http://api.host.url',
@@ -94,7 +94,7 @@ describe('ClientService', function () {
     });
 
     describe('->callAPI', function () {
-        it('return "ClientResult" instance with success = true when status code = 200 and body != ""', function () {
+        it('return "ClientResult" instance with success = true when status code = 200 and body != ""', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -127,7 +127,7 @@ describe('ClientService', function () {
 
         });
 
-        it('return "ClientResult" instance with success = false when status code = 200 and body = ""', function () {
+        it('return "ClientResult" instance with success = false when status code = 200 and body = ""', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -160,7 +160,7 @@ describe('ClientService', function () {
 
         });
 
-        it('set files data with success if has tmp_name and name key exists', function () {
+        it('set files data with success if has tmp_name and name key exists', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -210,7 +210,7 @@ describe('ClientService', function () {
 
         });
 
-        it('set files data with success if has tmp_name and name key exists and does not has any other data', function () {
+        it('set files data with success if has tmp_name and name key exists and does not has any other data', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -259,7 +259,7 @@ describe('ClientService', function () {
 
         });
 
-        it('set files data with not success if has tmp_name and name key not exists and does not has any other data', function () {
+        it('set files data with not success if has tmp_name and name key not exists and does not has any other data', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -290,7 +290,7 @@ describe('ClientService', function () {
 
         });
 
-        it('set files data with success if doesnot has tmp_name or name key in per-file', function () {
+        it('set files data with success if doesnot has tmp_name or name key in per-file', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -320,7 +320,7 @@ describe('ClientService', function () {
 
         });
 
-        it('return "ClientResult" instance with success = false when status code != 200', function () {
+        it('return "ClientResult" instance with success = false when status code != 200', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -382,7 +382,7 @@ describe('ClientService', function () {
 
         });
 
-        it('define timeout parameter will set timeout for http call', function () {
+        it('define timeout parameter will set timeout for http call', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -414,7 +414,7 @@ describe('ClientService', function () {
 
         });
 
-        it('throws InvalidArgumentException when withHttpAuthType() called and authType is not "basic" or "digest"', function () {
+        it('throws InvalidArgumentException when withHttpAuthType() called and authType is not "basic" or "digest"', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -430,7 +430,7 @@ describe('ClientService', function () {
                 'Content-type' => 'application/json'
             ];
 
-            $closure = function () use ($data) {
+            $closure = function () use ($data): void {
                 $this->service
                             ->withHttpAuthType('not_basic_nor_digest')
                             ->callAPI($data, 100);
@@ -439,7 +439,7 @@ describe('ClientService', function () {
 
         });
 
-        it('call client->setAuth() when withHttpAuthType() and withClient() called and exists in configuration', function () {
+        it('call client->setAuth() when withHttpAuthType() and withClient() called and exists in configuration', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -501,7 +501,7 @@ describe('ClientService', function () {
 
         });
 
-        it('call client->setAuth() when withHttpAuthType() called and exists in configuration', function () {
+        it('call client->setAuth() when withHttpAuthType() called and exists in configuration', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -533,7 +533,7 @@ describe('ClientService', function () {
 
         });
 
-        it('call client->setAuth() when withHttpAuthType() called and exists in $data parameter', function () {
+        it('call client->setAuth() when withHttpAuthType() called and exists in $data parameter', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -576,7 +576,7 @@ describe('ClientService', function () {
 
         });
 
-        it('call client->setAuth() with setAdapter(Curl:class) when withHttpAuthType() called for AUTH_DIGEST', function () {
+        it('call client->setAuth() with setAdapter(Curl:class) when withHttpAuthType() called for AUTH_DIGEST', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -621,7 +621,7 @@ describe('ClientService', function () {
         });
 
 
-        it('throws InvalidArgumentException when withClient() called and client is not defined in the config', function () {
+        it('throws InvalidArgumentException when withClient() called and client is not defined in the config', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -637,7 +637,7 @@ describe('ClientService', function () {
                 'Content-type' => 'application/json'
             ];
 
-            $closure = function () use ($data) {
+            $closure = function () use ($data): void {
                 $this->service
                             ->withClient('not_registered_client')
                             ->callAPI($data, 100);

@@ -4,14 +4,14 @@ namespace ApigilityConsumer\Spec;
 
 use ApigilityConsumer\Module;
 
-describe('Module', function () {
-    beforeAll(function () {
+describe('Module', function (): void {
+    beforeAll(function (): void {
         $this->module = new Module();
     });
 
-    describe('->getConfig', function () {
+    describe('->getConfig', function (): void {
 
-        it('return "config" array', function () {
+        it('return "config" array', function (): void {
 
             $moduleConfig = include __DIR__ . '/../config/module.config.php';
 

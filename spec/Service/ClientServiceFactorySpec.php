@@ -7,14 +7,14 @@ use ApigilityConsumer\Service\ClientServiceFactory;
 use Kahlan\Plugin\Double;
 use Psr\Container\ContainerInterface;
 
-describe('ClientServiceFactory', function () {
-    beforeAll(function () {
+describe('ClientServiceFactory', function (): void {
+    beforeAll(function (): void {
         $this->factory = new ClientServiceFactory();
     });
 
-    describe('->__invoke', function () {
+    describe('->__invoke', function (): void {
 
-        it('return "ClientService" instance', function () {
+        it('return "ClientService" instance', function (): void {
 
             $container = Double::instance(['implements' => ContainerInterface::class]);
             allow($container)->toReceive('get')->with('config')->andReturn([

@@ -4,14 +4,14 @@ namespace ApigilityConsumer\Spec;
 
 use ApigilityConsumer\ConfigProvider;
 
-describe('ConfigProvider', function () {
-    beforeAll(function () {
+describe('ConfigProvider', function (): void {
+    beforeAll(function (): void {
         $this->configProvider = new ConfigProvider();
     });
 
-    describe('->__invoke', function () {
+    describe('->__invoke', function (): void {
 
-        it('return "config" array with "dependencies" key', function () {
+        it('return "config" array with "dependencies" key', function (): void {
 
             $moduleConfig = include __DIR__ . '/../config/module.config.php';
             $expected = [
