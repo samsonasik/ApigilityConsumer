@@ -80,6 +80,7 @@ describe('ClientAuthService', function () {
                 'form-request-method' => 'POST',
             ];
 
+            allow($httpClient)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
             allow($httpClient)->toReceive('setRawBody')->with(Json::encode(
                 [
                     'grant_type'    => 'client_credentials',
@@ -126,6 +127,7 @@ describe('ClientAuthService', function () {
                 ],
             ];
 
+            allow($this->httpClient)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
             allow($this->httpClient)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
 
             $result = $this->service->callAPI($data);
@@ -163,6 +165,7 @@ describe('ClientAuthService', function () {
                 ]
             );
 
+            allow($this->httpClient)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
             allow($this->httpClient)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
 
             $service->withClient('bar');
