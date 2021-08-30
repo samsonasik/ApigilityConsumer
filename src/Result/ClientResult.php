@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ApigilityConsumer\Result;
 
-use ApigilityConsumer\Error\SpecialErrorMessage as ErrorMessage;
+use ApigilityConsumer\Error\SpecialErrorMessage;
 use Laminas\Json\Json;
 use RuntimeException;
 
@@ -14,7 +14,8 @@ use RuntimeException;
 class ClientResult implements ResultInterface
 {
     public ?bool $success = null;
-    public ?array $data   = null;
+
+    public ?array $data = null;
 
     /**
      * use static modifier on purpose, to make it usable when assign
@@ -61,7 +62,8 @@ class ClientResult implements ResultInterface
         } catch (RuntimeException) {
             $resultArray['validation_messages'] = [
                 'http' => [
-                    ErrorMessage::SERVICE_UNAVAILABLE['code'] => ErrorMessage::SERVICE_UNAVAILABLE['reason'],
+                    SpecialErrorMessage::SERVICE_UNAVAILABLE['code']
+                        => SpecialErrorMessage::SERVICE_UNAVAILABLE['reason'],
                 ],
             ];
 

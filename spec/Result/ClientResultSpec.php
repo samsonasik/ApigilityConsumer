@@ -23,8 +23,8 @@ describe('ClientResult', function (): void {
 
             try {
                 new ClientResult();
-            } catch (Error $e) {
-                expect($e->getMessage())->toBe("Call to private ApigilityConsumer\\Result\\ClientResult::__construct() from scope Kahlan\\Cli\\Kahlan");
+            } catch (Error $error) {
+                expect($error->getMessage())->toBe("Call to private ApigilityConsumer\\Result\\ClientResult::__construct() from scope Kahlan\\Cli\\Kahlan");
             }
 
         });
@@ -58,20 +58,9 @@ describe('ClientResult', function (): void {
         it('set success = false when validation_messages is not empty', function (): void {
 
             ClientResult::$messages = [];
+            $jsonData = ['validation_messages' => ['foo' => ['regexNotMatch' => 'The input does not match against pattern \'/^[a-zA-Z0-9 .\-]+$/\'']], 'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html', 'title' => 'Unprocessable Entity', 'status' => 422, 'detail' => 'Failed Validation'];
 
-            $response = <<<json
-{
-    "validation_messages": {
-        "foo": {
-            "regexNotMatch": "The input does not match against pattern '/^[a-zA-Z0-9 .\\\\-]+$/'"
-        }
-    },
-    "type": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
-    "title": "Unprocessable Entity",
-    "status": 422,
-    "detail": "Failed Validation"
-}
-json;
+            $response = json_encode($jsonData);
 
             $result = ClientResult::applyResult($response);
             expect(false)->toBe($result->success);
@@ -81,14 +70,9 @@ json;
         it('set success = true when validation_messages is empty and $messages is empty too', function (): void {
 
             ClientResult::$messages = [];
+            $jsonData = ['data' => []];
 
-            $response = <<<json
-{
-    "data": {
-
-    }
-}
-json;
+            $response = json_encode($jsonData);
 
             $result = ClientResult::applyResult($response);
             expect(true)->toBe($result->success);

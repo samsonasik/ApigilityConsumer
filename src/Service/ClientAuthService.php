@@ -8,7 +8,7 @@ use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientAuthResult;
 use ApigilityConsumer\Result\ResultInterface;
 use InvalidArgumentException;
-use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Client;
 use Laminas\Http\Response;
 use Laminas\Json\Json;
 use RuntimeException;
@@ -20,7 +20,7 @@ class ClientAuthService implements ClientApiInterface
 {
     private ?string $client = null;
 
-    public function __construct(private string $apiHostUrl, private HttpClient $httpClient, private array $oauthConfig)
+    public function __construct(private string $apiHostUrl, private Client $httpClient, private array $oauthConfig)
     {
     }
 

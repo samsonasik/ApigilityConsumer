@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ApigilityConsumer\Service;
 
-use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Client;
 use Psr\Container\ContainerInterface;
 
 class ClientServiceFactory
@@ -13,7 +13,7 @@ class ClientServiceFactory
     {
         $config     = $container->get('config')['apigility-consumer'];
         $apiHostURL = $config['api-host-url'];
-        $httpClient = new HttpClient(null, $config['http_client_options'] ?? null);
+        $httpClient = new Client(null, $config['http_client_options'] ?? null);
         $authConfig = $config['auth'] ?? [];
 
         return new ClientService(

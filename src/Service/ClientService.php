@@ -8,7 +8,7 @@ use ApigilityConsumer\Error\SpecialErrorMessage;
 use ApigilityConsumer\Result\ClientResult;
 use ApigilityConsumer\Result\ResultInterface;
 use InvalidArgumentException;
-use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Client;
 use Laminas\Http\Client\Adapter\Curl;
 use Laminas\Http\Response;
 use Laminas\Json\Json;
@@ -21,10 +21,11 @@ use function sprintf;
 
 class ClientService implements ClientApiInterface
 {
-    private ?string $client   = null;
+    private ?string $client = null;
+
     private ?string $authType = null;
 
-    public function __construct(private string $apiHostUrl, private HttpClient $httpClient, private array $authConfig)
+    public function __construct(private string $apiHostUrl, private Client $httpClient, private array $authConfig)
     {
     }
 
@@ -46,13 +47,13 @@ class ClientService implements ClientApiInterface
      *
      * @throws InvalidArgumentException
      */
-    public function withHttpAuthType(string $authType = HttpClient::AUTH_BASIC): self
+    public function withHttpAuthType(string $authType = Client::AUTH_BASIC): self
     {
-        if (! in_array($authType, [HttpClient::AUTH_BASIC, HttpClient::AUTH_DIGEST])) {
+        if (! in_array($authType, [Client::AUTH_BASIC, Client::AUTH_DIGEST])) {
             throw new InvalidArgumentException(sprintf(
                 'authType selected should be a %s or %s',
-                HttpClient::AUTH_BASIC,
-                HttpClient::AUTH_DIGEST
+                Client::AUTH_BASIC,
+                Client::AUTH_DIGEST
             ));
         }
 
@@ -113,7 +114,7 @@ class ClientService implements ClientApiInterface
             }
 
             if (! empty($authConfigSelected['username']) && ! empty($authConfigSelected['password'])) {
-                if ($this->authType === HttpClient::AUTH_DIGEST) {
+                if ($this->authType === Client::AUTH_DIGEST) {
                     $this->httpClient->setAdapter(Curl::class);
                 }
 
@@ -212,6 +213,7 @@ class ClientService implements ClientApiInterface
                     ],
                 ];
             }
+
             return ClientResult::applyResult($body);
         }
 

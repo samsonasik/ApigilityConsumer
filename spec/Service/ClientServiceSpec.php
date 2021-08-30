@@ -9,22 +9,22 @@ use Kahlan\Plugin\Double;
 use ReflectionProperty;
 use RuntimeException;
 use Laminas\Http\Client\Adapter\Curl;
-use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Client;
 use Laminas\Http\Response;
 use Laminas\Json\Json;
 
 describe('ClientService', function () {
     beforeAll(function (): void {
-        $this->httpClient = Double::instance(['extends' => HttpClient::class]);
+        $this->httpClient = Double::instance(['extends' => Client::class]);
         $this->service = new ClientService(
             'http://api.host.url',
             $this->httpClient,
             [
-                HttpClient::AUTH_BASIC => [
+                Client::AUTH_BASIC => [
                     'username' => 'foo',
                     'password' => 'foo_s3cret'
                 ],
-                HttpClient::AUTH_DIGEST => [
+                Client::AUTH_DIGEST => [
                     'username' => 'foo',
                     'password' => 'foo_s3cret'
                 ],
@@ -36,10 +36,11 @@ describe('ClientService', function () {
 
         it('reset $authType property back to null', function (): void {
 
-            $service = $this->service->withHttpAuthType(HttpClient::AUTH_BASIC);
+            $service = $this->service->withHttpAuthType(Client::AUTH_BASIC);
             $r = new ReflectionProperty($service, 'authType');
             $r->setAccessible(true);
-            expect($r->getValue($service))->toBe(HttpClient::AUTH_BASIC);
+
+            expect($r->getValue($service))->toBe(Client::AUTH_BASIC);
 
             $service->resetHttpAuthType();
             expect($r->getValue($service))->toBe(null);
@@ -56,23 +57,23 @@ describe('ClientService', function () {
                 'http://api.host.url',
                 $this->httpClient,
                 [
-                    HttpClient::AUTH_BASIC => [
+                    Client::AUTH_BASIC => [
                         'username' => 'foo',
                         'password' => 'foo_s3cret'
                     ],
-                    HttpClient::AUTH_DIGEST => [
+                    Client::AUTH_DIGEST => [
                         'username' => 'foo',
                         'password' => 'foo_s3cret'
                     ],
 
                     'clients' => [
                         'bar' => [ // bar is client_id
-                            HttpClient::AUTH_BASIC => [
+                            Client::AUTH_BASIC => [
                                 'username' => 'bar',
                                 'password' => 'bar_s3cret'
                             ],
 
-                            HttpClient::AUTH_DIGEST => [
+                            Client::AUTH_DIGEST => [
                                 'username' => 'bar',
                                 'password' => 'bar_s3cret'
                             ],
@@ -82,8 +83,10 @@ describe('ClientService', function () {
             );
 
             $service = $service->withClient('bar');
+
             $r = new ReflectionProperty($service, 'client');
             $r->setAccessible(true);
+
             expect($r->getValue($service))->toBe('bar');
 
             $service->resetClient();
@@ -457,7 +460,7 @@ describe('ClientService', function () {
 
             allow($this->httpClient)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
 
-            expect($this->httpClient)->toReceive('setAuth')->with('bar', 'bar_s3cret', HttpClient::AUTH_BASIC);
+            expect($this->httpClient)->toReceive('setAuth')->with('bar', 'bar_s3cret', Client::AUTH_BASIC);
             expect($this->httpClient)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
             expect($this->httpClient)->toReceive('setOptions')->with(['timeout' => 100]);
             expect($this->httpClient)->toReceive('setHeaders')->with($headers);
@@ -468,23 +471,23 @@ describe('ClientService', function () {
                 'http://api.host.url',
                 $this->httpClient,
                 [
-                    HttpClient::AUTH_BASIC => [
+                    Client::AUTH_BASIC => [
                         'username' => 'foo',
                         'password' => 'foo_s3cret'
                     ],
-                    HttpClient::AUTH_DIGEST => [
+                    Client::AUTH_DIGEST => [
                         'username' => 'foo',
                         'password' => 'foo_s3cret'
                     ],
 
                     'clients' => [
                         'bar' => [ // bar is client_id
-                            HttpClient::AUTH_BASIC => [
+                            Client::AUTH_BASIC => [
                                 'username' => 'bar',
                                 'password' => 'bar_s3cret'
                             ],
 
-                            HttpClient::AUTH_DIGEST => [
+                            Client::AUTH_DIGEST => [
                                 'username' => 'bar',
                                 'password' => 'bar_s3cret'
                             ],
@@ -494,7 +497,7 @@ describe('ClientService', function () {
             );
 
             $clientResult = $service
-                            ->withHttpAuthType(HttpClient::AUTH_BASIC)
+                            ->withHttpAuthType(Client::AUTH_BASIC)
                             ->withClient('bar')
                             ->callAPI($data, 100);
             expect($clientResult)->toBeAnInstanceOf(ClientResult::class);
@@ -519,7 +522,7 @@ describe('ClientService', function () {
 
             allow($this->httpClient)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
 
-            expect($this->httpClient)->toReceive('setAuth')->with('foo', 'foo_s3cret', HttpClient::AUTH_BASIC);
+            expect($this->httpClient)->toReceive('setAuth')->with('foo', 'foo_s3cret', Client::AUTH_BASIC);
             expect($this->httpClient)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
             expect($this->httpClient)->toReceive('setOptions')->with(['timeout' => 100]);
             expect($this->httpClient)->toReceive('setHeaders')->with($headers);
@@ -527,7 +530,7 @@ describe('ClientService', function () {
             expect($this->httpClient)->toReceive('setMethod')->with($data['form-request-method']);
 
             $result = $this->service
-                            ->withHttpAuthType(HttpClient::AUTH_BASIC)
+                            ->withHttpAuthType(Client::AUTH_BASIC)
                             ->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
 
@@ -544,11 +547,11 @@ describe('ClientService', function () {
                 ],
 
                 'auth' => [
-                    HttpClient::AUTH_BASIC => [
+                    Client::AUTH_BASIC => [
                         'username' => 'foo',
                         'password' => 'foo_s3cret'
                     ],
-                    HttpClient::AUTH_DIGEST => [
+                    Client::AUTH_DIGEST => [
                         'username' => 'foo',
                         'password' => 'foo_s3cret'
                     ],
@@ -562,7 +565,7 @@ describe('ClientService', function () {
 
             allow($this->httpClient)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
 
-            expect($this->httpClient)->toReceive('setAuth')->with('foo', 'foo_s3cret', HttpClient::AUTH_BASIC);
+            expect($this->httpClient)->toReceive('setAuth')->with('foo', 'foo_s3cret', Client::AUTH_BASIC);
             expect($this->httpClient)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
             expect($this->httpClient)->toReceive('setOptions')->with(['timeout' => 100]);
             expect($this->httpClient)->toReceive('setHeaders')->with($headers);
@@ -570,7 +573,7 @@ describe('ClientService', function () {
             expect($this->httpClient)->toReceive('setMethod')->with($data['form-request-method']);
 
             $result = $this->service
-                            ->withHttpAuthType(HttpClient::AUTH_BASIC)
+                            ->withHttpAuthType(Client::AUTH_BASIC)
                             ->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
 
@@ -587,11 +590,11 @@ describe('ClientService', function () {
                 ],
 
                 'auth' => [
-                    HttpClient::AUTH_BASIC => [
+                    Client::AUTH_BASIC => [
                         'username' => 'foo',
                         'password' => 'foo_s3cret'
                     ],
-                    HttpClient::AUTH_DIGEST => [
+                    Client::AUTH_DIGEST => [
                         'username' => 'foo',
                         'password' => 'foo_s3cret'
                     ],
@@ -606,7 +609,7 @@ describe('ClientService', function () {
             allow($this->httpClient)->toReceive('send')->andReturn(Double::instance(['extends' => Response::class]));
 
             expect($this->httpClient)->toReceive('setAdapter')->with(Curl::class);
-            expect($this->httpClient)->toReceive('setAuth')->with('foo', 'foo_s3cret', HttpClient::AUTH_DIGEST);
+            expect($this->httpClient)->toReceive('setAuth')->with('foo', 'foo_s3cret', Client::AUTH_DIGEST);
             expect($this->httpClient)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
             expect($this->httpClient)->toReceive('setOptions')->with(['timeout' => 100]);
             expect($this->httpClient)->toReceive('setHeaders')->with($headers);
@@ -614,7 +617,7 @@ describe('ClientService', function () {
             expect($this->httpClient)->toReceive('setMethod')->with($data['form-request-method']);
 
             $result = $this->service
-                            ->withHttpAuthType(HttpClient::AUTH_DIGEST)
+                            ->withHttpAuthType(Client::AUTH_DIGEST)
                             ->callAPI($data, 100);
             expect($result)->toBeAnInstanceOf(ClientResult::class);
 

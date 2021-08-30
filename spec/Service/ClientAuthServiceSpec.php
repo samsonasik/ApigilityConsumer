@@ -49,8 +49,10 @@ describe('ClientAuthService', function () {
             );
 
             $service = $service->withClient('bar');
+
             $r = new ReflectionProperty($service, 'client');
             $r->setAccessible(true);
+
             expect($r->getValue($service))->toBe('bar');
 
             $service->resetClient();

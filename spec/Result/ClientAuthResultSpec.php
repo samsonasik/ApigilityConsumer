@@ -23,8 +23,9 @@ describe('ClientAuthResult', function (): void {
 
             try {
                 new ClientAuthResult();
-            } catch (Error $e) {
-                expect($e->getMessage())->toBe("Call to private ApigilityConsumer\\Result\\ClientAuthResult::__construct() from scope Kahlan\\Cli\\Kahlan");
+            } catch (Error $error) {
+                expect($error->getMessage())
+                    ->toBe("Call to private ApigilityConsumer\\Result\\ClientAuthResult::__construct() from scope Kahlan\\Cli\\Kahlan");
             }
 
         });
@@ -58,15 +59,9 @@ describe('ClientAuthResult', function (): void {
         it('set success = false when login failed', function (): void {
 
             ClientAuthResult::$messages = [];
+            $jsonData = ['type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html', 'title' => 'invalid_request', 'status' => 400, 'detail' => 'The grant type was not specified in the request'];
 
-            $response = <<<json
-{
-    "type": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
-    "title": "invalid_request",
-    "status": 400,
-    "detail": "The grant type was not specified in the request"
-}
-json;
+            $response = json_encode($jsonData);
 
             $result = ClientAuthResult::applyResult($response);
             expect(false)->toBe($result->success);
@@ -76,16 +71,9 @@ json;
         it('set success = true when login succeed', function (): void {
 
             ClientAuthResult::$messages = [];
+            $jsonData = ['access_token' => '8e4b0e5ddc874a6f1500514ef530dbea3976ae77', 'expires_in' => 3600, 'token_type' => 'Bearer', 'scope' => null, 'refresh_token' => 'd19b79cd376924409c14ee46e5230617482fb169'];
 
-            $response = <<<json
-{
-  "access_token": "8e4b0e5ddc874a6f1500514ef530dbea3976ae77",
-  "expires_in": 3600,
-  "token_type": "Bearer",
-  "scope": null,
-  "refresh_token": "d19b79cd376924409c14ee46e5230617482fb169"
-}
-json;
+            $response = json_encode($jsonData);
 
             $result = ClientAuthResult::applyResult($response);
             expect(true)->toBe($result->success);
