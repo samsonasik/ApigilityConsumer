@@ -493,11 +493,11 @@ describe('ClientService', function () {
                 ]
             );
 
-            $result = $service
+            $clientResult = $service
                             ->withHttpAuthType(HttpClient::AUTH_BASIC)
                             ->withClient('bar')
                             ->callAPI($data, 100);
-            expect($result)->toBeAnInstanceOf(ClientResult::class);
+            expect($clientResult)->toBeAnInstanceOf(ClientResult::class);
 
         });
 
