@@ -60,7 +60,7 @@ describe('ClientResult', function (): void {
             ClientResult::$messages = [];
             $jsonData = ['validation_messages' => ['foo' => ['regexNotMatch' => 'The input does not match against pattern \'/^[a-zA-Z0-9 .\-]+$/\'']], 'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html', 'title' => 'Unprocessable Entity', 'status' => 422, 'detail' => 'Failed Validation'];
 
-            $response = json_encode($jsonData);
+            $response = json_encode($jsonData, JSON_THROW_ON_ERROR);
 
             $result = ClientResult::applyResult($response);
             expect(false)->toBe($result->success);
@@ -72,7 +72,7 @@ describe('ClientResult', function (): void {
             ClientResult::$messages = [];
             $jsonData = ['data' => []];
 
-            $response = json_encode($jsonData);
+            $response = json_encode($jsonData, JSON_THROW_ON_ERROR);
 
             $result = ClientResult::applyResult($response);
             expect(true)->toBe($result->success);

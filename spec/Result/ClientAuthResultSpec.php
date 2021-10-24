@@ -61,7 +61,7 @@ describe('ClientAuthResult', function (): void {
             ClientAuthResult::$messages = [];
             $jsonData = ['type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html', 'title' => 'invalid_request', 'status' => 400, 'detail' => 'The grant type was not specified in the request'];
 
-            $response = json_encode($jsonData);
+            $response = json_encode($jsonData, JSON_THROW_ON_ERROR);
 
             $result = ClientAuthResult::applyResult($response);
             expect(false)->toBe($result->success);
@@ -73,7 +73,7 @@ describe('ClientAuthResult', function (): void {
             ClientAuthResult::$messages = [];
             $jsonData = ['access_token' => '8e4b0e5ddc874a6f1500514ef530dbea3976ae77', 'expires_in' => 3600, 'token_type' => 'Bearer', 'scope' => null, 'refresh_token' => 'd19b79cd376924409c14ee46e5230617482fb169'];
 
-            $response = json_encode($jsonData);
+            $response = json_encode($jsonData, JSON_THROW_ON_ERROR);
 
             $result = ClientAuthResult::applyResult($response);
             expect(true)->toBe($result->success);
