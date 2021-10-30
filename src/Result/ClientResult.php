@@ -33,10 +33,10 @@ class ClientResult implements ResultInterface
 
     /**
      * Apply result with return its class as value object
-     * when succeed, it will return static::fromSucceed()
-     * when failure, it will return static::fromFailure().
+     * when succeed, it will return self::fromSucceed()
+     * when failure, it will return self::fromFailure().
      *
-     * if decode failed, it will return static::fromFailure() with "Service unavailable" error message
+     * if decode failed, it will return self::fromFailure() with "Service unavailable" error message
      *
      * There is a condition when the STATIC $messages already setted up
      * via ClientResult::$messages assignment in \ApigilityConsumer\Service\ClientService::getClientResult(),
@@ -52,7 +52,7 @@ class ClientResult implements ResultInterface
         if (! empty(self::$messages)) {
             $resultArray['validation_messages'] = self::$messages;
 
-            return static::fromFailure($resultArray);
+            return self::fromFailure($resultArray);
         }
 
         try {
@@ -68,12 +68,12 @@ class ClientResult implements ResultInterface
                 ],
             ];
 
-            return static::fromFailure($resultArray);
+            return self::fromFailure($resultArray);
         }
 
         return isset($resultArray['validation_messages'])
-            ? static::fromFailure($resultArray)
-            : static::fromSucceed($resultArray);
+            ? self::fromFailure($resultArray)
+            : self::fromSucceed($resultArray);
     }
 
     /**
