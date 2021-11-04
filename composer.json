@@ -37,7 +37,7 @@
         "laminas/laminas-coding-standard": "^2.1.1",
         "php-coveralls/php-coveralls": "^2.4",
         "phpstan/phpstan": "^1.0",
-        "rector/rector": "^0.11.52"
+        "rector/rector": "dev-main"
     },
     "config": {
         "bin-dir": "bin"
