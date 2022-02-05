@@ -33,14 +33,17 @@
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^7.2",
-        "kahlan/kahlan": "dev-moving-to-github-action",
+        "kahlan/kahlan": "^5.2",
         "laminas/laminas-coding-standard": "^2.1.1",
         "php-coveralls/php-coveralls": "^2.4",
         "phpstan/phpstan": "^1.0",
         "rector/rector": "dev-main"
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "extra": {
         "zf": {
