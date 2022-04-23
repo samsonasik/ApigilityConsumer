@@ -6,6 +6,7 @@ use Rector\Set\ValueObject\SetList;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
+        SetList::DEAD_CODE,
         SetList::CODING_STYLE,
         SetList::CODE_QUALITY,
         SetList::EARLY_RETURN,
