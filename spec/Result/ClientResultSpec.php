@@ -24,7 +24,7 @@ describe('ClientResult', function (): void {
             try {
                 new ClientResult();
             } catch (Error $error) {
-                expect($error->getMessage())->toBe("Call to private ApigilityConsumer\\Result\\ClientResult::__construct() from scope Kahlan\\Cli\\Kahlan");
+                expect($error->getMessage())->toBe('Call to private ' . ClientResult::class . '::__construct() from scope Kahlan\Cli\Kahlan');
             }
 
         });
@@ -41,8 +41,8 @@ describe('ClientResult', function (): void {
                 ],
             ];
 
-            $result = ClientResult::applyResult('{}');
-            expect(false)->toBe($result->success);
+            $clientResult = ClientResult::applyResult('{}');
+            expect(false)->toBe($clientResult->success);
 
         });
 
@@ -50,8 +50,8 @@ describe('ClientResult', function (): void {
 
             ClientResult::$messages = [];
 
-            $result = ClientResult::applyResult('invalid json');
-            expect(false)->toBe($result->success);
+            $clientResult = ClientResult::applyResult('invalid json');
+            expect(false)->toBe($clientResult->success);
 
         });
 
@@ -62,8 +62,8 @@ describe('ClientResult', function (): void {
 
             $response = json_encode($jsonData, JSON_THROW_ON_ERROR);
 
-            $result = ClientResult::applyResult($response);
-            expect(false)->toBe($result->success);
+            $clientResult = ClientResult::applyResult($response);
+            expect(false)->toBe($clientResult->success);
 
         });
 
@@ -74,8 +74,8 @@ describe('ClientResult', function (): void {
 
             $response = json_encode($jsonData, JSON_THROW_ON_ERROR);
 
-            $result = ClientResult::applyResult($response);
-            expect(true)->toBe($result->success);
+            $clientResult = ClientResult::applyResult($response);
+            expect(true)->toBe($clientResult->success);
 
         });
 

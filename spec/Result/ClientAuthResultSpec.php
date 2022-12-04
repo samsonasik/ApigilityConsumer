@@ -25,7 +25,7 @@ describe('ClientAuthResult', function (): void {
                 new ClientAuthResult();
             } catch (Error $error) {
                 expect($error->getMessage())
-                    ->toBe("Call to private ApigilityConsumer\\Result\\ClientAuthResult::__construct() from scope Kahlan\\Cli\\Kahlan");
+                    ->toBe('Call to private ' . ClientAuthResult::class . '::__construct() from scope Kahlan\Cli\Kahlan');
             }
 
         });
@@ -42,8 +42,8 @@ describe('ClientAuthResult', function (): void {
                 ],
             ];
 
-            $result = ClientAuthResult::applyResult('{}');
-            expect(false)->toBe($result->success);
+            $clientAuthResult = ClientAuthResult::applyResult('{}');
+            expect(false)->toBe($clientAuthResult->success);
 
         });
 
@@ -51,8 +51,8 @@ describe('ClientAuthResult', function (): void {
 
             ClientAuthResult::$messages = [];
 
-            $result = ClientAuthResult::applyResult('invalid json');
-            expect(false)->toBe($result->success);
+            $clientAuthResult = ClientAuthResult::applyResult('invalid json');
+            expect(false)->toBe($clientAuthResult->success);
 
         });
 
@@ -63,8 +63,8 @@ describe('ClientAuthResult', function (): void {
 
             $response = json_encode($jsonData, JSON_THROW_ON_ERROR);
 
-            $result = ClientAuthResult::applyResult($response);
-            expect(false)->toBe($result->success);
+            $clientAuthResult = ClientAuthResult::applyResult($response);
+            expect(false)->toBe($clientAuthResult->success);
 
         });
 
@@ -75,8 +75,8 @@ describe('ClientAuthResult', function (): void {
 
             $response = json_encode($jsonData, JSON_THROW_ON_ERROR);
 
-            $result = ClientAuthResult::applyResult($response);
-            expect(true)->toBe($result->success);
+            $clientAuthResult = ClientAuthResult::applyResult($response);
+            expect(true)->toBe($clientAuthResult->success);
 
         });
 

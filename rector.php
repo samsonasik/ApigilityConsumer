@@ -17,7 +17,6 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::NAMING,
         LevelSetList::UP_TO_PHP_80,
         SetList::TYPE_DECLARATION,
-        SetList::TYPE_DECLARATION_STRICT,
     ]);
 
     $rectorConfig->paths([
