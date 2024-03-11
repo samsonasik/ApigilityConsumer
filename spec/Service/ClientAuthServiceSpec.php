@@ -12,7 +12,7 @@ use Laminas\Http\Client;
 use Laminas\Http\Response;
 use Laminas\Json\Json;
 
-describe('ClientAuthService', function () {
+describe('ClientAuthService', function (): void {
     beforeAll(function (): void {
         $this->httpClient = Double::instance(['extends' => Client::class]);
         $this->service = new ClientAuthService(
@@ -62,7 +62,7 @@ describe('ClientAuthService', function () {
 
     });
 
-    describe('->callAPI', function () {
+    describe('->callAPI', function (): void {
 
         it('define grant_type = client_credentials will not set username form-data', function (): void {
 
@@ -246,7 +246,7 @@ json
 
         });
 
-        it('set not success on Http Client send got RuntimeException', function () {
+        it('set not success on Http Client send got RuntimeException', function (): void {
 
             $data = [
                 'api-route-segment' => '/oauth',
@@ -263,7 +263,7 @@ json
                 'Content-type' => 'application/json'
             ];
 
-            allow($this->httpClient)->toReceive('send')->andRun(function () {
+            allow($this->httpClient)->toReceive('send')->andRun(function (): void {
                 throw new RuntimeException();
             });
 

@@ -13,7 +13,7 @@ use Laminas\Http\Client;
 use Laminas\Http\Response;
 use Laminas\Json\Json;
 
-describe('ClientService', function () {
+describe('ClientService', function (): void {
     beforeAll(function (): void {
         $this->httpClient = Double::instance(['extends' => Client::class]);
         $this->service = new ClientService(
@@ -96,7 +96,7 @@ describe('ClientService', function () {
 
     });
 
-    describe('->callAPI', function () {
+    describe('->callAPI', function (): void {
         it('return "ClientResult" instance with success = true when status code = 200 and body != ""', function (): void {
 
             $data = [
@@ -355,7 +355,7 @@ describe('ClientService', function () {
 
         });
 
-        it('return "ClientResult" instance with success = false when client->send() throw exception', function () {
+        it('return "ClientResult" instance with success = false when client->send() throw exception', function (): void {
 
             $data = [
                 'api-route-segment' => '/api',
@@ -375,7 +375,7 @@ describe('ClientService', function () {
             expect($this->httpClient)->toReceive('setHeaders')->with($headers);
             expect($this->httpClient)->toReceive('setUri')->with('http://api.host.url/api');
             expect($this->httpClient)->toReceive('setMethod')->with($data['form-request-method']);
-            allow($this->httpClient)->toReceive('send')->andRun(function () {
+            allow($this->httpClient)->toReceive('send')->andRun(function (): void {
                 throw new RuntimeException();
             });
 
@@ -649,7 +649,7 @@ describe('ClientService', function () {
 
         });
 
-        it('set not success on Http Client send got RuntimeException', function () {
+        it('set not success on Http Client send got RuntimeException', function (): void {
 
             $data = [
                 'api-route-segment'   => '/api',
@@ -662,7 +662,7 @@ describe('ClientService', function () {
                 'Content-type' => 'application/json'
             ];
 
-            allow($this->httpClient)->toReceive('send')->andRun(function () {
+            allow($this->httpClient)->toReceive('send')->andRun(function (): void {
                 throw new RuntimeException();
             });
 
