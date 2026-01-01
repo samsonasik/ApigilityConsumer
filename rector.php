@@ -11,11 +11,11 @@ use Rector\Set\ValueObject\SetList;
 return RectorConfig::configure()
     ->withPreparedSets(
         deadCode: true,
-        codingStyle: true,
         codeQuality: true,
-        earlyReturn: true,
+        codingStyle: true,
+        typeDeclarations: true,
         naming: true,
-        typeDeclarations: true
+        earlyReturn: true
     )
     ->withPhpSets(php80: true)
     ->withPaths([

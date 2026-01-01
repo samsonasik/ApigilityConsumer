@@ -91,8 +91,8 @@ describe('ClientAuthService', function (): void {
                 ]
             ));
 
-            $result = $service->callAPI($data);
-            expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
+            $clientAuthResult = $service->callAPI($data);
+            expect($clientAuthResult)->toBeAnInstanceOf(ClientAuthResult::class);
 
         });
 
@@ -171,8 +171,8 @@ describe('ClientAuthService', function (): void {
             allow($this->httpClient)->toReceive('setRawBody')->with(Json::encode($data['form-data']));
 
             $service->withClient('bar');
-            $result = $service->callAPI($data);
-            expect($result)->toBeAnInstanceOf(ClientAuthResult::class);
+            $clientAuthResult = $service->callAPI($data);
+            expect($clientAuthResult)->toBeAnInstanceOf(ClientAuthResult::class);
 
         });
 

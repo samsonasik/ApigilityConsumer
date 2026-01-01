@@ -85,8 +85,9 @@ class ClientAuthResult implements ResultInterface
      */
     private static function fromFailure(?array $result): self
     {
-        $self            = new self();
-        $self->success   = false;
+        $self          = new self();
+        $self->success = false;
+
         $self::$messages = $result['validation_messages'] ?? [];
 
         return $self;
