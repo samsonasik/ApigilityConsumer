@@ -1,12 +1,7 @@
 <?php
 
 declare(strict_types=1);
-
-use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
-use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
 use Rector\Config\RectorConfig;
-use Rector\Set\ValueObject\LevelSetList;
-use Rector\Set\ValueObject\SetList;
 
 return RectorConfig::configure()
     ->withPreparedSets(
@@ -24,12 +19,4 @@ return RectorConfig::configure()
         __DIR__ . '/spec',
     ])
     ->withRootFiles()
-    ->withImportNames()
-    ->withSkip([
-        StaticArrowFunctionRector::class => [
-            __DIR__ . '/spec',
-        ],
-        StaticClosureRector::class       => [
-            __DIR__ . '/spec',
-        ],
-    ]);
+    ->withImportNames(removeUnusedImports: true);
